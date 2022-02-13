@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Medication App</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home">Home</string>
+    <string name="guest">Guest</string>
+    <string name="add_dependent">Add Dependent</string>
+    <string name="medications">Medications</string>
+    <string name="more">More</string>
+    <string name="profiles">Profiles</string>
+</resources>
