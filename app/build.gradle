@@ -73,6 +73,17 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
+    // sdp screen size
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    // calender
+    implementation 'devs.mulham.horizontalcalendar:horizontalcalendar:1.3.4'
+
+    // lotti
+    implementation "com.airbnb.android:lottie:3.4.0"
+
+
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
     //gson type converter
     implementation 'com.google.code.gson:gson:2.8.7'
 

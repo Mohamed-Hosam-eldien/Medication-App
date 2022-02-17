@@ -8,71 +8,103 @@
     android:layout_height="match_parent"
     tools:context=".home.view.MainActivity">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_500"
-        android:elevation="8sp"
-        android:layout_alignParentTop="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" >
-
-        <LinearLayout
-            android:id="@+id/layoutCurrentDep"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_alignParentTop="true"
+            android:background="@color/purple_500"
+            android:elevation="8sp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
 
-            <ImageView
-                android:id="@+id/imgCurrentDep"
-                android:layout_width="40sp"
-                android:layout_height="35sp"
-                android:src="@drawable/guest"
-                android:contentDescription="@null" />
-
-
-            <TextView
-                android:id="@+id/txtCurrentDep"
-                android:layout_width="45sp"
-                android:layout_height="wrap_content"
-                android:text="@string/guest"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:layout_marginStart="8sp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_horizontal" />
-
-            <ImageView
+            <LinearLayout
+                android:id="@+id/layoutCurrentDep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="8sp"
-                android:src="@drawable/ic_baseline_arrow_drop_down_24"
-                android:contentDescription="@null" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgCurrentDep"
+                    android:layout_width="40sp"
+                    android:layout_height="35sp"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/guest" />
 
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/txtCurrentDep"
+                    android:layout_width="45sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8sp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/guest"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8sp"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
 
 
+            </LinearLayout>
 
-    </androidx.appcompat.widget.Toolbar>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainer"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        android:layout_below="@id/toolbar"
-        android:layout_above="@id/bottomBar"
-        app:navGraph="@navigation/nav_graph" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainer"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottomBar"
+            android:layout_below="@id/toolbar"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph" />
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/flaoting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_expandDirection="up"
+            app:fab_labelsPosition="right"
+            android:layout_above="@id/bottomBar"
+            android:layout_alignParentLeft="true"
+            app:fab_labelStyle="@style/LabelStyle">
+
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnAddMed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/pink"
+                app:fab_size="mini"
+                app:fab_icon="@drawable/pill3"
+                app:fab_title="@string/add_medication"/>
+
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnAddTaker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/pink"
+                app:fab_size="mini"
+                app:fab_icon="@drawable/ic_baseline_person_add_24"
+                app:fab_title="@string/add_health_taker"/>
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

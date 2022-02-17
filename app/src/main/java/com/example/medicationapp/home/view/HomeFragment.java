@@ -1,6 +1,5 @@
 package com.example.medicationapp.home.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,25 +11,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.caring.view.AdditionalCare;
 import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Patient;
+import com.example.medicationapp.databinding.FragmentHomeBinding;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.HorizontalCalendarView;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+
 
 public class HomeFragment extends Fragment {
 
-    Button btnTst;
-    LocalDB localDB;
-    Patient patient;
-    Medication medication;
-    List <Medication> medications;
-    List<Patient> getPatients;
+    FragmentHomeBinding binding;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -46,21 +45,50 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_home, container, false);
-        btnTst = view.findViewById(R.id.btnTest);
-        return view;
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.bind(view);
+
+        setCalenderDetails();
+
+        return binding.getRoot();
     }
+
+    private void setCalenderDetails() {
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.MONTH, 1);
+
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.MONTH, -1);
+
+
+        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(binding.getRoot(), R.id.calendarView)
+                .range(startDate, endDate)
+                .build();
+
+        binding.txtToday.setOnClickListener(v -> {
+            if(!horizontalCalendar.getSelectedDate().equals(Calendar.getInstance())) {
+                horizontalCalendar.selectDate(Calendar.getInstance(), true);
+            }
+        });
+
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+            @Override
+            public void onDateSelected(Calendar date, int position) {
+                OnDateSelect select = (OnDateSelect) getActivity();
+                select.onDateSelected(date);
+            }
+
+            @Override
+            public void onCalendarScroll(HorizontalCalendarView calendarView, int dx, int dy) {}
+        });
+
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        btnTst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AdditionalCare.class);
-                startActivity(intent);
-            }
-        });
 
 
     }

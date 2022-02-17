@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".home.view.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,13 +15,57 @@
         android:layout_height="wrap_content"
         android:text="Button" />
 
-    <TextView
-        android:id="@+id/t"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <devs.mulham.horizontalcalendar.HorizontalCalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:colorBottomTextSelected="@color/purple_700"
+                app:colorMiddleTextSelected="@color/purple_700"
+                app:colorTopTextSelected="@color/purple_700"
+                app:sizeBottomText="12sp"
+                app:sizeMiddleText="12sp"
+                app:sizeTopText="12sp"
+                app:textColorSelected="#03A9F4" />
+
+
+            <TextView
+                android:id="@+id/txtToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:padding="@dimen/_4sdp"
+                android:text="@string/today"
+                android:textSize="@dimen/_14sdp"
+                android:layout_gravity="start"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_below="@id/card"
+        android:id="@+id/fragmentContainerView"
+        android:name="com.example.medicationapp.home.view.HomeMedFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/home"
-        android:textSize="24sp" />
+        android:text="@string/home" />
 
-</FrameLayout>
+
+</RelativeLayout>
