@@ -14,4 +14,9 @@
     <string name="addMedication">Add Medication</string>
     <string name="add_medication">Add Medication</string>
     <string name="add_health_taker">Add Health Taker</string>
+    <string name="activeList">Active Medicines</string>
+    <string name="SuspendedList">Suspended Medicines</string>
+    <string name="title">Gmail Invitation</string>
+    <string name="sendInvitation">Send Invitation</string>
+    <string name="emalHint">USER@gmail.com</string>
 </resources>

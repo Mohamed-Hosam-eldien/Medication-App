@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/linear"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="3"
+    tools:context=".caring.view.AdditionalCare">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#43C7D8"
+        app:cardBackgroundColor="@color/purple_700">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgViewProfile"
+            android:layout_width="82dp"
+            android:layout_height="76dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_person_24"
+            app:civ_circle_background_color="@color/white"/>
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:padding="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="@string/title"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textSize="16sp"
+            android:id="@+id/edtTxtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtViewTitle"
+            android:layout_marginTop="16dp"
+            android:hint="@string/emalHint"
+            android:padding="12dp"
+            tools:layout_editor_absoluteX="127dp"
+            tools:layout_editor_absoluteY="57dp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView2"
+            android:layout_width="42dp"
+            android:layout_height="30dp"
+            android:layout_alignLeft="@+id/txtViewTitle"
+            android:src="@drawable/gmail"/>
+
+        <Button
+            android:id="@+id/btnSendInvitation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/sendInvitation" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

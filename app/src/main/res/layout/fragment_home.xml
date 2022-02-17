@@ -8,6 +8,14 @@
     android:orientation="vertical"
     tools:context=".home.view.HomeFragment">
 
+    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/btnTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
         android:layout_alignParentTop="true"
@@ -56,7 +64,8 @@
         android:id="@+id/fragmentContainerView"
         android:name="com.example.medicationapp.home.view.HomeMedFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:text="@string/home" />
 
 
 </RelativeLayout>

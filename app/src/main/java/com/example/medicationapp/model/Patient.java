@@ -25,9 +25,6 @@ public class Patient {
     @NonNull
     private List<Medication> medications;
 
-    public Patient() {
-    }
-
     public Patient(int id, String firstName, String lastName,
                    short age, int image, String disease, List<Medication> medications) {
         this.id = id;
