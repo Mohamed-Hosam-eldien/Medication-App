@@ -75,4 +75,7 @@ dependencies {
 
     //gson type converter
     implementation 'com.google.code.gson:gson:2.8.7'
+
+    //circular image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

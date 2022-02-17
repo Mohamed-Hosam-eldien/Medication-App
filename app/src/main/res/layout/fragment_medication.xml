@@ -1,17 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".medications.view.MedicationFragment">
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    tools:context=".medications.view.MedicationFragment"
+    android:padding="5dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="24sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/medications" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activeList" />
 
-</FrameLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/SuspendedList"
+                android:layout_marginTop="5dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/suspendedRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
