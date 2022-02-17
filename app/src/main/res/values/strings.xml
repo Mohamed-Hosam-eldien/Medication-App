@@ -8,4 +8,10 @@
     <string name="medications">Medications</string>
     <string name="more">More</string>
     <string name="profiles">Profiles</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="today">today</string>
+    <string name="addMedication">Add Medication</string>
+    <string name="add_medication">Add Medication</string>
+    <string name="add_health_taker">Add Health Taker</string>
 </resources>
