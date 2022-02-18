@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicationApp">
         <activity
+            android:name=".medications.view.addEditMed.AddEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".medications.view.displayMedication.DisplayMedicationActivity"
             android:exported="false" />
         <activity

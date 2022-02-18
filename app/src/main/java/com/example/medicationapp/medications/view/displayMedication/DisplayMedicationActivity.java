@@ -2,12 +2,15 @@ package com.example.medicationapp.medications.view.displayMedication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.medicationapp.R;
+import com.example.medicationapp.home.view.MainActivity;
+import com.example.medicationapp.medications.view.addEditMed.AddEditActivity;
 
 public class DisplayMedicationActivity extends AppCompatActivity {
 
@@ -29,6 +32,15 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         btnSuspend=findViewById(R.id.showDrugBtnSuspend);
         btnRefill=findViewById(R.id.showDrugBtnRefill);
         btnAddDose=findViewById(R.id.showDrugBtnAddDose);
+
+        btnSuspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(DisplayMedicationActivity.this, AddEditActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         btnAddDose.setOnClickListener(new View.OnClickListener() {
             @Override

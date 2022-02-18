@@ -63,6 +63,14 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
 
         initFabButton();
 
+        binding.btnAddMed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,DisplayMedicationActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initFabButton() {
