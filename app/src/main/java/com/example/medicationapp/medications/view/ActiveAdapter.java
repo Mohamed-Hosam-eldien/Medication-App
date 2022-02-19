@@ -22,10 +22,13 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.ViewHolder
 //    List<Medication> suspendedMedicines;
     Context context;
 
+    public void setActiveMedicines(List<Medication> activeMedicines) {
+        this.activeMedicines = activeMedicines;
+    }
+
     public ActiveAdapter(Context context, List<Medication>activeMedicines){
         this.activeMedicines = activeMedicines;
         this.context = context;
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

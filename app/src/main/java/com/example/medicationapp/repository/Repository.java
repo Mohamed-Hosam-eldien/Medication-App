@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.database.LocalDB;
+import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Patient;
 
 import java.util.List;
@@ -29,22 +30,32 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public void insertPatient(Patient patient) {
-        localDB.insertPatient(patient);
+    public void insertMedication(Medication medication) {
+        localDB.insertMedicine(medication);
     }
 
     @Override
-    public void deletePatient(Patient patient) {
-        localDB.deleterPatient(patient);
+    public void deleteMedication(Medication medication) {
+        localDB.deleteMedication(medication);
     }
 
     @Override
-    public LiveData<List<Patient>> getAllPatients() {
-        return localDB.getAllPatients();
+    public LiveData<List<Medication>> getAllMedications() {
+        return localDB.getAllMedications();
     }
 
     @Override
-    public LiveData<Patient> getPatient(int id) {
-        return localDB.getPatient(id);
+    public LiveData<Medication> getMedication(String name) {
+        return localDB.getMedication(name);
+    }
+
+    @Override
+    public LiveData<List<Medication>> getActiveMedicines() {
+        return localDB.getAllActiveMedicines();
+    }
+
+    @Override
+    public LiveData<List<Medication>> getInActiveMedicines() {
+        return localDB.getAllInActiveMedicines();
     }
 }

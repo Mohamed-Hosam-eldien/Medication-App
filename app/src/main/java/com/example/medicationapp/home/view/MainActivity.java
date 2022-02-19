@@ -16,8 +16,10 @@ import android.widget.Toast;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.caring.view.AdditionalCare;
+import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityMainBinding;
 import com.example.medicationapp.medications.view.displayMedication.DisplayMedicationActivity;
+import com.example.medicationapp.model.Medication;
 
 
 import java.util.Calendar;
@@ -25,9 +27,9 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity implements OnDateSelect{
     int id;
 
-//    LocalDB localDB;
+    LocalDB localDB;
 //    Patient patient;
-//    Medication medication;
+    Medication medication;
 //    List <Medication> medications;
 //    List<Patient> getPatients;
     private ActivityMainBinding binding;
@@ -44,10 +46,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         setContentView(view);
 
 
-//        localDB = LocalDB.getInstance(this);
-//        patient = new Patient();
-//        patient.setFirstName("mina");
-//        patient.setLastName("peter");
+        localDB = LocalDB.getInstance(this);
+
 //        medication = new Medication();
 //        medication.setName("zithrocan");
 //        medications = new ArrayList<>();

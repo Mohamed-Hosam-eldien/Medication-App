@@ -8,7 +8,7 @@ import androidx.room.TypeConverter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(tableName = "Patient")
+
 public class Patient {
 
     @PrimaryKey(autoGenerate = true)

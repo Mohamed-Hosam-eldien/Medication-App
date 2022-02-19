@@ -2,12 +2,12 @@ package com.example.medicationapp.model;
 
 public class MedDetails {
     String time;
-    short dose;
+    int dose;
     String type;
 
     public MedDetails() {}
 
-    public MedDetails(String time, short dose, String type) {
+    public MedDetails(String time, int dose, String type) {
         this.time = time;
         this.dose = dose;
         this.type = type;
@@ -21,11 +21,11 @@ public class MedDetails {
         this.time = time;
     }
 
-    public short getDose() {
+    public int getDose() {
         return dose;
     }
 
-    public void setDose(short dose) {
+    public void setDose(int dose) {
         this.dose = dose;
     }
 
