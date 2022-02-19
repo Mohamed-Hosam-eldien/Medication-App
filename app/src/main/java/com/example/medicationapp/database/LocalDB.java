@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.model.Patient;
 
 import java.util.List;
 

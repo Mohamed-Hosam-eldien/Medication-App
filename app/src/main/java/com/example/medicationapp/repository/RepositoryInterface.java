@@ -3,7 +3,6 @@ package com.example.medicationapp.repository;
 import androidx.lifecycle.LiveData;
 
 import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.model.Patient;
 
 import java.util.List;
 

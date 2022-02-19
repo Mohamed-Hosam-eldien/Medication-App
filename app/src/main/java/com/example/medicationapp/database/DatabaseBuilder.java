@@ -12,7 +12,6 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.model.Patient;
 
 @Database(entities = {Medication.class},version = 1)
 @TypeConverters(Converter.class)

@@ -4,10 +4,8 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.medicationapp.R;
 import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.model.Patient;
 
 import java.util.List;
 
