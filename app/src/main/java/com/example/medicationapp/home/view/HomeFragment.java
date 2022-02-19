@@ -18,6 +18,7 @@ import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Patient;
 import com.example.medicationapp.databinding.FragmentHomeBinding;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.Calendar;
 
@@ -89,7 +90,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
+        FloatingActionsMenu floatingActionsMenu= getActivity().findViewById(R.id.flaoting);
+        floatingActionsMenu.setVisibility(View.VISIBLE);
     }
 }

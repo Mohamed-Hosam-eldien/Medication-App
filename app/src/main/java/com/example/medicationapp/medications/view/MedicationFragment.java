@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.model.Medication;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,8 @@ public class MedicationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FloatingActionsMenu floatingActionsMenu= getActivity().findViewById(R.id.flaoting);
+        floatingActionsMenu.setVisibility(View.GONE);
         activeRecyclerView = view.findViewById(R.id.recyclerView);
         suspendedRecyclerView = view.findViewById(R.id.suspendedRecyclerView);
 
