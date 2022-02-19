@@ -4,12 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/ITI/Medication-App/app/src/main/res/drawable/btn_menu_home.xml" value="0.1075" />
+        <entry key="..\:/ITI/Medication-App/app/src/main/res/drawable/ic_accept.xml" value="0.1435" />
+        <entry key="..\:/ITI/Medication-App/app/src/main/res/drawable/ic_baseline_panorama_24.xml" value="0.1435" />
+        <entry key="..\:/ITI/Medication-App/app/src/main/res/drawable/ic_reject.xml" value="0.1435" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/activity_additional_care.xml" value="0.2" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/custom_row.xml" value="0.25416666666666665" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/fragment_home.xml" value="0.17135416666666667" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/fragment_home_med.xml" value="0.1609375" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/fragment_medication.xml" value="0.2" />
+        <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/fragment_requests.xml" value="0.25416666666666665" />
+        <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/layout_nav_include.xml" value="0.25416666666666665" />
+        <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/requests_custom_row.xml" value="0.25416666666666665" />
+        <entry key="..\:/ITI/Medication-App/app/src/main/res/menu/bar_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/android_studio_projects/MedicationApp/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.183" />
         <entry key="..\:/android_studio_projects/MedicationApp/app/src/main/res/drawable/ic_baseline_more_horiz_24.xml" value="0.183" />
         <entry key="..\:/android_studio_projects/MedicationApp/app/src/main/res/layout/activity_main.xml" value="0.171875" />

@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_medication" />
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.example.medicationapp.more.view.MoreFragment"
+        android:name="com.example.medicationapp.requests.view.RequestsFragment"
         android:label="More"
-        tools:layout="@layout/fragment_more" />
+        tools:layout="@layout/fragment_requests" />
 </navigation>

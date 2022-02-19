@@ -33,6 +33,7 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.ViewHolder
         TextView medicineName;
         TextView medDose;
         public ConstraintLayout constraintLayout;
+
         public ViewHolder(@NonNull View generatedRow) {
             super(generatedRow);
             medImage = generatedRow.findViewById(R.id.imgMed);

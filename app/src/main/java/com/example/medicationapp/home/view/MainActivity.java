@@ -8,12 +8,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.medicationapp.R;
+import com.example.medicationapp.caring.view.AdditionalCare;
 import com.example.medicationapp.databinding.ActivityMainBinding;
 
 
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         binding.btnAddTaker.setOnClickListener(v -> {
             Toast.makeText(this, "add tacker", Toast.LENGTH_SHORT).show();
             binding.flaoting.collapse();
+            startActivity(new Intent(MainActivity.this, AdditionalCare.class));
         });
     }
 

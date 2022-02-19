@@ -19,6 +19,7 @@ public class Medication {
     public Medication(String name, ArrayList<MedDetails> medDetails,
                       MedScheduler medScheduler, int image, int midStrength,
                       MedInstructions medInstructions) {
+
         this.name = name;
         this.medDetails = medDetails;
         this.medScheduler = medScheduler;

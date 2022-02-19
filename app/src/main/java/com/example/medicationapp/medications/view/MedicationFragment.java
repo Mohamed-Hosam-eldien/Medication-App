@@ -58,28 +58,11 @@ public class MedicationFragment extends Fragment {
         medication4.setImage(R.drawable.ic_baseline_person_24);medication3.setMidStrength(12);
         medication4.setName("afdlsfkdsdsddddddddddddddddddddddddddddddddddddddddddddsj");
         medication4.setImage(R.drawable.ic_baseline_person_24);
-        activeList.add(medication);
-        activeList.add(medication);
-        activeList.add(medication2);
-        activeList.add(medication2);
-        activeList.add(medication2);
-        activeList.add(medication3);
-        activeList.add(medication3);
-        activeList.add(medication3);
-        activeList.add(medication3);
-        activeList.add(medication3);
         activeList.add(medication4);
         activeList.add(medication4);
         activeList.add(medication4);
         suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
+
         return inflater.inflate(R.layout.fragment_medication, container, false);
     }
 
