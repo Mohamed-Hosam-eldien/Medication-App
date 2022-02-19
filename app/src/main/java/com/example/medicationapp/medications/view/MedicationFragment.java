@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,18 +17,19 @@ import android.view.ViewGroup;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.database.LocalDB;
+import com.example.medicationapp.medications.view.displayMedication.Presenter;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.MedScheduler;
 import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.repository.Repository;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-public class MedicationFragment extends Fragment {
+public class MedicationFragment extends Fragment implements MedicationViewInterface{
 
-    LocalDB localDB;
     List<Medication> activeList;
     List<Medication> suspendedList;
     List<MedDetails> medDetailsList;
@@ -39,7 +41,7 @@ public class MedicationFragment extends Fragment {
     RecyclerView.LayoutManager suspendedLayoutManager;
     ActiveAdapter activeAdapter;
     ActiveAdapter suspendedAdapter;
-
+    Presenter presenter;
     public MedicationFragment() {
         // Required empty public constructor
     }
@@ -49,12 +51,10 @@ public class MedicationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         medScheduler = new MedScheduler();
-        localDB = LocalDB.getInstance(getContext());
         activeList = new ArrayList<>();
         medDetailsList = new ArrayList<>();
         suspendedList = new ArrayList<>();
-        medication = new Medication("zithrocassnsa",medDetailsList, medScheduler, 100, 1,1, "after breakfast");
-        localDB.insertMedicine(medication);
+
 
         return inflater.inflate(R.layout.fragment_medication, container, false);
     }
@@ -78,11 +78,31 @@ public class MedicationFragment extends Fragment {
         activeRecyclerView.setAdapter(activeAdapter);
         suspendedRecyclerView.setAdapter(suspendedAdapter);
 
-        localDB.getAllActiveMedicines().observe(getActivity(), new Observer<List<Medication>>() {
+        presenter = new Presenter(getActivity(), Repository.
+                getInstance(getActivity(), LocalDB.getInstance(getActivity())),this);
+        presenter.getActiveMedications();
+        presenter.getInActiveMedications();
+    }
+
+    @Override
+    public void getAllActiveMedicines(LiveData<List<Medication>> active) {
+        active.observe(getActivity(), new Observer<List<Medication>>() {
             @Override
             public void onChanged(List<Medication> medications) {
                 activeList = medications;
                 activeAdapter.setActiveMedicines(activeList);
+                activeAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void getAllInActiveMedicines(LiveData<List<Medication>> inActive) {
+        inActive.observe(getActivity(), new Observer<List<Medication>>() {
+            @Override
+            public void onChanged(List<Medication> medications) {
+                suspendedList = medications;
+                activeAdapter.setActiveMedicines(suspendedList);
                 activeAdapter.notifyDataSetChanged();
             }
         });
