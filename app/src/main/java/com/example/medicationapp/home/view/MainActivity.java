@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.medicationapp.R;
 import com.example.medicationapp.caring.view.AdditionalCare;
 import com.example.medicationapp.databinding.ActivityMainBinding;
+import com.example.medicationapp.medications.view.displayMedication.DisplayMedicationActivity;
 
 
 import java.util.Calendar;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
     private ActivityMainBinding binding;
     private HomeMedFragment homeMedFragment;
     private Bundle bundle;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
 
 //        localDB = LocalDB.getInstance(this);
 //        patient = new Patient();
@@ -60,6 +63,14 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         initDependentLayout();
 
         initFabButton();
+
+        binding.btnAddMed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,DisplayMedicationActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -98,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
 
     private void initNavController() {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        NavController navController = navHostFragment.getNavController();
+        navController = navHostFragment.getNavController();
 
         NavigationUI.setupWithNavController(binding.navigationView, navController);
 
