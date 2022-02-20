@@ -5,34 +5,43 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.medicationapp.R;
+import com.example.medicationapp.database.LocalDB;
+import com.example.medicationapp.medications.view.displayMedication.Presenter;
+import com.example.medicationapp.model.MedDetails;
+import com.example.medicationapp.model.MedScheduler;
 import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.repository.Repository;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class MedicationFragment extends Fragment {
+public class MedicationFragment extends Fragment implements MedicationViewInterface{
 
     List<Medication> activeList;
     List<Medication> suspendedList;
+    List<MedDetails> medDetailsList;
     Medication medication;
-    Medication medication2;
-    Medication medication3;
-    Medication medication4;
+    MedScheduler medScheduler;
     RecyclerView suspendedRecyclerView;
     RecyclerView activeRecyclerView;
     RecyclerView.LayoutManager activeLayoutManager;
     RecyclerView.LayoutManager suspendedLayoutManager;
-    RecyclerView.Adapter activeAdapter;
-    RecyclerView.Adapter suspendedAdapter;
-
+    ActiveAdapter activeAdapter;
+    ActiveAdapter suspendedAdapter;
+    Presenter presenter;
     public MedicationFragment() {
         // Required empty public constructor
     }
@@ -41,51 +50,20 @@ public class MedicationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        medScheduler = new MedScheduler();
         activeList = new ArrayList<>();
+        medDetailsList = new ArrayList<>();
         suspendedList = new ArrayList<>();
-        medication = new Medication();
-        medication2 = new Medication();
-        medication3 = new Medication();
-        medication4 = new Medication();
-        medication.setName("zithrocan");
-        medication.setMidStrength(100);
-        medication.setImage(R.drawable.ic_baseline_person_24);
-        medication2.setName("sfd");
-        medication2.setImage(R.drawable.guest);
-        medication2.setMidStrength(12);
-        medication3.setMidStrength(12);
-        medication3.setName("afdlsfkdsj");
-        medication4.setImage(R.drawable.ic_baseline_person_24);medication3.setMidStrength(12);
-        medication4.setName("afdlsfkdsdsddddddddddddddddddddddddddddddddddddddddddddsj");
-        medication4.setImage(R.drawable.ic_baseline_person_24);
-        activeList.add(medication);
-        activeList.add(medication);
-        activeList.add(medication2);
-        activeList.add(medication2);
-        activeList.add(medication2);
-        activeList.add(medication3);
-        activeList.add(medication3);
-        activeList.add(medication3);
-        activeList.add(medication3);
-        activeList.add(medication3);
-        activeList.add(medication4);
-        activeList.add(medication4);
-        activeList.add(medication4);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
-        suspendedList.add(medication);
+
+
         return inflater.inflate(R.layout.fragment_medication, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FloatingActionsMenu floatingActionsMenu= getActivity().findViewById(R.id.flaoting);
+        floatingActionsMenu.setVisibility(View.GONE);
         activeRecyclerView = view.findViewById(R.id.recyclerView);
         suspendedRecyclerView = view.findViewById(R.id.suspendedRecyclerView);
 
@@ -100,5 +78,33 @@ public class MedicationFragment extends Fragment {
         activeRecyclerView.setAdapter(activeAdapter);
         suspendedRecyclerView.setAdapter(suspendedAdapter);
 
+        presenter = new Presenter(getActivity(), Repository.
+                getInstance(getActivity(), LocalDB.getInstance(getActivity())),this);
+        presenter.getActiveMedications();
+        presenter.getInActiveMedications();
+    }
+
+    @Override
+    public void getAllActiveMedicines(LiveData<List<Medication>> active) {
+        active.observe(getActivity(), new Observer<List<Medication>>() {
+            @Override
+            public void onChanged(List<Medication> medications) {
+                activeList = medications;
+                activeAdapter.setActiveMedicines(activeList);
+                activeAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void getAllInActiveMedicines(LiveData<List<Medication>> inActive) {
+        inActive.observe(getActivity(), new Observer<List<Medication>>() {
+            @Override
+            public void onChanged(List<Medication> medications) {
+                suspendedList = medications;
+                activeAdapter.setActiveMedicines(suspendedList);
+                activeAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

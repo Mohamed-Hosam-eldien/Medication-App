@@ -19,4 +19,5 @@
     <string name="title">Gmail Invitation</string>
     <string name="sendInvitation">Send Invitation</string>
     <string name="emalHint">USER@gmail.com</string>
+    <string name="requests">Requests</string>
 </resources>

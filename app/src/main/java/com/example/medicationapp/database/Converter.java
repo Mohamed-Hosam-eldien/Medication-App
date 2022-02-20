@@ -16,16 +16,6 @@ import java.util.List;
 
 public class Converter {
 
-//    @TypeConverter
-//    public String fromMedicationToString(List<Medication> medication){
-//        return new Gson().toJson(medication);
-//    }
-//
-//    @TypeConverter
-//    public List<Medication> fromStringToMedication(String medication){
-//        Type listType = new TypeToken<List<Medication>>() {}.getType();
-//        return new Gson().fromJson(medication, listType);
-//    }
 
     @TypeConverter
     public String fromSchedulerToString(MedScheduler medScheduler){

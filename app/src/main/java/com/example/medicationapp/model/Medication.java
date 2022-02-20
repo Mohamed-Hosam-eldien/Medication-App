@@ -1,31 +1,61 @@
 package com.example.medicationapp.model;
 
-import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity(tableName = "Medication")
 public class Medication {
 
-    String name;
-    List<MedDetails> medDetails;
-    MedScheduler medScheduler;
-    int image;
-    int midStrength;
+    @PrimaryKey()
+    @NonNull
+    private String name;
+    private int refillNo;
+    private int isActive = 1;
+    private List<MedDetails> medDetails;
+    private MedScheduler medScheduler;
+    private int image;
+    private int midStrength;
+    private String timeToFood;
 
-    public Medication(){
-    }
-
-    public Medication(String name, ArrayList<MedDetails> medDetails,
-                      MedScheduler medScheduler, int image, int midStrength,
-                      MedInstructions medInstructions) {
+    public Medication(String name, List<MedDetails> medDetails,
+                      MedScheduler medScheduler,int midStrength,
+                      int isActive, int refillNo, String timeToFood) {
+        this.timeToFood = timeToFood;
+        this.refillNo = refillNo;
+        this.isActive = isActive;
         this.name = name;
         this.medDetails = medDetails;
         this.medScheduler = medScheduler;
-        this.image = image;
+//        this.image = image;
         this.midStrength = midStrength;
-        this.medInstructions = medInstructions;
+    }
+
+    public String getTimeToFood() {
+        return timeToFood;
+    }
+
+    public void setTimeToFood(String timeToFood) {
+        this.timeToFood = timeToFood;
+    }
+
+    public int getRefillNo() {
+        return refillNo;
+    }
+
+    public void setRefillNo(int refillNo) {
+        this.refillNo = refillNo;
+    }
+
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
+    }
+
+    public int getIsActive() {
+        return isActive;
     }
 
     public String getName() {
@@ -68,13 +98,4 @@ public class Medication {
         this.midStrength = midStrength;
     }
 
-    public MedInstructions getMedInstructions() {
-        return medInstructions;
-    }
-
-    public void setMedInstructions(MedInstructions medInstructions) {
-        this.medInstructions = medInstructions;
-    }
-
-    MedInstructions medInstructions;
 }

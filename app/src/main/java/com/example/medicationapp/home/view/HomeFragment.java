@@ -19,10 +19,9 @@ import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Patient;
 import com.example.medicationapp.databinding.FragmentHomeBinding;
 import com.example.medicationapp.utils.Helper;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarView;
@@ -76,6 +75,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
+        FloatingActionsMenu floatingActionsMenu= getActivity().findViewById(R.id.flaoting);
+        floatingActionsMenu.setVisibility(View.VISIBLE);
     }
 }

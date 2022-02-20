@@ -11,9 +11,9 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
-import com.example.medicationapp.model.Patient;
+import com.example.medicationapp.model.Medication;
 
-@Database(entities = {Patient.class},version = 1)
+@Database(entities = {Medication.class},version = 1)
 @TypeConverters(Converter.class)
 public abstract class DatabaseBuilder extends RoomDatabase {
 
@@ -26,8 +26,6 @@ public abstract class DatabaseBuilder extends RoomDatabase {
         }
         return databaseBuilder;
     }
-
-
 
     @NonNull
     @Override

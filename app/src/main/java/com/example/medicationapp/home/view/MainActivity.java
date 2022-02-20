@@ -8,16 +8,28 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.medicationapp.R;
+import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityMainBinding;
+import com.example.medicationapp.model.Medication;
+
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements OnDateSelect{
+    int id;
 
+    LocalDB localDB;
+//    Patient patient;
+    Medication medication;
+//    List <Medication> medications;
+//    List<Patient> getPatients;
     private ActivityMainBinding binding;
     private HomeMedFragment homeMedFragment;
     private Bundle bundle;
@@ -30,6 +42,17 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         View view = binding.getRoot();
         setContentView(view);
 
+
+        localDB = LocalDB.getInstance(this);
+
+//        medication = new Medication();
+//        medication.setName("zithrocan");
+//        medications = new ArrayList<>();
+//        medications.add(medication);
+//        patient.setMedications(medications);
+////        patient.setAge(20);
+//        localDB.insertPatient(patient);
+
         initNavController();
 
         initAllMedicationFragment();
@@ -37,6 +60,14 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         initDependentLayout();
 
         initFabButton();
+
+        binding.btnAddMed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent=new Intent(MainActivity.this,DisplayMedicationActivity.class);
+//                startActivity(intent);
+            }
+        });
 
     }
 
@@ -97,4 +128,24 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         homeMedFragment.getDate(date, this);
     }
 
+//    private void db() {
+//        getPatients = new ArrayList<>();
+//        localDB.getAllPatients().observe(this, new Observer<List<Patient>>() {
+//            @Override
+//            public void onChanged(List<Patient> patients) {
+//                getPatients = patients;
+//                Log.i("TAG", "main activity: "+ getPatients.get(0).getMedications().get(0).getName());
+//                id=getPatients.get(0).getId();
+//                Toast.makeText(MainActivity.this, ""+ id, Toast.LENGTH_SHORT).show();
+//            }
+//
+//        });
+//
+//        localDB.getPatient(1).observe(this, new Observer<Patient>() {
+//            @Override
+//            public void onChanged(Patient patient) {
+//                Toast.makeText(MainActivity.this, ""+patient.getFirstName() , Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 }

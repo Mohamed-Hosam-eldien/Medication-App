@@ -5,23 +5,24 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Patient;
 
 import java.util.List;
 
 public class LocalDB implements LocalInterface{
-    DAO patientDao;
+    DAO medicationDao;
     Context context;
     DatabaseBuilder databaseBuilder;
-    private final LiveData<List<Patient>> AllPatients;
+    private LiveData<List<Medication>> allMedications;
     private static LocalDB localDB = null;
 
     private LocalDB(Context context){
         databaseBuilder = DatabaseBuilder .getInstance(context);
         Log.i("TAG", "LocalDB: created");
         this.context = context;
-        patientDao = databaseBuilder.getDao();
-        AllPatients = patientDao.getAllPAtient();
+        medicationDao = databaseBuilder.getDao();
+        allMedications = medicationDao.getAllMedicines();
     }
 
     public static LocalDB getInstance(Context context){
@@ -32,32 +33,42 @@ public class LocalDB implements LocalInterface{
     }
 
     @Override
-    public void insertPatient(Patient patient) {
+    public void insertMedicine(Medication medication) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                patientDao.insertPatient(patient);
+                medicationDao.insertMedication(medication);
             }
         }).start();
     }
 
     @Override
-    public void deleterPatient(Patient patient) {
+    public void deleteMedication(Medication medication) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                deleterPatient(patient);
+                deleteMedication(medication);
             }
         }).start();
     }
 
     @Override
-    public LiveData<List<Patient>> getAllPatients() {
-        return AllPatients;
+    public LiveData<List<Medication>> getAllMedications() {
+        return allMedications;
     }
 
     @Override
-    public LiveData<Patient> getPatient(int id) {
-        return patientDao.getPatient(id);
+    public LiveData<Medication> getMedication(String name) {
+        return medicationDao.getMedication(name);
+    }
+
+    @Override
+    public LiveData<List<Medication>> getAllActiveMedicines() {
+        return medicationDao.getActiveMedicines();
+    }
+
+    @Override
+    public LiveData<List<Medication>> getAllInActiveMedicines() {
+        return medicationDao.getInActiveMedicines();
     }
 }
