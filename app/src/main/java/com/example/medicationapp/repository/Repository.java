@@ -16,14 +16,14 @@ public class Repository implements RepositoryInterface {
     private static Repository repository = null;
     public Context context;
 
-    private Repository (Context context,  LocalDB localDB){
+    private Repository (Context context){
         this.context = context;
-        this.localDB = localDB;
+        this.localDB = LocalDB.getInstance(context);
     }
 
-    public static synchronized Repository getInstance(Context context, LocalDB localDB){
+    public static synchronized Repository getInstance(Context context){
         if(repository == null){
-            repository = new Repository(context, localDB);
+            repository = new Repository(context);
         }
         return repository;
     }

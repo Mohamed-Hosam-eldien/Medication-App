@@ -16,7 +16,6 @@ import com.example.medicationapp.utils.Helper;
 
 public class AdditionalCare extends AppCompatActivity {
 
-
     EditText edtEmail;
     Button btnSend;
     @Override

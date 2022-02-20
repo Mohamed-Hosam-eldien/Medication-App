@@ -13,7 +13,7 @@ public class LocalDB implements LocalInterface{
     DAO patientDao;
     Context context;
     DatabaseBuilder databaseBuilder;
-    private LiveData<List<Patient>> AllPatients;
+    private final LiveData<List<Patient>> AllPatients;
     private static LocalDB localDB = null;
 
     private LocalDB(Context context){

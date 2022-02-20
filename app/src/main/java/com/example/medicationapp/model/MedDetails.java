@@ -1,23 +1,25 @@
 package com.example.medicationapp.model;
 
+import java.util.Calendar;
+
 public class MedDetails {
-    String time;
+    Calendar time;
     short dose;
     String type;
 
     public MedDetails() {}
 
-    public MedDetails(String time, short dose, String type) {
+    public MedDetails(Calendar time, short dose, String type) {
         this.time = time;
         this.dose = dose;
         this.type = type;
     }
 
-    public String getTime() {
+    public Calendar getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Calendar time) {
         this.time = time;
     }
 

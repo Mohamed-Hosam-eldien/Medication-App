@@ -6,7 +6,7 @@ import java.util.List;
 public class MedScheduler {
     String startDate;
     short treatDaysNo;
-    List <String> days;
+    List<String> days;
 
     public MedScheduler() {
     }

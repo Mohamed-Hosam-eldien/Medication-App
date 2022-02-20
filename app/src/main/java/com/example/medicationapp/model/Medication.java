@@ -1,6 +1,6 @@
 package com.example.medicationapp.model;
 
-import androidx.room.Entity;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,8 @@ public class Medication {
     int image;
     int midStrength;
 
-    public Medication(){}
+    public Medication(){
+    }
 
     public Medication(String name, ArrayList<MedDetails> medDetails,
                       MedScheduler medScheduler, int image, int midStrength,

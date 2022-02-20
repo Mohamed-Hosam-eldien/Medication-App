@@ -10,20 +10,22 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Converter {
 
-    @TypeConverter
-    public String fromMedicationToString(List<Medication> medication){
-        return new Gson().toJson(medication);
-    }
-
-    @TypeConverter
-    public List<Medication> fromStringToMedication(String medication){
-        Type listType = new TypeToken<List<Medication>>() {}.getType();
-        return new Gson().fromJson(medication, listType);
-    }
+//    @TypeConverter
+//    public String fromMedicationToString(List<Medication> medication){
+//        return new Gson().toJson(medication);
+//    }
+//
+//    @TypeConverter
+//    public List<Medication> fromStringToMedication(String medication){
+//        Type listType = new TypeToken<List<Medication>>() {}.getType();
+//        return new Gson().fromJson(medication, listType);
+//    }
 
     @TypeConverter
     public String fromSchedulerToString(MedScheduler medScheduler){
@@ -45,4 +47,16 @@ public class Converter {
         Type listType = new TypeToken<List<MedScheduler>>() {}.getType();
         return new Gson().fromJson(medSchedule, listType);
     }
+
+    @TypeConverter
+    public Calendar fromStringToCalender(String string){
+        return new Gson().fromJson(string, Calendar.class);
+    }
+
+    @TypeConverter
+    public String fromCalenderToString(Calendar calendar){
+        return new Gson().toJson(calendar);
+    }
+
+
 }

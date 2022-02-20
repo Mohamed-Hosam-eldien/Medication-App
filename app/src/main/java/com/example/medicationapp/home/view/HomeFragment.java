@@ -18,8 +18,11 @@ import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Patient;
 import com.example.medicationapp.databinding.FragmentHomeBinding;
+import com.example.medicationapp.utils.Helper;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarView;
@@ -66,17 +69,18 @@ public class HomeFragment extends Fragment {
                 .build();
 
         binding.txtToday.setOnClickListener(v -> {
+            Log.d("Current Date : " , Calendar.getInstance()+"");
+            Log.d("Selected Date : " , horizontalCalendar.getSelectedDate()+"");
             if(!horizontalCalendar.getSelectedDate().equals(Calendar.getInstance())) {
                 horizontalCalendar.selectDate(Calendar.getInstance(), true);
             }
         });
 
-
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 OnDateSelect select = (OnDateSelect) getActivity();
-                select.onDateSelected(date);
+                select.onDateSelected(Helper.convertLongToDateFormat(date.getTime().getTime()));
             }
 
             @Override

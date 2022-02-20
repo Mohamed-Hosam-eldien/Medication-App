@@ -16,17 +16,8 @@ import android.widget.Toast;
 import com.example.medicationapp.R;
 import com.example.medicationapp.databinding.ActivityMainBinding;
 
-
-import java.util.Calendar;
-
 public class MainActivity extends AppCompatActivity implements OnDateSelect{
-    int id;
 
-//    LocalDB localDB;
-//    Patient patient;
-//    Medication medication;
-//    List <Medication> medications;
-//    List<Patient> getPatients;
     private ActivityMainBinding binding;
     private HomeMedFragment homeMedFragment;
     private Bundle bundle;
@@ -38,18 +29,6 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-//        localDB = LocalDB.getInstance(this);
-//        patient = new Patient();
-//        patient.setFirstName("mina");
-//        patient.setLastName("peter");
-//        medication = new Medication();
-//        medication.setName("zithrocan");
-//        medications = new ArrayList<>();
-//        medications.add(medication);
-//        patient.setMedications(medications);
-////        patient.setAge(20);
-//        localDB.insertPatient(patient);
 
         initNavController();
 
@@ -113,29 +92,9 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
     }
 
     @Override
-    public void onDateSelected(Calendar calendar) {
-        homeMedFragment.getDate(calendar);
-        initAllMedicationFragment();
+    public void onDateSelected(String date) {
+        //initAllMedicationFragment();
+        homeMedFragment.getDate(date, this);
     }
 
-//    private void db() {
-//        getPatients = new ArrayList<>();
-//        localDB.getAllPatients().observe(this, new Observer<List<Patient>>() {
-//            @Override
-//            public void onChanged(List<Patient> patients) {
-//                getPatients = patients;
-//                Log.i("TAG", "main activity: "+ getPatients.get(0).getMedications().get(0).getName());
-//                id=getPatients.get(0).getId();
-//                Toast.makeText(MainActivity.this, ""+ id, Toast.LENGTH_SHORT).show();
-//            }
-//
-//        });
-//
-//        localDB.getPatient(1).observe(this, new Observer<Patient>() {
-//            @Override
-//            public void onChanged(Patient patient) {
-//                Toast.makeText(MainActivity.this, ""+patient.getFirstName() , Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 }

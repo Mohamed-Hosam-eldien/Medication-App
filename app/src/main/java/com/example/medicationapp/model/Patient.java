@@ -25,14 +25,24 @@ public class Patient {
     @NonNull
     private List<Medication> medications;
 
-    public Patient(int id, String firstName, String lastName,
-                   short age, int image, String disease, List<Medication> medications) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+//    public Patient(int id, String firstName, String lastName,
+//                   short age, int image, String disease, List<Medication> medications) {
+//        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.age = age;
+//        this.image = image;
+//        this.disease = disease;
+//        this.medications = medications;
+//    }
+
+    public Patient(short age, int image,@NonNull String firstName, @NonNull String lastName, String disease,
+                    @NonNull List<Medication> medications) {
         this.age = age;
         this.image = image;
         this.disease = disease;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.medications = medications;
     }
 
