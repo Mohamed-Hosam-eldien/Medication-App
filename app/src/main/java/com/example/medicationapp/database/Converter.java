@@ -4,18 +4,14 @@ import androidx.room.TypeConverter;
 
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.MedScheduler;
-import com.example.medicationapp.model.Medication;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class Converter {
-
 
     @TypeConverter
     public String fromSchedulerToString(MedScheduler medScheduler){
@@ -33,9 +29,20 @@ public class Converter {
     }
 
     @TypeConverter
-    public List<MedDetails> fromStringToMedDetails(String medSchedule){
-        Type listType = new TypeToken<List<MedScheduler>>() {}.getType();
-        return new Gson().fromJson(medSchedule, listType);
+    public String fromListToString(List<String> days){
+        return new Gson().toJson(days);
+    }
+
+    @TypeConverter
+    public List<String> fromStringToList(String days){
+        Type listType = new TypeToken<List<String>>() {}.getType();
+        return new Gson().fromJson(days, listType);
+    }
+
+    @TypeConverter
+    public List<MedDetails> fromStringToMedDetails(String medDetails){
+        Type listType = new TypeToken<List<MedDetails>>() {}.getType();
+        return new Gson().fromJson(medDetails, listType);
     }
 
     @TypeConverter

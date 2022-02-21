@@ -19,4 +19,7 @@ public interface LocalInterface {
     LiveData<List<Medication>> getAllActiveMedicines();
 
     LiveData<List<Medication>> getAllInActiveMedicines();
+
+    LiveData<List<Medication>> getMedicationInAllDays();
+
 }

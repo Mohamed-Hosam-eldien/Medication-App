@@ -20,5 +20,6 @@ public interface RepositoryInterface {
 
     public LiveData<List<Medication>> getInActiveMedicines();
 
+    LiveData<List<Medication>> getAllMedicationInAllDay();
 
 }

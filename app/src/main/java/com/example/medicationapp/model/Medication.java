@@ -16,22 +16,50 @@ public class Medication {
     private int refillNo;
     private int isActive = 1;
     private List<MedDetails> medDetails;
-    private MedScheduler medScheduler;
+    //private MedScheduler medScheduler;
     private int image;
     private int midStrength;
     private String timeToFood;
+    private String startDate;
+    private List <String> days;
+    private int allDays;
 
-    public Medication(String name, List<MedDetails> medDetails,
-                      MedScheduler medScheduler,int midStrength,
-                      int isActive, int refillNo, String timeToFood) {
-        this.timeToFood = timeToFood;
+    public Medication(@NonNull String name, int refillNo, int isActive,
+                      List<MedDetails> medDetails, int midStrength,
+                      String timeToFood, String startDate, List<String> days, int allDays) {
+        this.name = name;
         this.refillNo = refillNo;
         this.isActive = isActive;
-        this.name = name;
         this.medDetails = medDetails;
-        this.medScheduler = medScheduler;
-//        this.image = image;
         this.midStrength = midStrength;
+        this.timeToFood = timeToFood;
+        this.startDate = startDate;
+        this.days = days;
+        this.allDays = allDays;
+    }
+
+    public int getAllDays() {
+        return allDays;
+    }
+
+    public void setAllDays(int allDays) {
+        this.allDays = allDays;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public List<String> getDays() {
+        return days;
+    }
+
+    public void setDays(List<String> days) {
+        this.days = days;
     }
 
     public String getTimeToFood() {
@@ -73,14 +101,14 @@ public class Medication {
     public void setMedDetails(List<MedDetails> medDetails) {
         this.medDetails = medDetails;
     }
-
-    public MedScheduler getMedScheduler() {
-        return medScheduler;
-    }
-
-    public void setMedScheduler(MedScheduler medScheduler) {
-        this.medScheduler = medScheduler;
-    }
+//
+//    public MedScheduler getMedScheduler() {
+//        return medScheduler;
+//    }
+//
+//    public void setMedScheduler(MedScheduler medScheduler) {
+//        this.medScheduler = medScheduler;
+//    }
 
     public int getImage() {
         return image;
