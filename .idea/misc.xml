@@ -39,10 +39,20 @@
         <entry key="..\:/android_studio_projects/MedicationApp/app/src/main/res/menu/app_menu.xml" value="0.171875" />
         <entry key="..\:/android_studio_projects/MedicationApp/app/src/main/res/menu/bar_menu.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/btn_menu_home.xml" value="0.174" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/ic_baseline_delete_forever_24.xml" value="0.1845" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1845" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.1845" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/ic_baseline_insert_drive_file_24.xml" value="0.1845" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/ic_baseline_notifications_active_24.xml" value="0.1845" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/ic_baseline_timer_24.xml" value="0.1845" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/ic_baseline_today_24.xml" value="0.1845" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/rounded_rectangle.xml" value="0.1695" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_main.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/fragment_home_med.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/home_bottom_dialog.xml" value="0.33" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/home_med_details_layout.xml" value="0.33" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/home_mid_layout.xml" value="0.33" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/layout_nav_include.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/menu/bar_menu.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/menu/btn_menu.xml" value="0.171875" />
