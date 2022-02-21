@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.model.Patient;
 
 import java.util.List;
 
@@ -70,5 +69,10 @@ public class LocalDB implements LocalInterface{
     @Override
     public LiveData<List<Medication>> getAllInActiveMedicines() {
         return medicationDao.getInActiveMedicines();
+    }
+
+    @Override
+    public LiveData<List<Medication>> getMedicationInAllDays() {
+        return medicationDao.getAllMedicationWithAllDays();
     }
 }

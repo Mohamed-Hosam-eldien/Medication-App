@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.medicationapp.R;
-import com.example.medicationapp.caring.view.AdditionalCare;
-import com.example.medicationapp.database.LocalDB;
-import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.model.Patient;
 import com.example.medicationapp.databinding.FragmentHomeBinding;
 import com.example.medicationapp.utils.Helper;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;

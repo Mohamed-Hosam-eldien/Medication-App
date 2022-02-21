@@ -78,8 +78,7 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
         activeRecyclerView.setAdapter(activeAdapter);
         suspendedRecyclerView.setAdapter(suspendedAdapter);
 
-        presenter = new Presenter(getActivity(), Repository.
-                getInstance(getActivity(), LocalDB.getInstance(getActivity())),this);
+        presenter = new Presenter(getActivity() ,this);
         presenter.getActiveMedications();
         presenter.getInActiveMedications();
     }

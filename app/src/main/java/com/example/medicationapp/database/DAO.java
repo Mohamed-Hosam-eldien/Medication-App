@@ -32,4 +32,8 @@ public interface DAO {
 
     @Query("Select * FROM Medication WHERE isActive = 0")
     public LiveData<List<Medication>> getInActiveMedicines();
+
+    @Query("Select * FROM Medication where allDays = 1")
+    LiveData<List<Medication>> getAllMedicationWithAllDays();
+
 }

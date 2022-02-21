@@ -56,4 +56,9 @@ public class Repository implements RepositoryInterface {
     public LiveData<List<Medication>> getInActiveMedicines() {
         return localDB.getAllInActiveMedicines();
     }
+
+    @Override
+    public LiveData<List<Medication>> getAllMedicationInAllDay() {
+        return localDB.getMedicationInAllDays();
+    }
 }

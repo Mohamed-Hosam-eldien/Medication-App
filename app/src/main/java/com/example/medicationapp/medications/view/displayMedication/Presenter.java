@@ -18,11 +18,10 @@ public class Presenter {
     MedicationViewInterface medicationViewInterface;
     Repository repo;
 
-    public Presenter(Context context, Repository repo, MedicationViewInterface medicationViewInterface) {
+    public Presenter(Context context, MedicationViewInterface medicationViewInterface) {
         this.context = context;
-        this.repo = repo;
+        this.repo = Repository.getInstance(context);
         this.medicationViewInterface=medicationViewInterface ;
-
     }
 
     public void getActiveMedications(){

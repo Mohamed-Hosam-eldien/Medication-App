@@ -6,13 +6,23 @@ public class MedDetails {
     Calendar time;
     short dose;
     String type;
+    int taken;
 
     public MedDetails() {}
 
-    public MedDetails(Calendar time, short dose, String type) {
+    public MedDetails(Calendar time, short dose, String type, int taken) {
         this.time = time;
         this.dose = dose;
         this.type = type;
+        this.taken = taken;
+    }
+
+    public int getTaken() {
+        return taken;
+    }
+
+    public void setTaken(int taken) {
+        this.taken = taken;
     }
 
     public Calendar getTime() {
