@@ -4,13 +4,13 @@ import java.util.Calendar;
 
 public class MedDetails {
     Calendar time;
-    short dose;
+    int dose;
     String type;
     int taken;
 
     public MedDetails() {}
 
-    public MedDetails(Calendar time, short dose, String type, int taken) {
+    public MedDetails(Calendar time, int dose, String type, int taken) {
         this.time = time;
         this.dose = dose;
         this.type = type;
@@ -33,11 +33,11 @@ public class MedDetails {
         this.time = time;
     }
 
-    public short getDose() {
+    public int getDose() {
         return dose;
     }
 
-    public void setDose(short dose) {
+    public void setDose(int dose) {
         this.dose = dose;
     }
 

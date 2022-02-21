@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/dialogChBoxSat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sat" />
+
+    <CheckBox
+        android:id="@+id/dialogChBoxSun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sun" />
+
+    <CheckBox
+        android:id="@+id/dialogChBoxMon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mon" />
+
+    <CheckBox
+        android:id="@+id/dialogChBoxTue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tue" />
+
+    <CheckBox
+        android:id="@+id/dialogChBoxWed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wed" />
+
+    <CheckBox
+        android:id="@+id/dialogChBoxThu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thu" />
+
+    <CheckBox
+        android:id="@+id/dialogChBoxFri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fri" />
+
+</LinearLayout>

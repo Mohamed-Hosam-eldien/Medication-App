@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.medicationapp.R;
 import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityMainBinding;
+import com.example.medicationapp.medications.view.addEditMed.AddEditActivity;
 import com.example.medicationapp.model.Medication;
 
 
@@ -64,8 +65,10 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         binding.btnAddMed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent=new Intent(MainActivity.this,DisplayMedicationActivity.class);
-//                startActivity(intent);
+
+                Intent intent=new Intent(MainActivity.this, AddEditActivity.class);
+                intent.putExtra("comeFrom",1);
+                startActivity(intent);
             }
         });
 

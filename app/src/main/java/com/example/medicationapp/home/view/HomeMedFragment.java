@@ -83,15 +83,15 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog {
 
         calendar = Calendar.getInstance();
         calendar.set(2022, 2, 19, 5, 20);
-        arrayList.add(new MedDetails(calendar, (short) 1, "",0));
+        arrayList.add(new MedDetails(calendar,  1, "",0));
 
         calendar = Calendar.getInstance();
         calendar.set(2022, 2, 19, 7, 20);
-        arrayList.add(new MedDetails(calendar, (short) 1, "",0));
+        arrayList.add(new MedDetails(calendar,  1, "",0));
 
         calendar = Calendar.getInstance();
         calendar.set(2022, 2, 19, 10, 20);
-        arrayList.add(new MedDetails(calendar, (short) 1, "",0));
+        arrayList.add(new MedDetails(calendar,  1, "",0));
 
 
         medicationList.add(new Medication("Cold and flow", 4, 1,
@@ -107,15 +107,15 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog {
 
         calendar = Calendar.getInstance();
         calendar.set(2022, 2, 19, 8, 0);
-        arrayList2.add(new MedDetails(calendar, (short) 1, "",0));
+        arrayList2.add(new MedDetails(calendar,  1, "",0));
 
         calendar = Calendar.getInstance();
         calendar.set(2022, 2, 19, 16, 0);
-        arrayList2.add(new MedDetails(calendar, (short) 1, "",0));
+        arrayList2.add(new MedDetails(calendar,  1, "",0));
 
         calendar = Calendar.getInstance();
         calendar.set(2022, 2, 19, 24, 0);
-        arrayList2.add(new MedDetails(calendar, (short) 1, "",0));
+        arrayList2.add(new MedDetails(calendar,  1, "",0));
 
         medicationList.add(new Medication("H.M.A", 3, 1,
                 arrayList2, 100,"before food","11/3/2022", null, 1));
@@ -130,15 +130,15 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog {
 
         calendar = Calendar.getInstance();
         calendar.set(2022, 2, 19, 8, 0);
-        arrayList3.add(new MedDetails(calendar, (short) 1, "",0));
+        arrayList3.add(new MedDetails(calendar,  1, "",0));
 
         calendar = Calendar.getInstance();
         calendar.set(2022, 2, 19, 16, 0);
-        arrayList3.add(new MedDetails(calendar, (short) 1, "",0));
+        arrayList3.add(new MedDetails(calendar,  1, "",0));
 
         calendar = Calendar.getInstance();
         calendar.set(2022, 2, 19, 24, 0);
-        arrayList3.add(new MedDetails(calendar, (short) 1, "",0));
+        arrayList3.add(new MedDetails(calendar,  1, "",0));
 
         medicationList.add(new Medication("Go to hell", 3, 1,
                 arrayList3, 100,"before food","11/3/2022", null, 0));
