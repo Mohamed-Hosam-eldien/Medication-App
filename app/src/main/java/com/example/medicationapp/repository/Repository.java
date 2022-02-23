@@ -4,13 +4,17 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.medicationapp.connection.Connection;
+import com.example.medicationapp.connection.NetworkInterface;
 import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.model.Request;
 
 import java.util.List;
 
-public class Repository implements RepositoryInterface {
+public class Repository implements RepositoryInterface , NetworkInterface {
 
+    Connection connection;
     LocalDB localDB;
     private static Repository repository = null;
     public Context context;
@@ -18,7 +22,9 @@ public class Repository implements RepositoryInterface {
     private Repository (Context context){
         this.context = context;
         this.localDB = LocalDB.getInstance(context);
+        connection = Connection.getInstance(this);
     }
+
 
     public static synchronized Repository getInstance(Context context){
         if(repository == null){
@@ -60,5 +66,15 @@ public class Repository implements RepositoryInterface {
     @Override
     public LiveData<List<Medication>> getAllMedicationInAllDay() {
         return localDB.getMedicationInAllDays();
+    }
+
+    @Override
+    public void onSendRequest(Request request) {
+        connection.onSendRequest(request);
+    }
+
+    @Override
+    public void onReceiveMedication() {
+        connection.onReceiveMedication();
     }
 }

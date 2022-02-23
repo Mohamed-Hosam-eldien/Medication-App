@@ -109,10 +109,10 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomBar"
-            app:menu="@menu/bar_menu"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="55sp" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/bar_menu" />
 
     </RelativeLayout>
 

@@ -1,4 +1,4 @@
-package com.example.medicationapp.medications.view.displayMedication;
+package com.example.medicationapp.medications.presenter;
 
 import android.content.Context;
 
@@ -13,12 +13,12 @@ import com.example.medicationapp.repository.Repository;
 
 import java.util.List;
 
-public class Presenter {
+public class MedicationPresenter {
     Context context;
     MedicationViewInterface medicationViewInterface;
     Repository repo;
 
-    public Presenter(Context context, MedicationViewInterface medicationViewInterface) {
+    public MedicationPresenter(Context context, MedicationViewInterface medicationViewInterface) {
         this.context = context;
         this.repo = Repository.getInstance(context);
         this.medicationViewInterface=medicationViewInterface ;

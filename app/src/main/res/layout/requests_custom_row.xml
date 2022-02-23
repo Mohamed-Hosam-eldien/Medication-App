@@ -1,85 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="4dp"
-    app:cardCornerRadius="16dp"
-    android:layout_margin="24dp">
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:padding="6dp"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="16dp"
+        android:elevation="4dp"
+        app:cardCornerRadius="16dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgNotification"
-            android:layout_width="52dp"
-            android:layout_height="86dp"
-            android:src="@drawable/outline_medical_services_black_18"
-            app:civ_circle_background_color="@color/white" />
-
-        <TextView
-            android:id="@+id/txtSenderName"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_toRightOf="@id/imgNotification"
-            android:paddingTop="12dp"
-            android:text="hee"
-            android:textStyle="bold" />
+            android:layout_margin="4dp"
+            android:padding="2dp">
 
-        <TextView
-            android:id="@+id/txtnotifBody"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtSenderName"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="30dp"
-            android:layout_toEndOf="@+id/imgNotification"
-            android:layout_toRightOf="@+id/imgNotification"
-            android:paddingLeft="4dp"
-            android:text="This person send you am invitation to take care of " />
+            <ImageView
+                android:id="@+id/imgNotification"
+                android:layout_width="52dp"
+                android:layout_height="86dp"
+                android:src="@drawable/request_doctor"
+                app:civ_circle_background_color="@color/white" />
 
-        <TextView
-            android:id="@+id/txtPersonName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtnotifBody"
-            android:layout_toEndOf="@+id/imgNotification"
-            android:paddingLeft="10dp"
-            android:text="person name" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtPersonName"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="12dp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnReject"
-                app:cornerRadius="12dp"
-                android:layout_width="wrap_content"
-                android:text="reject"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/holo_red_dark"
-                app:icon="@drawable/ic_reject"/>
-
-            <com.google.android.material.button.MaterialButton
+            <TextView
+                android:id="@+id/txtSenderName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cornerRadius="12dp"
-                android:backgroundTint="@color/teal_700"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_toEndOf="@id/imgNotification"
+                android:paddingTop="12dp"
+                android:text="hee"
+                android:textColor="@android:color/background_dark"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtnotifBody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtSenderName"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@+id/imgNotification"
+                android:paddingStart="4dp"
+                android:text="@string/notification_body" />
+
+            <TextView
+                android:id="@+id/txtPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtnotifBody"
+                android:layout_toEndOf="@+id/imgNotification"
+                android:paddingStart="12dp"
+                android:text="person name"
+                android:textColor="@android:color/background_dark"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/txtPersonName"
-                android:layout_marginLeft="16dp"
-                android:text="accept"
-                app:icon="@drawable/ic_accept" />
+                android:layout_centerHorizontal="true"
+                android:layout_margin="2dp"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnReject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/holo_red_dark"
+                    android:text="reject"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_reject" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAcceptRequestActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:backgroundTint="@color/teal_700"
+                    android:text="accept"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_accept" />
+
+            </LinearLayout>
 
 
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

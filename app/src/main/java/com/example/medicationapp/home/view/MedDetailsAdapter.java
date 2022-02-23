@@ -44,7 +44,7 @@ public class MedDetailsAdapter extends RecyclerView.Adapter<MedDetailsAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MedDetails details = medDetails.get(position);
 
-        holder.txtDrugDate.setText(getRemainingTime(details.getTime().getTime()));
+        holder.txtDrugDate.setText(getRemainingTime(details.getTime()));
 
         holder.txtDrugDetails.setText("تناول " + details.getDose()
                 +"جرعة");
@@ -55,7 +55,7 @@ public class MedDetailsAdapter extends RecyclerView.Adapter<MedDetailsAdapter.Vi
 
     }
 
-    private String getRemainingTime(Date time) {
+    private String getRemainingTime(long time) {
         String delegate = "hh:mm aaa";
         return (String) DateFormat.format(delegate, time);
     }

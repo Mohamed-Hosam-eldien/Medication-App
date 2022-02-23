@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.medicationapp.R;
+import com.example.medicationapp.caring.view.AdditionalCare;
 import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityMainBinding;
 import com.example.medicationapp.model.Medication;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         });
 
         binding.btnAddTaker.setOnClickListener(v -> {
-            Toast.makeText(this, "add tacker", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, AdditionalCare.class));
             binding.flaoting.collapse();
         });
     }
@@ -128,24 +129,4 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         homeMedFragment.getDate(date, this);
     }
 
-//    private void db() {
-//        getPatients = new ArrayList<>();
-//        localDB.getAllPatients().observe(this, new Observer<List<Patient>>() {
-//            @Override
-//            public void onChanged(List<Patient> patients) {
-//                getPatients = patients;
-//                Log.i("TAG", "main activity: "+ getPatients.get(0).getMedications().get(0).getName());
-//                id=getPatients.get(0).getId();
-//                Toast.makeText(MainActivity.this, ""+ id, Toast.LENGTH_SHORT).show();
-//            }
-//
-//        });
-//
-//        localDB.getPatient(1).observe(this, new Observer<Patient>() {
-//            @Override
-//            public void onChanged(Patient patient) {
-//                Toast.makeText(MainActivity.this, ""+patient.getFirstName() , Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 }

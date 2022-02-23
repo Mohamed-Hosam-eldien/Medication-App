@@ -6,12 +6,9 @@
     <string name="guest">Guest</string>
     <string name="add_dependent">Add Dependent</string>
     <string name="medications">Medications</string>
-    <string name="more">More</string>
     <string name="profiles">Profiles</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="today">today</string>
-    <string name="addMedication">Add Medication</string>
     <string name="add_medication">Add Medication</string>
     <string name="add_health_taker">Add Health Taker</string>
     <string name="activeList">Active Medicines</string>
@@ -20,4 +17,10 @@
     <string name="sendInvitation">Send Invitation</string>
     <string name="emalHint">USER@gmail.com</string>
     <string name="requests">Requests</string>
+    <string name="notification_body">send you an invitation to take care of</string>
+    <string name="acceptString">You\'ve accepted the Request, you can see all Patient Details in Home Screen</string>
+    <string name="hintInfoDialog">this wille be send to the Health Taker</string>
+    <string name="btnSend">Send</string>
+    <string name="dialogTitle">Enter the Patient\'s name</string>
+    <string name="succesfullyAdded">Succesfully added</string>
 </resources>

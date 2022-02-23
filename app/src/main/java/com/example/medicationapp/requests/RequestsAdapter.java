@@ -39,6 +39,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
             txtDependentName = itemView.findViewById(R.id.txtPersonName);
         }
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup recycler, int viewType) {
@@ -51,8 +52,8 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtSenderName.setText(list.get(position).getSenderName());
-        holder.txtDescription.setText(list.get(position).getRequestText());
-        holder.txtDependentName.setText(list.get(position).getDependentName());
+        holder.txtDescription.setText(list.get(position).getDescription());
+        holder.txtDependentName.setText(list.get(position).getPatientName());
     }
 
     @Override
