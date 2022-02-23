@@ -317,7 +317,7 @@ public class AddEditActivity extends AppCompatActivity {
                 c.set(calendarFroDate.getTime()
                         .getYear(),calendarFroDate.getTime()
                         .getMonth(),calendarFroDate.getTime().getDay(),r.getHour(),r.getMinute());
-                medDetails1.add(new MedDetails(c,r.getPill(),"pill",0));
+                medDetails1.add(new MedDetails(c.getTimeInMillis(),r.getPill(),"pill",0));
             }
             medication.setMedDetails(medDetails1);
             Repository repo=Repository.getInstance(this);

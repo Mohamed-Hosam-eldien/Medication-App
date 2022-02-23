@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.LinearLayout;
 import com.example.medicationapp.R;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.utils.Common;
@@ -23,16 +23,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.List;
+
+import io.paperdb.Paper;
 
 public class RequestsFragment extends Fragment {
 
+    LinearLayout linearLayout;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    FirebaseRecyclerAdapter<Request, CustomRequestRow> firebaseRecyclerAdapter;
+    FirebaseRecyclerAdapter<Request, RecyclerView.ViewHolder> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Request> firebaseRecyclerOptions;
     RecyclerView.LayoutManager layoutManager;
+    //    RecyclerView.Adapter adapter;
     RecyclerView recyclerView;
+    List<Request> myList;
+    Request request;
+    Request request2;
+    Request request3;
 
     int i = 0;
 
@@ -50,76 +59,86 @@ public class RequestsFragment extends Fragment {
         return view;
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FloatingActionsMenu floatingActionsMenu = getActivity().findViewById(R.id.flaoting);
         floatingActionsMenu.setVisibility(View.GONE);
-
         init();
-
         loadRequest();
-
     }
 
     private void init() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(Common.Request);
-        Query query = databaseReference.orderByChild("receiverEmail").equalTo("mohamedhosameldien07@gmail,com");
-        firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Request>()
-                .setQuery(query, Request.class)
-                .build();
-
+        Query query = databaseReference.orderByChild("receiverEmail").equalTo(Paper.book().read(Common.emailUserPaper));
+        firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Request>().
+                setQuery(query, Request.class).build();
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+    }
 
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Request, CustomRequestRow>(firebaseRecyclerOptions) {
-
+    private void loadRequest() {
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Request, RecyclerView.ViewHolder>(firebaseRecyclerOptions) {
             @Override
-            public int getItemViewType(int position) {
-                return firebaseRecyclerAdapter.getItem(position).isRequest() ? 1:0;
+            protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder custom, int position, @NonNull Request model) {
+                if(!model.isRequest()) {
+                    CustomRequestRow holder = (CustomRequestRow) custom;
+                    holder.senderName.setText(model.getSenderName());
+                    holder.patientName.setText(model.getPatientName());
+                    holder.Description.setText(model.getDescription());
+                    holder.btnReject.setOnClickListener(View -> {
+                        firebaseRecyclerAdapter.getRef(position).removeValue();
+
+                    });
+                    holder.btnAccept.setOnClickListener(view -> {
+                        firebaseRecyclerAdapter.getRef(position).child("request").setValue(true);
+                        firebaseRecyclerAdapter.startListening();
+                    });
+
+                } else {
+                    AcceptedRequestRow acceptedRequestRow = (AcceptedRequestRow) custom;
+                }
+
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull CustomRequestRow holder, int position, @NonNull Request model) {
-
-                holder.senderName.setText(model.getSenderName());
-                holder.patientName.setText(model.getPatientName());
-                holder.Description.setText(model.getDescription());
-
-                holder.btnReject.setOnClickListener(View -> {
-                    firebaseRecyclerAdapter.getRef(position).removeValue();
-                });
-
-                holder.btnAccept.setOnClickListener(view -> {
-                    firebaseRecyclerAdapter.getRef(position)
-                            .child("request").setValue(true);
-                });
-
+            public int getItemViewType(int position) {
+                return firebaseRecyclerAdapter.getItem(position).isRequest() ? 1 : 0;
             }
 
             @NonNull
             @Override
-            public CustomRequestRow onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view;
-                if(viewType == 0) {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.requests_custom_row, null);
+            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                if (viewType == 0) {
+                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.requests_custom_row, null);
+                    return new CustomRequestRow(view);
                 } else {
-                    view = LayoutInflater.from(parent.getContext()).inflate(R.layout.empty_view, null);
+                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.accepted_layout, null);
+                    return new AcceptedRequestRow(view);
                 }
-                return new CustomRequestRow(view);
             }
         };
-
         recyclerView.setAdapter(firebaseRecyclerAdapter);
         firebaseRecyclerAdapter.startListening();
-
-    }
-
-    private void loadRequest() {
         Log.i("TAG", "loadRequest: " + i);
     }
 
-
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if(firebaseRecyclerAdapter!=null){
+//            firebaseRecyclerAdapter.startListening();
+//        }
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        if(firebaseRecyclerAdapter!=null){
+//            firebaseRecyclerAdapter.stopListening();
+//        }
+//    }
 }

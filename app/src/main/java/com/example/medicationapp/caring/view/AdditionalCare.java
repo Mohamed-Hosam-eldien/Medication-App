@@ -32,10 +32,9 @@ import io.paperdb.Paper;
 
 public class AdditionalCare extends AppCompatActivity {
 
-    EditText edtEmail;
-    Button btnSend;
-    CaringPresenter presenter;
-    GoogleSignInClient mGoogleSignInClient;
+    private EditText edtEmail;
+    private CaringPresenter presenter;
+    private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1001;
 
     Dialog dialog;
@@ -45,7 +44,7 @@ public class AdditionalCare extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_additional_care);
         edtEmail = findViewById(R.id.edtTxtEmail);
-        btnSend = findViewById(R.id.btnSendInvitation);
+        Button btnSend = findViewById(R.id.btnSendInvitation);
         Paper.init(this);
 
         presenter = new CaringPresenter(this);
@@ -58,7 +57,7 @@ public class AdditionalCare extends AppCompatActivity {
         boolean isNetworkConnected = Helper.isNetworkAvailable(getApplicationContext());
         if (validationResult) {
             if (isNetworkConnected) {
-                if(edtEmail.getText().toString().equals(Paper.book().read(Common.emailUserPaper))) {
+                if(!edtEmail.getText().toString().equals(Paper.book().read(Common.emailUserPaper))) {
                     if (checkUserRegistration()) {
                         sendRequest();
                     }
@@ -80,18 +79,19 @@ public class AdditionalCare extends AppCompatActivity {
             if(medications.size() != 0) {
                 Request request;
                 request = new Request(Common.currentUser.getName(), "Peter",
-                        "please accept to request", "peter.samir299@gmail.com",
+                        "please accept to request", edtEmail.getText().toString(),
                         Common.currentUser.getEmail(), false, medications);
 
-                presenter.onSendRequest(request);
-
                 presenter.onSaveUserData(Common.currentUser);
+
+                presenter.onSendRequest(request);
 
             } else {
                 Toast.makeText(this, "you don't have any medication list", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     private void sendToEmail() {
         Intent i = new Intent(Intent.ACTION_SEND);
@@ -124,7 +124,7 @@ public class AdditionalCare extends AppCompatActivity {
             Log.d("TAG", Common.currentUser.getEmail());
             Log.d("TAG", Common.currentUser.getUid());
 
-            presenter.onSaveUserData(Common.currentUser);
+            //presenter.onSaveUserData(Common.currentUser);
 
             writeToPaper();
             return true;
