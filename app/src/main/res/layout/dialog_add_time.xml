@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <TimePicker
+        android:id="@+id/dialogTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView
+        android:id="@+id/dialogTimeBtnPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/plus"
+        android:layout_toRightOf="@+id/dialogTimeEtNumber"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_below="@+id/dialogTimePicker"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_25sdp"
+
+        />
+    <TextView
+        android:id="@+id/dialogTimeBtnMinus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/minus"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_below="@+id/dialogTimePicker"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_25sdp"
+
+        />
+    <EditText
+        android:id="@+id/dialogTimeEtNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialogTimePicker"
+        android:text="1"
+        android:layout_centerHorizontal="true"
+        android:layout_toEndOf="@+id/dialogTimeBtnMinus"
+        android:layout_marginBottom="@dimen/_25sdp"
+
+        />
+
+
+</RelativeLayout>

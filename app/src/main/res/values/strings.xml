@@ -17,6 +17,22 @@
     <string name="sendInvitation">Send Invitation</string>
     <string name="emalHint">USER@gmail.com</string>
     <string name="requests">Requests</string>
+
+    <string-array name="addSpinnerArray">
+        <item>Choose Time</item>
+        <item>Once daily</item>
+        <item>Twice daily</item>
+        <item>3 times daily</item>
+        <item>4 times daily</item>
+        <item>5 times daily</item>
+        <item>6 times daily</item>
+        <item>Every 12 hours</item>
+        <item>Every 8 hours</item>
+        <item>Every 6 hours</item>
+
+
+    </string-array>
+
     <string name="notification_body">send you an invitation to take care of</string>
     <string name="acceptString">You\'ve accepted the Request, you can see all Patient Details in Home Screen</string>
     <string name="hintInfoDialog">this wille be send to the Health Taker</string>
