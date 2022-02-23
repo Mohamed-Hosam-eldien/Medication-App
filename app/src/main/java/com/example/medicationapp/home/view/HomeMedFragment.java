@@ -181,7 +181,7 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog {
 
         HomeBottomDialogBinding dialogBinding = HomeBottomDialogBinding.bind(view);
         dialogBinding.txtName.setText(medication.getName());
-        dialogBinding.txtTime.setText("take at " + getRemainingTime(detail.getTime().getTime()));
+        dialogBinding.txtTime.setText("take at " + getRemainingTime(detail.getTime()));
         dialogBinding.txtDose.setText("Take " + detail.getDose() + " " + medication.getTimeToFood());
 
         dialog.show();

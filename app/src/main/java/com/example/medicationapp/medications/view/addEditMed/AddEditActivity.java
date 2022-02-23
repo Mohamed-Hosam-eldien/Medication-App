@@ -29,6 +29,8 @@ import com.example.medicationapp.databinding.ActivityAddEditBinding;
 import com.example.medicationapp.medications.view.addEditMed.model.ReminderTime;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.utils.Common;
+import com.example.medicationapp.utils.Helper;
 
 
 import java.text.ParseException;
@@ -293,7 +295,7 @@ public class AddEditActivity extends AppCompatActivity {
                 c.set(calendarFroDate.getTime()
                         .getYear(), calendarFroDate.getTime()
                         .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
-                medDetails1.add(new MedDetails(c, r.getPill(), "pill", 0));
+                medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
             }
             medication.setMedDetails(medDetails1);
             AddEditPresenter presenter=new AddEditPresenter(this);
@@ -508,7 +510,8 @@ public class AddEditActivity extends AppCompatActivity {
         binding.addMedEtMedName.setText(medication.getName());
         List<ReminderTime> times = new ArrayList<>();
         for (MedDetails m : medication.getMedDetails()) {
-            timesArrayAdapter.add(new ReminderTime(m.getTime().getTime().getHours(), m.getTime().getTime().getMinutes(), m.getDose()));
+            timesArrayAdapter.add(new ReminderTime(Helper.convertLongToHours(m.getTime()),
+                    Helper.convertLongToMinuets(m.getTime()), m.getDose()));
         }
         adapter.notifyDataSetChanged();
         binding.addMedEtStrength.setText(medication.getMidStrength() + "");

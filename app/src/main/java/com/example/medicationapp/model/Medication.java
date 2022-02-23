@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "Medication")
@@ -167,7 +168,7 @@ public class Medication implements Parcelable {
         dest.writeString(this.name);
         dest.writeInt(this.refillNo);
         dest.writeInt(this.isActive);
-        dest.writeTypedList(this.medDetails);
+        dest.writeList(this.medDetails);
         dest.writeInt(this.image);
         dest.writeInt(this.midStrength);
         dest.writeString(this.timeToFood);
@@ -181,7 +182,8 @@ public class Medication implements Parcelable {
         this.name = source.readString();
         this.refillNo = source.readInt();
         this.isActive = source.readInt();
-        this.medDetails = source.createTypedArrayList(MedDetails.CREATOR);
+        this.medDetails = new ArrayList<MedDetails>();
+        source.readList(this.medDetails, MedDetails.class.getClassLoader());
         this.image = source.readInt();
         this.midStrength = source.readInt();
         this.timeToFood = source.readString();
@@ -195,7 +197,8 @@ public class Medication implements Parcelable {
         this.name = in.readString();
         this.refillNo = in.readInt();
         this.isActive = in.readInt();
-        this.medDetails = in.createTypedArrayList(MedDetails.CREATOR);
+        this.medDetails = new ArrayList<MedDetails>();
+        in.readList(this.medDetails, MedDetails.class.getClassLoader());
         this.image = in.readInt();
         this.midStrength = in.readInt();
         this.timeToFood = in.readString();

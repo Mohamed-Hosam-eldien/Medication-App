@@ -126,7 +126,7 @@
                     android:layout_below="@id/showDrugTvTime"
                     android:layout_marginTop="15dp"
                     android:text="Prescription Refill"
-                    android:textColor="@color/green" />
+                    android:textColor="@color/purple_500" />
 
                                 <Button
                                     android:id="@+id/showDrugBtnRefill"

@@ -29,6 +29,7 @@ import com.example.medicationapp.medications.view.addEditMed.AddEditActivity;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.repository.Repository;
+import com.example.medicationapp.utils.Helper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         tvReasonOfTaking = findViewById(R.id.showDrugTvReasonOfTaking);
 
         presenter = new DisplayPresenter(DisplayMedicationActivity.this);
-        
+
         binding.showDrugBtnRefill.setVisibility(View.GONE);
 
 
@@ -146,8 +147,8 @@ public class DisplayMedicationActivity extends AppCompatActivity {
 
     private void showData(Medication medication) {
         for (MedDetails med : medication.getMedDetails()) {
-            String time = med.getTime().getTime().getHours() + " : " +
-                    med.getTime().getTime().getMinutes();
+            String time = Helper.convertLongToHours(med.getTime()) + " : " +
+                    Helper.convertLongToMinuets(med.getTime());
             setTimeToTextView(time, med.getDose());
         }
         setDayToTextView(medication.getAllDays(), medication.getDays());
