@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/medLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,20 +8,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".home.view.HomeMedFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/homeRecyclerMid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/gray2" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_main"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        app:lottie_autoPlay="true"
-        android:layout_centerInParent="true"
-        app:lottie_loop="false"
-        app:lottie_speed="2"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:background="@color/gray2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 </RelativeLayout>

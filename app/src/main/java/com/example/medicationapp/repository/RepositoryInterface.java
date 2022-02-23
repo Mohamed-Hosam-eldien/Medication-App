@@ -3,6 +3,7 @@ package com.example.medicationapp.repository;
 import androidx.lifecycle.LiveData;
 
 import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.model.Request;
 
 import java.util.List;
 
@@ -21,5 +22,10 @@ public interface RepositoryInterface {
     public LiveData<List<Medication>> getInActiveMedicines();
 
     LiveData<List<Medication>> getAllMedicationInAllDay();
+
+
+    void onSendRequest(Request request);
+
+    List<Medication> onReceiveMedication();
 
 }

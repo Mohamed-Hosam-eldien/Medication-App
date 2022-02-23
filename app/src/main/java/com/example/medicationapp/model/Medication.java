@@ -24,6 +24,10 @@ public class Medication {
     private List <String> days;
     private int allDays;
 
+
+    public Medication() {
+    }
+
     public Medication(@NonNull String name, int refillNo, int isActive,
                       List<MedDetails> medDetails, int midStrength,
                       String timeToFood, String startDate, List<String> days, int allDays) {

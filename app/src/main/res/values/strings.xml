@@ -6,12 +6,8 @@
     <string name="guest">Guest</string>
     <string name="add_dependent">Add Dependent</string>
     <string name="medications">Medications</string>
-    <string name="more">More</string>
     <string name="profiles">Profiles</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="today">today</string>
-    <string name="addMedication">Add Medication</string>
     <string name="add_medication">Add Medication</string>
     <string name="add_health_taker">Add Health Taker</string>
     <string name="activeList">Active Medicines</string>
@@ -20,4 +16,19 @@
     <string name="sendInvitation">Send Invitation</string>
     <string name="emalHint">USER@gmail.com</string>
     <string name="requests">Requests</string>
+    <string name="dependents">Dependents</string>
+    <string name="email">Email</string>
+    <string name="register">Register</string>
+    <string name="already_registered">Already registered</string>
+    <string name="login_here">Login here</string>
+    <string name="register_here">Register here</string>
+    <string name="not_registered_yet">Not registered yet</string>
+    <string name="login">Login</string>
+    <string name="password">password</string>
+    <string name="authID">1056851636378-cq6m6m8d9a7vig7meptilt1rgmqvvh1b.apps.googleusercontent.com</string>
+    <string name="register_now">Register now</string>
+    <string name="to_send_a_request_to_another_friend_please_sign_in_with_your_email">to send a request to another friend please sign in with your email</string>
+    <string name="medication_App">Medication App</string>
+    <string name="info">Info</string>
+
 </resources>

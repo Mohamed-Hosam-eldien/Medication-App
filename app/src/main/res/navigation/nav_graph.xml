@@ -19,4 +19,9 @@
         android:name="com.example.medicationapp.requests.view.RequestsFragment"
         android:label="More"
         tools:layout="@layout/fragment_requests" />
+    <fragment
+        android:id="@+id/dependentFragment"
+        android:name="com.example.medicationapp.dependent.view.DependentFragment"
+        android:label="Dependents"
+        tools:layout="@layout/fragment_dependent" />
 </navigation>

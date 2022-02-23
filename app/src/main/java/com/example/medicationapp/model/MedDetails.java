@@ -1,16 +1,15 @@
 package com.example.medicationapp.model;
 
-import java.util.Calendar;
 
 public class MedDetails {
-    Calendar time;
-    short dose;
+    long time;
+    int dose;
     String type;
     int taken;
 
     public MedDetails() {}
 
-    public MedDetails(Calendar time, short dose, String type, int taken) {
+    public MedDetails(long time, int dose, String type, int taken) {
         this.time = time;
         this.dose = dose;
         this.type = type;
@@ -25,19 +24,19 @@ public class MedDetails {
         this.taken = taken;
     }
 
-    public Calendar getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Calendar time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
-    public short getDose() {
+    public int getDose() {
         return dose;
     }
 
-    public void setDose(short dose) {
+    public void setDose(int dose) {
         this.dose = dose;
     }
 
