@@ -19,18 +19,17 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.medicationapp.R;
+import com.example.medicationapp.medications.presenter.MedicationPresenter;
 import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.medications.view.displayMedication.DisplayMedicationActivity;
-import com.example.medicationapp.medications.view.displayMedication.Presenter;
+
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.MedScheduler;
 import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.repository.Repository;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 public class MedicationFragment extends Fragment implements MedicationViewInterface{
 
@@ -45,7 +44,7 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
     RecyclerView.LayoutManager suspendedLayoutManager;
     ActiveAdapter activeAdapter;
     ActiveAdapter suspendedAdapter;
-    Presenter presenter;
+    MedicationPresenter medicationPresenter;
     public MedicationFragment() {
         // Required empty public constructor
     }
@@ -105,9 +104,9 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
                 activeRecyclerView.setAdapter(activeAdapter);
         suspendedRecyclerView.setAdapter(suspendedAdapter);
 
-        presenter = new Presenter(getActivity() ,this);
-        presenter.getActiveMedications();
-        presenter.getInActiveMedications();
+        medicationPresenter = new MedicationPresenter(getActivity() ,this);
+        medicationPresenter.getActiveMedications();
+        medicationPresenter.getInActiveMedications();
     }
 
     @Override
@@ -117,6 +116,7 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
             public void onChanged(List<Medication> medications) {
                 activeList = medications;
                 activeAdapter.setActiveMedicines(activeList);
+                activeAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -128,6 +128,7 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
             public void onChanged(List<Medication> medications) {
                 suspendedList = medications;
                 suspendedAdapter.setActiveMedicines(suspendedList);
+                suspendedAdapter.notifyDataSetChanged();
             }
         });
     }

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.model.Request;
 
 import java.util.List;
 
@@ -76,5 +77,16 @@ public class Repository implements RepositoryInterface {
     @Override
     public void refill(int amount, String medName) {
         localDB.refill(amount, medName);
+    }
+
+
+    @Override
+    public void onSendRequest(Request request) {
+        //connection.sendRequest(request);
+    }
+
+    @Override
+    public List<Medication> onReceiveMedication() {
+        return null;
     }
 }

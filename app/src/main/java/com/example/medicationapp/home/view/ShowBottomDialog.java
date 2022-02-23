@@ -6,5 +6,5 @@ import com.example.medicationapp.model.Medication;
 import java.util.List;
 
 public interface ShowBottomDialog {
-    void showBottomDialog(MedDetails detail, Medication medication);
+    void showMedDialog(MedDetails detail, Medication medication);
 }

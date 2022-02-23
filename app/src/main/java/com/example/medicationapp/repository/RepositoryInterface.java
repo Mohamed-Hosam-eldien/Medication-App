@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.model.Request;
 
 import java.util.List;
 
@@ -30,5 +31,10 @@ public interface RepositoryInterface {
     LiveData<List<Medication>> getAllMedicationInAllDay();
 
     void refill(int amount,String medName);
+
+
+    void onSendRequest(Request request);
+
+    List<Medication> onReceiveMedication();
 
 }

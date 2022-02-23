@@ -35,6 +35,7 @@ public class Medication implements Parcelable {
         this.totalPills = totalPills;
     }
 
+
     public Medication() {
     }
 

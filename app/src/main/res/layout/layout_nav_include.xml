@@ -23,13 +23,23 @@
 
 
         <TextView
-            android:id="@+id/txtHeaderView"
+            android:id="@+id/txtHeaderName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6sp"
             android:text="@string/guest"
             android:textColor="@color/purple_700"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/txtHeaderEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6sp"
+            android:textColor="@color/purple_700"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -44,30 +54,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16sp"
-            android:text="@string/profiles"
+            android:textColor="@color/purple_700"
+            android:text="@string/medication_App"
             android:textSize="18sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerProfiles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8sp" />
-
-
         <LinearLayout
-            android:id="@+id/layoutAddDependent"
-            android:layout_marginTop="8sp"
-            android:paddingTop="12sp"
-            android:paddingBottom="12sp"
+            android:id="@+id/layoutRegister"
+            android:layout_margin="@dimen/_12sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_baseline_add_circle_24"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:srcCompat="@drawable/googlle"
                 android:contentDescription="@null" />
 
 
@@ -76,12 +78,53 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
                 android:textStyle="bold"
                 android:layout_marginStart="8sp"
-                android:text="@string/add_dependent"/>
+                android:text="@string/register"/>
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
+
+
+        <LinearLayout
+            android:id="@+id/layoutInfo"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="28sp"
+                android:layout_height="28sp"
+                app:srcCompat="@drawable/ic_baseline_info_24"
+                android:contentDescription="@null" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:layout_marginStart="8sp"
+                android:text="@string/info"/>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
+
 
     </LinearLayout>
 

@@ -4,7 +4,11 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.medicationapp.connection.Connection;
+import com.example.medicationapp.connection.GetAllMedication;
+import com.example.medicationapp.connection.NetworkInterface;
 import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.model.Request;
 import com.example.medicationapp.repository.Repository;
 
 import java.util.List;
@@ -12,9 +16,13 @@ import java.util.List;
 public class HomePresenter {
 
     private final Repository repository;
+    Connection connection;
+    GetAllMedication getAllMedication;
+
 
     public HomePresenter(Context context) {
         this.repository = Repository.getInstance(context);
+        this.getAllMedication = getAllMedication;
     }
 
     public void addMedication(Medication medication) {
@@ -33,4 +41,18 @@ public class HomePresenter {
         return repository.getAllMedicationInAllDay();
     }
 
+//
+//    @Override
+//    public void onSendRequest(Request request) {
+//
+//    }
+//
+//    @Override
+//    public void onReceiveMedication(Request list) {
+//        getAllMedication.getMedicationList(list);
+//    }
+//
+//    public void getPatientMed() {
+//        connection.receiveMedication();
+//    }
 }

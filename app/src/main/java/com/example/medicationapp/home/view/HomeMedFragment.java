@@ -165,8 +165,15 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog {
 
     }
 
+
+    private String getRemainingTime(long time) {
+        String delegate = "hh:mm aaa";
+        return (String) DateFormat.format(delegate, time);
+    }
+
+
     @Override
-    public void showBottomDialog(MedDetails detail, Medication medication) {
+    public void showMedDialog(MedDetails detail, Medication medication) {
         Dialog dialog = new Dialog(getActivity());
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_bottom_dialog,null);
         dialog.setContentView(view);
@@ -179,11 +186,4 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog {
 
         dialog.show();
     }
-
-    private String getRemainingTime(Date time) {
-        String delegate = "hh:mm aaa";
-        return (String) DateFormat.format(delegate, time);
-    }
-
-
 }

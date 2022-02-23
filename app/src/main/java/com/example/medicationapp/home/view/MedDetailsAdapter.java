@@ -23,12 +23,11 @@ import java.util.List;
 public class MedDetailsAdapter extends RecyclerView.Adapter<MedDetailsAdapter.ViewHolder>{
 
     private final List<MedDetails> medDetails;
-    private final Medication medication;
+
     ClickToMed clickToMed;
 
     public MedDetailsAdapter(List<MedDetails> medDetails, Medication medication, ClickToMed clickToMed) {
         this.medDetails = medDetails;
-        this.medication = medication;
         this.clickToMed = clickToMed;
     }
 
@@ -44,7 +43,7 @@ public class MedDetailsAdapter extends RecyclerView.Adapter<MedDetailsAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MedDetails details = medDetails.get(position);
 
-        holder.txtDrugDate.setText(getRemainingTime(details.getTime().getTime()));
+        holder.txtDrugDate.setText(getRemainingTime(details.getTime()));
 
         holder.txtDrugDetails.setText("تناول " + details.getDose()
                 +"جرعة");
@@ -55,7 +54,7 @@ public class MedDetailsAdapter extends RecyclerView.Adapter<MedDetailsAdapter.Vi
 
     }
 
-    private String getRemainingTime(Date time) {
+    private String getRemainingTime(long time) {
         String delegate = "hh:mm aaa";
         return (String) DateFormat.format(delegate, time);
     }

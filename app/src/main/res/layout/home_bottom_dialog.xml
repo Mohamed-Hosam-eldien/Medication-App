@@ -95,6 +95,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:gravity="center_vertical"
+                        android:src="@drawable/ic_baseline_timer_24"
                         android:text="take at 9:00"
                         android:textSize="@dimen/_14sdp" />
 
@@ -153,6 +154,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:gravity="center_vertical"
+                        android:src="@drawable/ic_baseline_timer_24"
                         android:text="take all days"
                         android:textSize="@dimen/_14sdp" />
 
@@ -182,7 +184,8 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:gravity="center_vertical"
-                        android:text="refill after"
+                        android:src="@drawable/ic_baseline_timer_24"
+                        android:text="refile after"
                         android:textSize="@dimen/_14sdp" />
 
 

@@ -62,7 +62,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
 
     @Override
     public void showMedDetails(MedDetails details) {
-        bottomDialog.showBottomDialog(details, medication); // handle it
+        bottomDialog.showMedDialog(details, medication); // handle it
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

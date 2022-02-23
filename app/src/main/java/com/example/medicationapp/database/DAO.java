@@ -15,7 +15,6 @@ import java.util.List;
 @Dao
 public interface DAO {
 
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public void insertMedication(Medication medication);
 
@@ -34,7 +33,7 @@ public interface DAO {
     @Query("Select * FROM Medication WHERE isActive = 0")
     public LiveData<List<Medication>> getInActiveMedicines();
 
-    @Query("Select * FROM Medication where allDays = 1")
+    @Query("Select * FROM Medication where allDays = 1 and isActive = 1")
     LiveData<List<Medication>> getAllMedicationWithAllDays();
 
     @Query("update Medication set isActive =:active where name =:medName")
