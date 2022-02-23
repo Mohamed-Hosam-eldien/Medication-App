@@ -29,6 +29,12 @@ public class Converter {
     }
 
     @TypeConverter
+    public List<MedDetails> fromStringToMedDetails(String medDetails){
+        Type listType = new TypeToken<List<MedDetails>>() {}.getType();
+        return new Gson().fromJson(medDetails, listType);
+    }
+
+    @TypeConverter
     public String fromListToString(List<String> days){
         return new Gson().toJson(days);
     }
@@ -37,12 +43,6 @@ public class Converter {
     public List<String> fromStringToList(String days){
         Type listType = new TypeToken<List<String>>() {}.getType();
         return new Gson().fromJson(days, listType);
-    }
-
-    @TypeConverter
-    public List<MedDetails> fromStringToMedDetails(String medDetails){
-        Type listType = new TypeToken<List<MedDetails>>() {}.getType();
-        return new Gson().fromJson(medDetails, listType);
     }
 
     @TypeConverter

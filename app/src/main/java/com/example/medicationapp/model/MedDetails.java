@@ -1,7 +1,10 @@
 package com.example.medicationapp.model;
 
 
-public class MedDetails {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class MedDetails implements Parcelable {
     long time;
     int dose;
     String type;
@@ -47,4 +50,43 @@ public class MedDetails {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.time);
+        dest.writeInt(this.dose);
+        dest.writeString(this.type);
+        dest.writeInt(this.taken);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.time = source.readLong();
+        this.dose = source.readInt();
+        this.type = source.readString();
+        this.taken = source.readInt();
+    }
+
+    protected MedDetails(Parcel in) {
+        this.time = in.readLong();
+        this.dose = in.readInt();
+        this.type = in.readString();
+        this.taken = in.readInt();
+    }
+
+    public static final Parcelable.Creator<MedDetails> CREATOR = new Parcelable.Creator<MedDetails>() {
+        @Override
+        public MedDetails createFromParcel(Parcel source) {
+            return new MedDetails(source);
+        }
+
+        @Override
+        public MedDetails[] newArray(int size) {
+            return new MedDetails[size];
+        }
+    };
 }

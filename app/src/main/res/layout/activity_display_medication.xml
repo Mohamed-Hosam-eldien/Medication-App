@@ -1,150 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:padding="@dimen/_4sdp">
 
-    <RelativeLayout
-        android:id="@+id/showRel1"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/teal_200"
-        android:gravity="center|start">
-
-        <ImageView
-            android:id="@+id/showDrugImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="20dp" />
-
-        <TextView
-            android:id="@+id/showDrugName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_toEndOf="@+id/showDrugImage"
-            android:text="misdn"
-            android:textSize="35sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/showDrugName"
-            android:layout_marginStart="15dp"
-            android:layout_toEndOf="@+id/showDrugImage"
-            android:text="misdn"
-            android:textSize="20sp" />
-
-    </RelativeLayout>
-    <ScrollView
+    <androidx.cardview.widget.CardView
+        android:id="@+id/toolbarCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/showRel1"
-        android:id="@+id/displayScroll"
-        android:layout_above="@+id/showDrugBtnAddDose"
-        >
-        <RelativeLayout
+        android:layout_margin="@dimen/_7sdp"
+        android:background="@color/purple_500"
+        android:elevation="@dimen/_7sdp"
+        app:cardCornerRadius="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/displayToolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_alignParentTop="true"
+            android:background="@color/purple_500"
 
-            >
-            <TextView
-                android:id="@+id/showDrugTvLastTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="10dp"
-                />
+            />
+    </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/showDrug"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Reminders"
-                android:layout_below="@+id/showDrugTvLastTime"
-                android:layout_alignParentStart="true"
-                />
-
-            <Button
-                android:id="@+id/showDrugBtnSuspend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/showDrug"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:text="suspend" />
-
-            <TextView
-                android:id="@+id/showDrugTvRemindersDays"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/showDrug"
-                android:layout_marginTop="15dp"
-                />
-
-            <TextView
-                android:id="@+id/showDrugTvTime"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/showDrugTvRemindersDays"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                android:id="@+id/showDrugTvPrescriptionTxt"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/showDrugTvTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Prescription Refill"
-                />
-
-            <Button
-                android:id="@+id/showDrugBtnRefill"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/showDrugTvPrescriptionTxt"
-                android:layout_alignParentEnd="true"
-
-                android:text="refill" />
-            <TextView
-                android:id="@+id/showDrugTvPrescriptionRefill"
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/showDrugTvPrescriptionTxt"
-                />
-
-            <TextView
-                android:id="@+id/showDrugTvHowToUse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/showDrugTvPrescriptionRefill"
-                />
-            <TextView
-                android:id="@+id/showDrugTvReasonOfTaking"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/showDrugTvHowToUse"
-                android:layout_marginTop="10dp"
-                />
-
-        </RelativeLayout>
-    </ScrollView>
-    <Button
-
-        android:id="@+id/showDrugBtnAddDose"
+    <ScrollView
+        android:id="@+id/displayScroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="add dose"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_margin="14dp"
-        />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarCard"
+        android:paddingBottom="@dimen/_15sdp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="@dimen/_7sdp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/showDrugTvLastTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/showDrugStartDateTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/showDrugTvLastTime"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="15dp"
+                    android:text="Start Date : "
+                    android:textColor="@color/black"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    />
+
+                <TextView
+                    android:id="@+id/showDrugStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/showDrugTvLastTime"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/purple_500"
+                    android:layout_toEndOf="@+id/showDrugStartDateTxt"
+                    />
+
+                <Button
+                    android:id="@+id/showDrugBtnSuspend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/showDrug"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:text="suspend" />
+
+                <TextView
+                    android:id="@+id/showDrugTvRemindersDaysTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/showDrugStartDate"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/black"
+                    android:text="Days : "
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    />
+                <TextView
+                    android:layout_toEndOf="@+id/showDrugTvRemindersDaysTxt"
+                    android:id="@+id/showDrugTvRemindersDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/showDrugStartDate"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/purple_500" />
+                <TextView
+                    android:id="@+id/showDrug"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/showDrugTvRemindersDays"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="15dp"
+                    android:text="Reminders"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/showDrugTvTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/showDrug"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/purple_500" />
+
+                <TextView
+                    android:id="@+id/showDrugTvPrescriptionTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/showDrugTvTime"
+                    android:layout_marginTop="15dp"
+                    android:text="Prescription Refill"
+                    android:textColor="@color/purple_500" />
+
+                                <Button
+                                    android:id="@+id/showDrugBtnRefill"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@id/showDrugTvPrescriptionTxt"
+                                    android:layout_alignParentEnd="true"
+                                    android:text="refill" />
+
+                <TextView
+                    android:id="@+id/showDrugTvPrescriptionRefillTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/showDrugTvPrescriptionTxt"
+                    android:layout_marginTop="15dp"
+                    android:text="Refill reminder : "
+                    android:textColor="@color/black"
+                    />
+                <TextView
+                    android:id="@+id/showDrugTvPrescriptionRefill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/showDrugTvPrescriptionTxt"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/purple_500"
+                    android:layout_toEndOf="@+id/showDrugTvPrescriptionRefillTxt"
+                    />
+
+                <TextView
+                    android:id="@+id/showDrugTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/showDrugTvPrescriptionRefill"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="How to use : "
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/showDrugTvHowToUse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/showDrugTvPrescriptionRefill"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_toEndOf="@+id/showDrugTxt"
+                    android:textColor="@color/purple_500" />
+
+                <TextView
+                    android:id="@+id/showDrugStrengthTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/showDrugTvHowToUse"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="Strength : "
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/showDrugStrength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/showDrugTvHowToUse"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_toEndOf="@+id/showDrugStrengthTxt"
+                    android:textColor="@color/purple_500" />
+
+                <TextView
+                    android:id="@+id/showDrugTvReasonOfTaking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/showDrugStrength"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/showDrugTvOtherInstruction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/showDrugTvReasonOfTaking"
+                    android:layout_marginTop="10dp" />
+                <TextView
+                    android:id="@+id/displayCurrentTxt"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_below="@+id/showDrugTvOtherInstruction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/displayCurrentAmountTxt"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:textColor="@color/black"
+                    />
+                <TextView
+                    android:id="@+id/displayCurrentPillsTv"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_below="@+id/showDrugTvOtherInstruction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/displayCurrentTxt"
+                    android:textColor="@color/purple_500"
+                    />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+
+    <!--    <Button-->
+
+    <!--        android:id="@+id/showDrugBtnAddDose"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_marginStart="14dp"-->
+    <!--        android:layout_marginTop="14dp"-->
+    <!--        android:layout_marginEnd="14dp"-->
+    <!--        android:layout_marginBottom="14dp"-->
+    <!--        android:text="add dose" />-->
 </RelativeLayout>

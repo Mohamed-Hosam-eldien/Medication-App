@@ -21,14 +21,17 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.ViewHolder
     List<Medication> activeMedicines;
 //    List<Medication> suspendedMedicines;
     Context context;
+    OnDisplayAdapterClickListener listener;
 
     public void setActiveMedicines(List<Medication> activeMedicines) {
         this.activeMedicines = activeMedicines;
+        notifyDataSetChanged();
     }
 
-    public ActiveAdapter(Context context, List<Medication>activeMedicines){
+    public ActiveAdapter(Context context, List<Medication>activeMedicines,OnDisplayAdapterClickListener listener){
         this.activeMedicines = activeMedicines;
         this.context = context;
+        this.listener=listener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,6 +54,12 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.ViewHolder
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View generatedRow = layoutInflater.inflate(R.layout.custom_row, parent, false);
         ViewHolder vh= new ViewHolder(generatedRow);
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClick(activeMedicines.get(vh.getAdapterPosition()));
+            }
+        });
         return vh;
     }
 
@@ -59,6 +68,7 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.ViewHolder
         holder.medicineName.setText(activeMedicines.get(position).getName());
         holder.medDose.setText(""+activeMedicines.get(position).getMidStrength());
         holder.medImage.setImageResource(activeMedicines.get(position).getImage());
+
     }
 
     @Override

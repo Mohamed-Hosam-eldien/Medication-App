@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -62,6 +61,18 @@ public class Helper {
     @SuppressLint("SimpleDateFormat")
     public static String convertLongToDateFormat(long time) {
         return new SimpleDateFormat("MM/dd/yyyy").format(new Date(time));
+    }
+
+    public static int convertLongToHours(long milliseconds) {
+        Calendar time = Calendar.getInstance();
+        time.setTimeInMillis(milliseconds);
+        return time.get(Calendar.HOUR_OF_DAY);
+    }
+
+    public static int convertLongToMinuets(long milliseconds) {
+        Calendar time = Calendar.getInstance();
+        time.setTimeInMillis(milliseconds);
+        return time.get(Calendar.MINUTE);
     }
 
 }

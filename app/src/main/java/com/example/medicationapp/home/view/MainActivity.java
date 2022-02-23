@@ -21,6 +21,7 @@ import com.example.medicationapp.R;
 import com.example.medicationapp.caring.presenter.CaringPresenter;
 import com.example.medicationapp.caring.view.AdditionalCare;
 import com.example.medicationapp.databinding.ActivityMainBinding;
+import com.example.medicationapp.medications.view.addEditMed.AddEditActivity;
 import com.example.medicationapp.medications.view.displayMedication.DisplayMedicationActivity;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
@@ -73,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
 
     private void initFabButton() {
         binding.btnAddMed.setOnClickListener(view1 -> {
-            Intent intent=new Intent(MainActivity.this, DisplayMedicationActivity.class);
+            Intent intent=new Intent(MainActivity.this, AddEditActivity.class);
+            intent.putExtra("comeFrom",1);
             startActivity(intent);
         });
 
