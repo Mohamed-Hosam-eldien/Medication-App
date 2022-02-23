@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="89dp"
-        tools:layout_editor_absoluteY="0dp"
+        android:layout_below="@+id/addToolbar"
+        android:layout_marginTop="15dp"
         android:padding="10dp"
-        >
+        tools:layout_editor_absoluteX="89dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,7 +22,8 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/card1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
 
                 <EditText
                     android:id="@+id/addMedEtMedName"
@@ -63,14 +64,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addMedRemindTv"
-                        android:layout_marginTop="15dp" />
+                        android:layout_marginTop="15dp"
+                        android:entries="@array/addSpinnerArray" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/addMedReminderRv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addMedReminderTimeSp"
-                        android:layout_marginTop="15dp" />
+                        android:layout_marginTop="15dp"
+
+                        />
 
 
                 </RelativeLayout>
@@ -95,18 +99,30 @@
                         android:text="Schedule" />
 
                     <TextView
+                        android:id="@+id/addMedStartTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedTxtSchedule"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:text="Start date :" />
+
+                    <TextView
                         android:id="@+id/addMedScheduleStartDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addMedTxtSchedule"
-                        android:layout_marginTop="15dp"
-                        android:text="Start date : " />
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_toEndOf="@+id/addMedStartTxt"
+                        android:text=" press to add date"
+                        android:textColor="#3911EA" />
 
                     <TextView
                         android:id="@+id/hint1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addMedScheduleStartDate"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:text="Medications Will not be created in the past"
 
                         />
@@ -120,7 +136,7 @@
                         android:text="Duration" />
 
                     <RadioGroup
-                        android:id="@+id/addMedGroup1"
+                        android:id="@+id/addMedDurationGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addMedTextRg1"
@@ -137,18 +153,20 @@
                             android:id="@+id/addMedRBtnNoDays"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ongoing treatment" />
+                            android:text="Number of days" />
                     </RadioGroup>
 
                     <TextView
+
                         android:id="@+id/addMedTextRg2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/addMedGroup1"
+                        android:layout_below="@+id/addMedDurationGroup"
                         android:layout_marginTop="15dp"
                         android:text="Days" />
 
                     <RadioGroup
+                        android:id="@+id/addMedDaysGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addMedTextRg2"
@@ -221,13 +239,13 @@
                         android:text="Medication strength : "
 
                         />
+
                     <EditText
                         android:id="@+id/addMedEtStrength"
-                        android:layout_toEndOf="@+id/addMedTVStrength"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Amout"
-                        />
+                        android:layout_toEndOf="@+id/addMedTVStrength"
+                        android:hint="Amout" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -252,12 +270,11 @@
                         android:text="Should this be taken with food ?" />
 
                     <RadioGroup
+                        android:id="@+id/addMedInstrRadGro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
                         android:layout_below="@+id/addMedTVInstr"
-                        android:id="@+id/addMedRad2"
-                        >
+                        android:layout_marginTop="15dp">
 
                         <RadioButton
                             android:id="@+id/addMedInstrRaBtnBefore"
@@ -283,23 +300,24 @@
                             android:layout_height="wrap_content"
                             android:text="Doesn't matter" />
                     </RadioGroup>
+
                     <EditText
+                        android:id="@+id/addMedInstrEtOtherInstr"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedInstrRadGro"
                         android:layout_marginTop="15dp"
-                        android:id="@+id/addMedInstrTVOtherInstr"
-                        android:hint="Any other instructions ?"
-                        android:layout_below="@+id/addMedRad2"
-                        />
+                        android:hint="Any other instructions ?" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card6"
-                android:layout_marginTop="20dp"
-                >
+                android:layout_marginTop="20dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -309,31 +327,43 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Prescription Refill" />
+
                     <TextView
+                        android:id="@+id/addMedPres2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addMedPres1"
-                        android:id="@+id/addMedPres2"
-                        android:text="Enter the amount of meds you currently have to get a refill reminder"
+                        android:text="Enter the amount of meds you currently have to get a refill reminder" />
 
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Amount of meds"
-                        android:layout_below="@+id/addMedPres2"
-                        android:id="@+id/addMedPres3"
-                        />
                     <EditText
+                        android:id="@+id/addMedPresAmountOfMedEt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedPres2"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:hint="Total amounts of Med"
                         android:inputType="number"
-                        android:id="@+id/addMedPresAmountOfMedEt"
-                        android:layout_below="@+id/addMedPres3"
-                        android:layout_marginTop="10dp"
+
                         />
 
+                    <TextView
+                        android:id="@+id/addMedLastText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedPresAmountOfMedEt"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:text="Number of Pills to remind to  refill when reached" />
 
+                    <EditText
+                        android:id="@+id/addMedNoPillToRemind"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedLastText"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:hint="Amount"
+                        android:inputType="number" />
 
 
                 </RelativeLayout>
@@ -344,14 +374,14 @@
 
 
     </ScrollView>
-<androidx.appcompat.widget.Toolbar
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:id="@+id/addToolbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/purple_500"
-    app:title="Add Medication"
-    />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/addToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/purple_500"
+        app:title="Add Medication" />
+
+</RelativeLayout>
