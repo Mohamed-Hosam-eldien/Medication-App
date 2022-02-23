@@ -7,6 +7,7 @@
     <string name="add_dependent">Add Dependent</string>
     <string name="medications">Medications</string>
     <string name="profiles">Profiles</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="today">today</string>
     <string name="add_medication">Add Medication</string>
     <string name="add_health_taker">Add Health Taker</string>
@@ -31,6 +32,32 @@
     <string name="medication_App">Medication App</string>
     <string name="info">Info</string>
 
+    <string name="addMed_MedNameHint">Medication Name</string>
+    <string name="addMedReminderTimesHint">Reminder Times</string>
+    <string name="addMedScheduleTxt">Schedule</string>
+    <string name="addMedStartDateTxt">Start date :</string>
+    <string name="addMedPressToAddHint">press to add date</string>
+    <string name="addMedNoteWhenChooseTime">Medications Will not be created in the past</string>
+    <string name="addMedDurationTxt">Duration</string>
+    <string name="addMedRBtnOnGoingTxt">Ongoing treatment</string>
+    <string name="addMedRBtnNoDays">Number of days</string>
+    <string name="addMedDaysTxt">Days</string>
+    <string name="addMedEveryDayTxt">Every day</string>
+    <string name="addMedSpecificDaysTxt">Specific days of the week</string>
+    <string name="addMedTxtMedIcon">Med Icon</string>
+    <string name="addMed_MedStrengthTxt">Medication strength :</string>
+    <string name="addMedAmountHint">Amount</string>
+    <string name="addMedShouldBeTakenTxt">Should this be taken</string>
+    <string name="addMedRBtnBeforeTxt">Before eating</string>
+    <string name="addMedRBtnWhileTxt">While eating</string>
+    <string name="addMedRBtnAfterTxt">After eating</string>
+    <string name="addMedRBtnDoesnotTxt">Doesn\'t matter</string>
+    <string name="addMedAnyOtherInstrHint">Any other instructions ?</string>
+    <string name="addMedPrescriptionRefillTxt">Prescription Refill</string>
+    <string name="addMedEnterAmountOfMedTxt">Enter the amount of meds you currently have to get a refill reminder</string>
+    <string name="addMedTotalAmountOfMedHint">Total amounts of Med</string>
+    <string name="addMedNoPillToRemindTxt">Number of Pills to remind to refill when reached</string>
+    <string name="displayCurrentAmountTxt">Current amount of pills</string>
 
     <string-array name="addSpinnerArray">
         <item>Choose Time</item>

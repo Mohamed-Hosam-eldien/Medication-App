@@ -53,11 +53,11 @@
 
 
     <androidx.fragment.app.FragmentContainerView
-        android:layout_below="@id/card"
         android:id="@+id/fragmentContainerView"
         android:name="com.example.medicationapp.home.view.HomeMedFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/card"
         android:text="@string/home" />
 
 

@@ -31,4 +31,5 @@ public class MedicationPresenter {
     public void getInActiveMedications(){
         medicationViewInterface.getAllInActiveMedicines(repo.getInActiveMedicines());
     }
+
 }

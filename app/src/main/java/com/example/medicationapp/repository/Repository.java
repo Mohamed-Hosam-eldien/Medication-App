@@ -1,31 +1,26 @@
 package com.example.medicationapp.repository;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.medicationapp.database.LocalDB;
+import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
-import com.example.medicationapp.model.User;
 
 import java.util.List;
 
 public class Repository implements RepositoryInterface {
 
     LocalDB localDB;
-    //Connection connection;
     private static Repository repository = null;
     public Context context;
 
-
     private Repository (Context context){
         this.context = context;
-        //connection = Connection.getInstance(context);
         this.localDB = LocalDB.getInstance(context);
     }
-
 
     public static synchronized Repository getInstance(Context context){
         if(repository == null){
@@ -42,6 +37,16 @@ public class Repository implements RepositoryInterface {
     @Override
     public void deleteMedication(Medication medication) {
         localDB.deleteMedication(medication);
+    }
+
+    @Override
+    public void updateActive(int active, String medName) {
+        localDB.updateActive(active,medName);
+    }
+
+    @Override
+    public void update(String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, String startDate, List<String> days, int allDays) {
+        localDB.update(name, refillNo, isActive, medDetails, img, midStrength, timeToFood, startDate, days, allDays);
     }
 
     @Override
@@ -67,6 +72,11 @@ public class Repository implements RepositoryInterface {
     @Override
     public LiveData<List<Medication>> getAllMedicationInAllDay() {
         return localDB.getMedicationInAllDays();
+    }
+
+    @Override
+    public void refill(int amount, String medName) {
+        localDB.refill(amount, medName);
     }
 
 

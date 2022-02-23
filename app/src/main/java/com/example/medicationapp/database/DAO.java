@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 
 import java.util.List;
@@ -34,5 +35,18 @@ public interface DAO {
 
     @Query("Select * FROM Medication where allDays = 1 and isActive = 1")
     LiveData<List<Medication>> getAllMedicationWithAllDays();
+
+    @Query("update Medication set isActive =:active where name =:medName")
+    void updateActive(int active,String medName);
+    @Query("update Medication set totalPills =:amount where name =:medName")
+    void refill(int amount,String medName);
+
+    @Query("update Medication set refillNo=:refillNo,isActive=:isActive" +
+            ",medDetails=:medDetails,image=:img,midStrength=:midStrength," +
+            "timeToFood=:timeToFood,startDate=:startDate,days=:days," +
+            "allDays= :allDays where name=:name")
+    void update(String name, int refillNo, int isActive, List<MedDetails>medDetails
+            ,int img,int midStrength,String timeToFood,
+                String startDate,List<String>days,int allDays);
 
 }

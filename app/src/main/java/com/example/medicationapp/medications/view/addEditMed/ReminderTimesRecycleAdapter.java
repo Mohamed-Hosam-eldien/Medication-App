@@ -2,6 +2,7 @@ package com.example.medicationapp.medications.view.addEditMed;
 
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +59,11 @@ public class ReminderTimesRecycleAdapter extends RecyclerView.Adapter<ReminderTi
     public void onBindViewHolder(@NonNull Holder holder, int position) {
        holder.tvTime.setText(parseTime(reminderTimes.get(position).getHour(),reminderTimes.get(position).getMinute()));
        holder.tvPill.setText("Take "+reminderTimes.get(position).getPill()+" pill(s)");
-       holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+
                onAdapterClickListener.onCLick(reminderTimes.get(holder.getAdapterPosition()), holder.getAdapterPosition());
            }
        });

@@ -66,11 +66,11 @@
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
 
-            <ImageView
+            <!--ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 app:srcCompat="@drawable/googlle"
-                android:contentDescription="@null" />
+                android:contentDescription="@null" /-->
 
 
             <TextView
