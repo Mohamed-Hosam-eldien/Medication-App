@@ -1,5 +1,6 @@
 package com.example.medicationapp.medications.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,13 +11,16 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.database.LocalDB;
+import com.example.medicationapp.medications.view.displayMedication.DisplayMedicationActivity;
 import com.example.medicationapp.medications.view.displayMedication.Presenter;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.MedScheduler;
@@ -73,9 +77,32 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
         suspendedRecyclerView.setLayoutManager(suspendedLayoutManager);
         activeRecyclerView.setLayoutManager(activeLayoutManager);
 
-        suspendedAdapter = new ActiveAdapter(getContext(), activeList);
-        activeAdapter = new ActiveAdapter(getContext(), suspendedList);
-        activeRecyclerView.setAdapter(activeAdapter);
+        suspendedRecyclerView.setHasFixedSize(true);
+        activeRecyclerView.setHasFixedSize(true);
+
+        suspendedAdapter = new ActiveAdapter(getContext(), suspendedList, new OnDisplayAdapterClickListener() {
+            @Override
+            public void onClick(Medication medication) {
+                Intent in=new Intent(getActivity(), DisplayMedicationActivity.class);
+                Bundle b=new Bundle();
+                b.putParcelable("med",medication);
+                in.putExtra("bundle",b);
+                startActivity(in);
+
+            }
+        });
+
+                activeAdapter = new ActiveAdapter(getContext(), activeList, new OnDisplayAdapterClickListener() {
+                    @Override
+                    public void onClick(Medication medication) {
+                        Intent in = new Intent(getActivity(), DisplayMedicationActivity.class);
+                        Bundle b = new Bundle();
+                        b.putParcelable("med", medication);
+                        in.putExtra("bundle", b);
+                        startActivity(in);
+                    }
+                });
+                activeRecyclerView.setAdapter(activeAdapter);
         suspendedRecyclerView.setAdapter(suspendedAdapter);
 
         presenter = new Presenter(getActivity() ,this);
@@ -90,7 +117,6 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
             public void onChanged(List<Medication> medications) {
                 activeList = medications;
                 activeAdapter.setActiveMedicines(activeList);
-                activeAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -101,8 +127,7 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
             @Override
             public void onChanged(List<Medication> medications) {
                 suspendedList = medications;
-                activeAdapter.setActiveMedicines(suspendedList);
-                activeAdapter.notifyDataSetChanged();
+                suspendedAdapter.setActiveMedicines(suspendedList);
             }
         });
     }

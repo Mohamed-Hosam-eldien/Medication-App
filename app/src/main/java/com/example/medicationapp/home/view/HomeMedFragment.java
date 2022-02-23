@@ -71,80 +71,76 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog {
 //        Date date = calendarr.getTime();
 //        Log.d("TIME", date.getHours() + ":"  +date.getMinutes());
 
-        List<Medication> medicationList = new ArrayList<>();
+//        List<Medication> medicationList = new ArrayList<>();
 
 
-        List<String> list = new ArrayList<>();
-        list.add("sunday");
-        list.add("friday");
+//        List<String> list = new ArrayList<>();
+//        list.add("sunday");
+//        list.add("friday");
+//
+//        ArrayList<MedDetails> arrayList = new ArrayList<>();
+//        MedScheduler scheduler = new MedScheduler("5/5/2022", list);
+//
+//        calendar = Calendar.getInstance();
+//        calendar.set(2022, 2, 19, 5, 20);
+//        arrayList.add(new MedDetails(calendar,  1, "",0));
+//
+//        calendar = Calendar.getInstance();
+//        calendar.set(2022, 2, 19, 7, 20);
+//        arrayList.add(new MedDetails(calendar,  1, "",0));
+//
+//        calendar = Calendar.getInstance();
+//        calendar.set(2022, 2, 19, 10, 20);
+//        arrayList.add(new MedDetails(calendar,  1, "",0));
 
-        ArrayList<MedDetails> arrayList = new ArrayList<>();
-        MedScheduler scheduler = new MedScheduler("5/5/2022", list);
 
-        calendar = Calendar.getInstance();
-        calendar.set(2022, 2, 19, 5, 20);
-        arrayList.add(new MedDetails(calendar,  1, "",0));
-
-        calendar = Calendar.getInstance();
-        calendar.set(2022, 2, 19, 7, 20);
-        arrayList.add(new MedDetails(calendar,  1, "",0));
-
-        calendar = Calendar.getInstance();
-        calendar.set(2022, 2, 19, 10, 20);
-        arrayList.add(new MedDetails(calendar,  1, "",0));
-
-
-        medicationList.add(new Medication("Cold and flow", 4, 1,
-                arrayList, 100,"after food","12/5/2022", null, 1));
+//        medicationList.add(new Medication("Cold and flow", 4, 1, arrayList, 5,100,"after food","12/5/2022", null, 1));
 
 //
 //        List<String> list2 = new ArrayList<>();
 //        list2.add("sunday");
 //        list2.add("friday");
-
-        ArrayList<MedDetails> arrayList2 = new ArrayList<>();
-        //MedScheduler scheduler2 = new MedScheduler("5/5/2022", list2);
-
-        calendar = Calendar.getInstance();
-        calendar.set(2022, 2, 19, 8, 0);
-        arrayList2.add(new MedDetails(calendar,  1, "",0));
-
-        calendar = Calendar.getInstance();
-        calendar.set(2022, 2, 19, 16, 0);
-        arrayList2.add(new MedDetails(calendar,  1, "",0));
-
-        calendar = Calendar.getInstance();
-        calendar.set(2022, 2, 19, 24, 0);
-        arrayList2.add(new MedDetails(calendar,  1, "",0));
-
-        medicationList.add(new Medication("H.M.A", 3, 1,
-                arrayList2, 100,"before food","11/3/2022", null, 1));
+//
+//        ArrayList<MedDetails> arrayList2 = new ArrayList<>();
+//        //MedScheduler scheduler2 = new MedScheduler("5/5/2022", list2);
+//
+//        calendar = Calendar.getInstance();
+//        calendar.set(2022, 2, 19, 8, 0);
+//        arrayList2.add(new MedDetails(calendar,  1, "",0));
+//
+//        calendar = Calendar.getInstance();
+//        calendar.set(2022, 2, 19, 16, 0);
+//        arrayList2.add(new MedDetails(calendar,  1, "",0));
+//
+//        calendar = Calendar.getInstance();
+//        calendar.set(2022, 2, 19, 24, 0);
+//        arrayList2.add(new MedDetails(calendar,  1, "",0));
 
 
         ///////////////////////////////////////////////////////////
 
 
-
-        ArrayList<MedDetails> arrayList3 = new ArrayList<>();
-        //MedScheduler scheduler2 = new MedScheduler("5/5/2022", list2);
-
-        calendar = Calendar.getInstance();
-        calendar.set(2022, 2, 19, 8, 0);
-        arrayList3.add(new MedDetails(calendar,  1, "",0));
-
-        calendar = Calendar.getInstance();
-        calendar.set(2022, 2, 19, 16, 0);
-        arrayList3.add(new MedDetails(calendar,  1, "",0));
-
-        calendar = Calendar.getInstance();
-        calendar.set(2022, 2, 19, 24, 0);
-        arrayList3.add(new MedDetails(calendar,  1, "",0));
-
-        medicationList.add(new Medication("Go to hell", 3, 1,
-                arrayList3, 100,"before food","11/3/2022", null, 0));
-
-        presenter.addMedication(medicationList.get(0));
-        presenter.addMedication(medicationList.get(1));
+//
+//        ArrayList<MedDetails> arrayList3 = new ArrayList<>();
+//        //MedScheduler scheduler2 = new MedScheduler("5/5/2022", list2);
+//
+//        calendar = Calendar.getInstance();
+//        calendar.set(2022, 2, 19, 8, 0);
+//        arrayList3.add(new MedDetails(calendar,  1, "",0));
+//
+//        calendar = Calendar.getInstance();
+//        calendar.set(2022, 2, 19, 16, 0);
+//        arrayList3.add(new MedDetails(calendar,  1, "",0));
+//
+//        calendar = Calendar.getInstance();
+//        calendar.set(2022, 2, 19, 24, 0);
+//        arrayList3.add(new MedDetails(calendar,  1, "",0));
+//
+////        medicationList.add(new Medication("Go to hell", 3, 1,
+////                arrayList3, 100,"before food","11/3/2022", null, 0));
+//
+//        presenter.addMedication(medicationList.get(0));
+//        presenter.addMedication(medicationList.get(1));
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

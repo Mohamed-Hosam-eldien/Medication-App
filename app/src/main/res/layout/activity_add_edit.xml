@@ -10,54 +10,71 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/addToolbar"
-        android:layout_marginTop="15dp"
-        android:padding="10dp"
         tools:layout_editor_absoluteX="89dp"
         tools:layout_editor_absoluteY="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            >
 
             <androidx.cardview.widget.CardView
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:id="@+id/card1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true">
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                >
 
                 <EditText
                     android:id="@+id/addMedEtMedName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Medication Name"
-                    android:paddingStart="5dp" />
+                    android:hint="@string/addMed_MedNameHint"
+                    android:paddingStart="5dp"
+                    tools:ignore="RtlSymmetry"
+                    android:textColor="@color/pink"
+                    />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
                 android:id="@+id/card2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/card1"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                >
 
                 <RelativeLayout
                     android:id="@+id/rel1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="5dp">
+                    android:padding="@dimen/_15sdp"
+                    >
 
                     <TextView
                         android:id="@+id/addMedRemindTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Reminder Times"
-                        android:paddingStart="5dp" />
+                        android:hint="@string/addMedReminderTimesHint"
+                        android:paddingStart="@dimen/_5sdp"
+                        tools:ignore="RtlSymmetry" />
 
                     <Switch
                         android:id="@+id/addMedReminderSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_alignParentEnd="true"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                     <Spinner
                         android:id="@+id/addMedReminderTimeSp"
@@ -82,21 +99,28 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp"
                 android:id="@+id/card3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card2"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_15sdp"
+                    >
 
                     <TextView
                         android:id="@+id/addMedTxtSchedule"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Schedule" />
+                        android:text="@string/addMedScheduleTxt" />
 
                     <TextView
                         android:id="@+id/addMedStartTxt"
@@ -104,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/addMedTxtSchedule"
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:text="Start date :" />
+                        android:text="@string/addMedStartDateTxt" />
 
                     <TextView
                         android:id="@+id/addMedScheduleStartDate"
@@ -114,8 +138,9 @@
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_toEndOf="@+id/addMedStartTxt"
-                        android:text=" press to add date"
-                        android:textColor="#3911EA" />
+                        android:hint="@string/addMedPressToAddHint"
+                        android:textColor="#3911EA"
+                        android:textColorHint="#3911EA" />
 
                     <TextView
                         android:id="@+id/hint1"
@@ -123,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addMedScheduleStartDate"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:text="Medications Will not be created in the past"
+                        android:text="@string/addMedNoteWhenChooseTime"
 
                         />
 
@@ -133,7 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/hint1"
                         android:layout_marginTop="15dp"
-                        android:text="Duration" />
+                        android:text="@string/addMedDurationTxt" />
 
                     <RadioGroup
                         android:id="@+id/addMedDurationGroup"
@@ -147,13 +172,13 @@
                             android:id="@+id/addMedRBtnOngoing"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ongoing treatment" />
+                            android:text="@string/addMedRBtnOnGoingTxt" />
 
                         <RadioButton
                             android:id="@+id/addMedRBtnNoDays"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Number of days" />
+                            android:text="@string/addMedRBtnNoDays" />
                     </RadioGroup>
 
                     <TextView
@@ -163,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/addMedDurationGroup"
                         android:layout_marginTop="15dp"
-                        android:text="Days" />
+                        android:text="@string/addMedDaysTxt" />
 
                     <RadioGroup
                         android:id="@+id/addMedDaysGroup"
@@ -179,7 +204,7 @@
                             android:id="@+id/addMedRBtnEveryDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Every day"
+                            android:text="@string/addMedEveryDayTxt"
 
                             />
 
@@ -187,12 +212,17 @@
                             android:id="@+id/addMedRBtnSpecificDays"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Specific days of the week" />
+                            android:text="@string/addMedSpecificDaysTxt" />
                     </RadioGroup>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
                 android:id="@+id/card4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,13 +231,15 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_15sdp"
+                    >
 
                     <TextView
                         android:id="@+id/medIconTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Med Icon" />
+                        android:text="@string/addMedTxtMedIcon" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/addMedRvMedIcon"
@@ -221,6 +253,11 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
                 android:id="@+id/card5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -229,14 +266,16 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_15sdp"
+                    >
 
                     <TextView
                         android:id="@+id/addMedTVStrength"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Medication strength : "
+                        android:text="@string/addMed_MedStrengthTxt"
 
                         />
 
@@ -245,13 +284,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/addMedTVStrength"
-                        android:hint="Amout" />
+                        android:hint="@string/addMedAmountHint" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
 
             <androidx.cardview.widget.CardView
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
                 android:id="@+id/card6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -260,14 +304,16 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_15sdp"
+                    >
 
                     <TextView
                         android:id="@+id/addMedTVInstr"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
-                        android:text="Should this be taken with food ?" />
+                        android:text="@string/addMedShouldBeTakenTxt" />
 
                     <RadioGroup
                         android:id="@+id/addMedInstrRadGro"
@@ -280,25 +326,25 @@
                             android:id="@+id/addMedInstrRaBtnBefore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Before eating" />
+                            android:text="@string/addMedRBtnBeforeTxt" />
 
                         <RadioButton
                             android:id="@+id/addMedInstrRaBtnWhile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="While eating" />
+                            android:text="@string/addMedRBtnWhileTxt" />
 
                         <RadioButton
                             android:id="@+id/addMedInstrRaBtnAfter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="After eating" />
+                            android:text="@string/addMedRBtnAfterTxt" />
 
                         <RadioButton
                             android:id="@+id/addMedInstrRaBtnDoesnt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Doesn't matter" />
+                            android:text="@string/addMedRBtnDoesnotTxt" />
                     </RadioGroup>
 
                     <EditText
@@ -307,12 +353,17 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/addMedInstrRadGro"
                         android:layout_marginTop="15dp"
-                        android:hint="Any other instructions ?" />
+                        android:hint="@string/addMedAnyOtherInstrHint" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card6"
@@ -320,20 +371,22 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_15sdp"
+                    >
 
                     <TextView
                         android:id="@+id/addMedPres1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Prescription Refill" />
+                        android:text="@string/addMedPrescriptionRefillTxt" />
 
                     <TextView
                         android:id="@+id/addMedPres2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addMedPres1"
-                        android:text="Enter the amount of meds you currently have to get a refill reminder" />
+                        android:text="@string/addMedEnterAmountOfMedTxt" />
 
                     <EditText
                         android:id="@+id/addMedPresAmountOfMedEt"
@@ -341,7 +394,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/addMedPres2"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:hint="Total amounts of Med"
+                        android:hint="@string/addMedTotalAmountOfMedHint"
                         android:inputType="number"
 
                         />
@@ -352,7 +405,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/addMedPresAmountOfMedEt"
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:text="Number of Pills to remind to  refill when reached" />
+                        android:text="@string/addMedNoPillToRemindTxt" />
 
                     <EditText
                         android:id="@+id/addMedNoPillToRemind"
@@ -362,8 +415,9 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:layout_marginBottom="@dimen/_15sdp"
-                        android:hint="Amount"
-                        android:inputType="number" />
+                        android:hint="@string/addMedAmountHint"
+                        android:inputType="number"
+                         />
 
 
                 </RelativeLayout>
@@ -380,7 +434,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:background="@color/purple_500"
         app:title="Add Medication" />
 

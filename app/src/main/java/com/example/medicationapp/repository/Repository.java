@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.example.medicationapp.database.LocalDB;
+import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 
 import java.util.List;
@@ -38,6 +39,16 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public void updateActive(int active, String medName) {
+        localDB.updateActive(active,medName);
+    }
+
+    @Override
+    public void update(String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, String startDate, List<String> days, int allDays) {
+        localDB.update(name, refillNo, isActive, medDetails, img, midStrength, timeToFood, startDate, days, allDays);
+    }
+
+    @Override
     public LiveData<List<Medication>> getAllMedications() {
         return localDB.getAllMedications();
     }
@@ -60,5 +71,10 @@ public class Repository implements RepositoryInterface {
     @Override
     public LiveData<List<Medication>> getAllMedicationInAllDay() {
         return localDB.getMedicationInAllDays();
+    }
+
+    @Override
+    public void refill(int amount, String medName) {
+        localDB.refill(amount, medName);
     }
 }

@@ -1,14 +1,16 @@
 package com.example.medicationapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "Medication")
-public class Medication {
+public class Medication implements Parcelable {
 
     @PrimaryKey()
     @NonNull
@@ -23,23 +25,47 @@ public class Medication {
     private String startDate;
     private List <String> days;
     private int allDays;
+    int totalPills;
+
+    public int getTotalPills() {
+        return totalPills;
+    }
+
+    public void setTotalPills(int totalPills) {
+        this.totalPills = totalPills;
+    }
 
     public Medication() {
     }
 
-    public Medication(@NonNull String name, int refillNo, int isActive,
-                      List<MedDetails> medDetails, int midStrength,
-                      String timeToFood, String startDate, List<String> days, int allDays) {
+    public Medication(@NonNull String name, int refillNo, int isActive, List<MedDetails> medDetails, int image
+            , int midStrength, String timeToFood, String startDate, List<String> days, int allDays, int totalPills) {
         this.name = name;
         this.refillNo = refillNo;
         this.isActive = isActive;
         this.medDetails = medDetails;
+        this.image = image;
         this.midStrength = midStrength;
         this.timeToFood = timeToFood;
         this.startDate = startDate;
         this.days = days;
         this.allDays = allDays;
+        this.totalPills = totalPills;
     }
+//    public Medication(@NonNull String name, int refillNo, int isActive,
+//                      List<MedDetails> medDetails, int midStrength,
+//                      String timeToFood, String startDate, List<String> days, int allDays) {
+//        this.name = name;
+//        this.refillNo = refillNo;
+//        this.isActive = isActive;
+//        this.medDetails = medDetails;
+//        this.midStrength = midStrength;
+//        this.timeToFood = timeToFood;
+//        this.startDate = startDate;
+//        this.days = days;
+//        this.allDays = allDays;
+//    }
+
 
     public int getAllDays() {
         return allDays;
@@ -129,4 +155,64 @@ public class Medication {
         this.midStrength = midStrength;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeInt(this.refillNo);
+        dest.writeInt(this.isActive);
+        dest.writeTypedList(this.medDetails);
+        dest.writeInt(this.image);
+        dest.writeInt(this.midStrength);
+        dest.writeString(this.timeToFood);
+        dest.writeString(this.startDate);
+        dest.writeStringList(this.days);
+        dest.writeInt(this.allDays);
+        dest.writeInt(this.totalPills);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.name = source.readString();
+        this.refillNo = source.readInt();
+        this.isActive = source.readInt();
+        this.medDetails = source.createTypedArrayList(MedDetails.CREATOR);
+        this.image = source.readInt();
+        this.midStrength = source.readInt();
+        this.timeToFood = source.readString();
+        this.startDate = source.readString();
+        this.days = source.createStringArrayList();
+        this.allDays = source.readInt();
+        this.totalPills = source.readInt();
+    }
+
+    protected Medication(Parcel in) {
+        this.name = in.readString();
+        this.refillNo = in.readInt();
+        this.isActive = in.readInt();
+        this.medDetails = in.createTypedArrayList(MedDetails.CREATOR);
+        this.image = in.readInt();
+        this.midStrength = in.readInt();
+        this.timeToFood = in.readString();
+        this.startDate = in.readString();
+        this.days = in.createStringArrayList();
+        this.allDays = in.readInt();
+        this.totalPills = in.readInt();
+    }
+
+    public static final Creator<Medication> CREATOR = new Creator<Medication>() {
+        @Override
+        public Medication createFromParcel(Parcel source) {
+            return new Medication(source);
+        }
+
+        @Override
+        public Medication[] newArray(int size) {
+            return new Medication[size];
+        }
+    };
 }
