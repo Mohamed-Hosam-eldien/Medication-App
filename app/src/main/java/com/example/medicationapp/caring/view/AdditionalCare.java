@@ -58,7 +58,7 @@ public class AdditionalCare extends AppCompatActivity {
         boolean isNetworkConnected = Helper.isNetworkAvailable(getApplicationContext());
         if (validationResult) {
             if (isNetworkConnected) {
-                if(edtEmail.getText().toString().equals(Paper.book().read(Common.emailUserPaper))) {
+                if(!edtEmail.getText().toString().equals(Paper.book().read(Common.emailUserPaper))) {
                     if (checkUserRegistration()) {
                         sendRequest();
                     }
@@ -80,7 +80,7 @@ public class AdditionalCare extends AppCompatActivity {
             if(medications.size() != 0) {
                 Request request;
                 request = new Request(Common.currentUser.getName(), "Peter",
-                        "please accept to request", "peter.samir299@gmail.com",
+                        "sent you a Medical Request", edtEmail.getText().toString(),
                         Common.currentUser.getEmail(), false, medications);
 
                 presenter.onSendRequest(request);
