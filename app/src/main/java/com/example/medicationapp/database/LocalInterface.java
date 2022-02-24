@@ -16,7 +16,7 @@ public interface LocalInterface {
     void updateActive(int active,String medName);
 
     void update(String name, int refillNo, int isActive, List<MedDetails>medDetails
-            ,int img,int midStrength,String timeToFood,
+            ,int img,int midStrength,String timeToFood,int current,
                 String startDate,List<String>days,int allDays);
 
     LiveData<List<Medication>> getAllMedications();

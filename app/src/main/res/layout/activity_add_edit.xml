@@ -38,6 +38,7 @@
                     android:paddingStart="5dp"
                     tools:ignore="RtlSymmetry"
                     android:textColor="@color/pink"
+                    android:layout_marginStart="@dimen/_15sdp"
                     />
             </androidx.cardview.widget.CardView>
 

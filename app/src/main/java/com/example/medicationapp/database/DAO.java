@@ -43,10 +43,10 @@ public interface DAO {
 
     @Query("update Medication set refillNo=:refillNo,isActive=:isActive" +
             ",medDetails=:medDetails,image=:img,midStrength=:midStrength," +
-            "timeToFood=:timeToFood,startDate=:startDate,days=:days," +
+            "timeToFood=:timeToFood,startDate=:startDate,days=:days,totalPills=:current," +
             "allDays= :allDays where name=:name")
     void update(String name, int refillNo, int isActive, List<MedDetails>medDetails
-            ,int img,int midStrength,String timeToFood,
+            ,int img,int midStrength,String timeToFood,int current,
                 String startDate,List<String>days,int allDays);
 
 }

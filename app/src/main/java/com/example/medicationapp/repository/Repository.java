@@ -45,8 +45,8 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public void update(String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, String startDate, List<String> days, int allDays) {
-        localDB.update(name, refillNo, isActive, medDetails, img, midStrength, timeToFood, startDate, days, allDays);
+    public void update(String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood,int current, String startDate, List<String> days, int allDays) {
+        localDB.update(name, refillNo, isActive, medDetails, img, midStrength, timeToFood,current, startDate, days, allDays);
     }
 
     @Override

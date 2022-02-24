@@ -55,9 +55,6 @@ public class DisplayMedicationActivity extends AppCompatActivity {
 
         presenter = new DisplayPresenter(DisplayMedicationActivity.this);
 
-        binding.showDrugBtnRefill.setVisibility(View.GONE);
-
-
         Intent in = getIntent();
         Bundle b = in.getBundleExtra("bundle");
         med = (Medication) b.getParcelable("med");
