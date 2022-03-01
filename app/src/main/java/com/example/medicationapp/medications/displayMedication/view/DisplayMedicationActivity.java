@@ -9,21 +9,26 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.medicationapp.R;
+import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityDisplayMedicationBinding;
 import com.example.medicationapp.databinding.DialogRefillBinding;
 import com.example.medicationapp.medications.addEditMed.view.AddEditActivity;
 import com.example.medicationapp.medications.displayMedication.presenter.DisplayPresenter;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.repository.Repository;
 import com.example.medicationapp.utils.Helper;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -54,6 +59,9 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         ref=database.getReference();
 
         presenter = new DisplayPresenter(DisplayMedicationActivity.this);
+
+        binding.showDrugBtnRefill.setVisibility(View.GONE);
+
 
         Intent in = getIntent();
         Bundle b = in.getBundleExtra("bundle");
@@ -175,7 +183,7 @@ public class DisplayMedicationActivity extends AppCompatActivity {
                 break;
             case R.id.displayMenuEdit:
                 Intent intent = new Intent(this, AddEditActivity.class);
-                intent.putExtra("comeFrom", 5);
+                intent.putExtra("comeFrom", 3);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("med", med);
                 intent.putExtra("bundle", bundle);

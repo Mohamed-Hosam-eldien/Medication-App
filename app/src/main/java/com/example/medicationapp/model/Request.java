@@ -26,16 +26,18 @@ public class Request {
     public Request() {
     }
 
-    public Request(String id, String senderName, String patientName,
-                   String description, String receiverEmail, String senderEmail, boolean request) {
-        this.id = id;
+    public Request(String id, String senderName, String patientName, String description,
+                   String receiverEmail, String senderEmail, boolean request) {
         this.senderName = senderName;
         this.patientName = patientName;
         this.description = description;
         this.receiverEmail = receiverEmail;
         this.senderEmail = senderEmail;
+        this.id = id;
         this.request = request;
     }
+
+
 
     public String getPatientName() {
         return patientName;

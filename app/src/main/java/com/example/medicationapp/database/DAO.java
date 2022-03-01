@@ -49,4 +49,6 @@ public interface DAO {
             ,int img,int midStrength,String timeToFood,int current,
                 String startDate,List<String>days,int allDays);
 
+    //    @Query("update Medication set =:refillNo-1")
+    //            void updateRefillNo(int refillNo);
 }

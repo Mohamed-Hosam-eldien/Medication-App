@@ -1,7 +1,6 @@
 package com.example.medicationapp.connection;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.paperdb.Paper;
 
 
 public class Connection {
@@ -46,7 +47,6 @@ public class Connection {
     }
 
     public void sendRequest(Request request) {
-
         firebaseDatabase.getReference(Common.Request)
                 .child(request.getId()).setValue(request)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -81,7 +81,7 @@ public class Connection {
                         for(DataSnapshot sanp : snapshot.getChildren()) {
                             Request request = sanp.getValue(Request.class);
 
-                            if(request.isRequest() && request.getReceiverEmail().equals("mohamedhosameldien07@gmail.com")) {
+                            if(request.isRequest() && request.getReceiverEmail().equals(Paper.book().read(Common.emailUserPaper))) {
                                 requests.add(request);
                             }
                             networkInterface.onReceiveMedication(requests);
@@ -89,6 +89,7 @@ public class Connection {
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {}});
+
     }
 
     public void saveUserToFirebase(User user) {
@@ -120,6 +121,7 @@ public class Connection {
 
 
     }
+
 
 
 
