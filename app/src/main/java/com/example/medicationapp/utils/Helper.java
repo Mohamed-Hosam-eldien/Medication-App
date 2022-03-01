@@ -5,6 +5,9 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -73,6 +76,13 @@ public class Helper {
         Calendar time = Calendar.getInstance();
         time.setTimeInMillis(milliseconds);
         return time.get(Calendar.MINUTE);
+    }
+
+   public static String generateKey()
+    {
+        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        DatabaseReference ref=database.getReference();
+        return ref.push().getKey();
     }
 
 }

@@ -15,6 +15,8 @@ public class Medication implements Parcelable {
 
     @PrimaryKey()
     @NonNull
+    String id;
+    @NonNull
     private String name;
     private int refillNo;
     private int isActive = 1;
@@ -40,8 +42,10 @@ public class Medication implements Parcelable {
     public Medication() {
     }
 
-    public Medication(@NonNull String name, int refillNo, int isActive, List<MedDetails> medDetails, int image
-            , int midStrength, String timeToFood, String startDate, List<String> days, int allDays, int totalPills) {
+    public Medication(@NonNull String id, @NonNull String name, int refillNo, int isActive,
+                      List<MedDetails> medDetails, int image, int midStrength, String timeToFood,
+                      String startDate, List<String> days, int allDays, int totalPills) {
+        this.id = id;
         this.name = name;
         this.refillNo = refillNo;
         this.isActive = isActive;
@@ -54,20 +58,6 @@ public class Medication implements Parcelable {
         this.allDays = allDays;
         this.totalPills = totalPills;
     }
-//    public Medication(@NonNull String name, int refillNo, int isActive,
-//                      List<MedDetails> medDetails, int midStrength,
-//                      String timeToFood, String startDate, List<String> days, int allDays) {
-//        this.name = name;
-//        this.refillNo = refillNo;
-//        this.isActive = isActive;
-//        this.medDetails = medDetails;
-//        this.midStrength = midStrength;
-//        this.timeToFood = timeToFood;
-//        this.startDate = startDate;
-//        this.days = days;
-//        this.allDays = allDays;
-//    }
-
 
     public int getAllDays() {
         return allDays;
@@ -157,6 +147,14 @@ public class Medication implements Parcelable {
         this.midStrength = midStrength;
     }
 
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
 
     @Override
     public int describeContents() {
@@ -165,10 +163,11 @@ public class Medication implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeInt(this.refillNo);
         dest.writeInt(this.isActive);
-        dest.writeList(this.medDetails);
+        dest.writeTypedList(this.medDetails);
         dest.writeInt(this.image);
         dest.writeInt(this.midStrength);
         dest.writeString(this.timeToFood);
@@ -179,11 +178,11 @@ public class Medication implements Parcelable {
     }
 
     public void readFromParcel(Parcel source) {
+        this.id = source.readString();
         this.name = source.readString();
         this.refillNo = source.readInt();
         this.isActive = source.readInt();
-        this.medDetails = new ArrayList<MedDetails>();
-        source.readList(this.medDetails, MedDetails.class.getClassLoader());
+        this.medDetails = source.createTypedArrayList(MedDetails.CREATOR);
         this.image = source.readInt();
         this.midStrength = source.readInt();
         this.timeToFood = source.readString();
@@ -194,11 +193,11 @@ public class Medication implements Parcelable {
     }
 
     protected Medication(Parcel in) {
+        this.id = in.readString();
         this.name = in.readString();
         this.refillNo = in.readInt();
         this.isActive = in.readInt();
-        this.medDetails = new ArrayList<MedDetails>();
-        in.readList(this.medDetails, MedDetails.class.getClassLoader());
+        this.medDetails = in.createTypedArrayList(MedDetails.CREATOR);
         this.image = in.readInt();
         this.midStrength = in.readInt();
         this.timeToFood = in.readString();
@@ -208,7 +207,7 @@ public class Medication implements Parcelable {
         this.totalPills = in.readInt();
     }
 
-    public static final Creator<Medication> CREATOR = new Creator<Medication>() {
+    public static final Parcelable.Creator<Medication> CREATOR = new Parcelable.Creator<Medication>() {
         @Override
         public Medication createFromParcel(Parcel source) {
             return new Medication(source);

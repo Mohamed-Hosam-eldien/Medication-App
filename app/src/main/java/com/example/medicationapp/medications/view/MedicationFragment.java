@@ -11,17 +11,13 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.medications.presenter.MedicationPresenter;
-import com.example.medicationapp.database.LocalDB;
-import com.example.medicationapp.medications.view.displayMedication.DisplayMedicationActivity;
+import com.example.medicationapp.medications.displayMedication.view.DisplayMedicationActivity;
 
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.MedScheduler;

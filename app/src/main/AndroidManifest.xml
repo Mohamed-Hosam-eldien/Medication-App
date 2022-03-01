@@ -22,11 +22,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".medications.view.addEditMed.AddEditActivity"
-            android:exported="false" />
+            android:name=".medications.addEditMed.view.AddEditActivity"
+            android:exported="true" />
         <activity
-            android:name=".medications.view.displayMedication.DisplayMedicationActivity"
-            android:exported="false" />
+            android:name=".medications.displayMedication.view.DisplayMedicationActivity"
+            android:exported="true" />
         <activity
             android:name=".home.view.MainActivity"
             android:exported="true">

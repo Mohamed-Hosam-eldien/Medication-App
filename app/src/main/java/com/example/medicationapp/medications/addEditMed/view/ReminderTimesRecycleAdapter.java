@@ -1,8 +1,7 @@
-package com.example.medicationapp.medications.view.addEditMed;
+package com.example.medicationapp.medications.addEditMed.view;
 
 
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicationapp.R;
-import com.example.medicationapp.medications.view.addEditMed.model.ReminderTime;
+import com.example.medicationapp.medications.addEditMed.model.ReminderTime;
 
 
 import java.util.List;
@@ -100,7 +99,6 @@ public class ReminderTimesRecycleAdapter extends RecyclerView.Adapter<ReminderTi
             super(itemView);
             tvTime=itemView.findViewById(R.id.customReminderTvTime);
             tvPill=itemView.findViewById(R.id.customReminderTvPill);
-
         }
     }
 

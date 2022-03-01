@@ -74,7 +74,7 @@
                     android:layout_toEndOf="@+id/showDrugStartDateTxt"
                     />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/showDrugBtnSuspend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
                     android:text="Prescription Refill"
                     android:textColor="@color/purple_500" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/showDrugBtnRefill"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

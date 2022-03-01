@@ -1,6 +1,7 @@
 package com.example.medicationapp.connection;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -45,8 +46,9 @@ public class Connection {
     }
 
     public void sendRequest(Request request) {
+
         firebaseDatabase.getReference(Common.Request)
-                .push().setValue(request)
+                .child(request.getId()).setValue(request)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -59,6 +61,14 @@ public class Connection {
                 Log.d("FAILURE", "failed : "+ e.getMessage());
             }
         });
+    }
+
+    public void sendMedicine(List<Medication>medications,String requestId)
+    {
+
+        for(Medication m:medications)
+        firebaseDatabase.getReference(Common.Request)
+                .child(requestId).child("medicationList").child(m.getId()).setValue(m);
     }
 
     public void receiveMedication() {
@@ -79,7 +89,6 @@ public class Connection {
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {}});
-
     }
 
     public void saveUserToFirebase(User user) {
@@ -111,7 +120,6 @@ public class Connection {
 
 
     }
-
 
 
 

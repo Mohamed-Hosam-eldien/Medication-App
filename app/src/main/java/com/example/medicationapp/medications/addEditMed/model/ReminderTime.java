@@ -1,4 +1,4 @@
-package com.example.medicationapp.medications.view.addEditMed.model;
+package com.example.medicationapp.medications.addEditMed.model;
 
 public class ReminderTime {
     int hour;

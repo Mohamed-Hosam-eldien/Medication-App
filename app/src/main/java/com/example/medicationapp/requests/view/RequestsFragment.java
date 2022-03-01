@@ -65,7 +65,7 @@ public class RequestsFragment extends Fragment {
     private void init() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(Common.Request);
-        Query query = databaseReference.orderByChild("receiverEmail").equalTo("mohamedhosameldien07@gmail,com");
+        Query query = databaseReference.orderByChild("receiverEmail").equalTo("mina@gmail.com");
         firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Request>()
                 .setQuery(query, Request.class)
                 .build();

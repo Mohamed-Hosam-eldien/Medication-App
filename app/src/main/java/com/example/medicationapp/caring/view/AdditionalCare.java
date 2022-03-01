@@ -19,6 +19,7 @@ import com.example.medicationapp.R;
 import com.example.medicationapp.caring.presenter.CaringPresenter;
 import com.example.medicationapp.databinding.RegisterDialogBinding;
 import com.example.medicationapp.home.presenter.HomePresenter;
+import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
@@ -54,13 +55,14 @@ public class AdditionalCare extends AppCompatActivity {
     }
 
     private void sendMedicationRequest() {
+        sendRequest();
         boolean validationResult = Helper.validate(String.valueOf(edtEmail.getText()));
         boolean isNetworkConnected = Helper.isNetworkAvailable(getApplicationContext());
         if (validationResult) {
             if (isNetworkConnected) {
-                if(edtEmail.getText().toString().equals(Paper.book().read(Common.emailUserPaper))) {
+                if(!edtEmail.getText().toString().equals(Paper.book().read(Common.emailUserPaper))) {
                     if (checkUserRegistration()) {
-                        sendRequest();
+//                        sendRequest();
                     }
                 } else {
                     Toast.makeText(this, "you can't send request to your email", Toast.LENGTH_SHORT).show();
@@ -76,17 +78,17 @@ public class AdditionalCare extends AppCompatActivity {
 
     private void sendRequest() {
         HomePresenter homePresenter = new HomePresenter(AdditionalCare.this);
+        Request request;
+        request = new Request(Helper.generateKey(),Common.currentUser.getName(), "Peter",
+                "please accept to request", "peter.samir299@gmail.com",
+                Common.currentUser.getEmail(), false);
+        Log.i("TAG", "sendRequest:add care "+request.getId());
+        presenter.onSendRequest(request);
+
         homePresenter.getMedicationList().observe(AdditionalCare.this, medications -> {
             if(medications.size() != 0) {
-                Request request;
-                request = new Request(Common.currentUser.getName(), "Peter",
-                        "please accept to request", "peter.samir299@gmail.com",
-                        Common.currentUser.getEmail(), false, medications);
-
-                presenter.onSendRequest(request);
-
+                    presenter.onSendMedicine(medications,request.getId());
                 presenter.onSaveUserData(Common.currentUser);
-
             } else {
                 Toast.makeText(this, "you don't have any medication list", Toast.LENGTH_SHORT).show();
             }
@@ -144,12 +146,9 @@ public class AdditionalCare extends AppCompatActivity {
         dialog = new Dialog(this);
         View view = LayoutInflater.from(this).inflate(R.layout.register_dialog,null);
         dialog.setContentView(view);
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
         RegisterDialogBinding dialogBinding = RegisterDialogBinding.bind(view);
         dialogBinding.btnRegister.setOnClickListener(v -> signIn());
-
         dialog.show();
     }
 

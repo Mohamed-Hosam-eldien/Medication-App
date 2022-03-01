@@ -53,22 +53,22 @@ public class LocalDB implements LocalInterface{
     }
 
     @Override
-    public void updateActive(int active, String medName) {
+    public void updateActive(int active, String id) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                medicationDao.updateActive(active,medName);
+                medicationDao.updateActive(active,id);
             }
         }).start();
 
     }
 
     @Override
-    public void update(String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood,int current, String startDate, List<String> days, int allDays) {
+    public void update(String id,String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood,int current, String startDate, List<String> days, int allDays) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                medicationDao.update(name, refillNo, isActive, medDetails, img, midStrength, timeToFood,current, startDate, days, allDays);
+                medicationDao.update(id,name, refillNo, isActive, medDetails, img, midStrength, timeToFood,current, startDate, days, allDays);
             }
         }).start();
     }
@@ -98,12 +98,12 @@ public class LocalDB implements LocalInterface{
         return medicationDao.getAllMedicationWithAllDays();
     }
 
-    public void refill(int amount, String medName)
+    public void refill(int amount, String id)
     {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                medicationDao.refill(amount,medName);
+                medicationDao.refill(amount,id);
             }
         }).start();
 

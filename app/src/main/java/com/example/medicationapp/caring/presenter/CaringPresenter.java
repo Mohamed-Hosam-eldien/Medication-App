@@ -1,10 +1,12 @@
 package com.example.medicationapp.caring.presenter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.example.medicationapp.connection.CaringViewInterface;
 import com.example.medicationapp.connection.Connection;
 import com.example.medicationapp.connection.NetworkInterface;
+import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.model.User;
 import com.example.medicationapp.repository.Repository;
@@ -16,9 +18,12 @@ public class CaringPresenter implements NetworkInterface {
     Repository repository;
     Connection connection;
 
+
+
     public CaringPresenter(Context context) {
         //this.repository = Repository.getInstance(context);
         connection = Connection.getInstance(this, context);
+
     }
 //
 //    public void sendRequest(Request request) {
@@ -41,6 +46,11 @@ public class CaringPresenter implements NetworkInterface {
 
     @Override
     public void onSaveUserData(User user) {
-        connection.saveUserToFirebase(user);
+//        connection.saveUserToFirebase(user);
+    }
+
+    @Override
+    public void onSendMedicine(List<Medication> medications,String requestId) {
+       connection.sendMedicine(medications,requestId);
     }
 }
