@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
+
 
 public class Connection {
 
@@ -46,11 +48,10 @@ public class Connection {
 
     public void sendRequest(Request request) {
         firebaseDatabase.getReference(Common.Request)
-                .push().setValue(request)
+                .child(request.getId()).setValue(request)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        //Log.d("SUCCESS", "success");
                         Toast.makeText(context, "Request has been sent", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -62,6 +63,7 @@ public class Connection {
     }
 
     public void receiveMedication() {
+
         firebaseDatabase.getReference(Common.Request)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -71,7 +73,7 @@ public class Connection {
                         for(DataSnapshot sanp : snapshot.getChildren()) {
                             Request request = sanp.getValue(Request.class);
 
-                            if(request.isRequest() && request.getReceiverEmail().equals("mohamedhosameldien07@gmail.com")) {
+                            if(request.isRequest() && request.getReceiverEmail().equals(Paper.book().read(Common.emailUserPaper))) {
                                 requests.add(request);
                             }
                             networkInterface.onReceiveMedication(requests);
@@ -79,7 +81,6 @@ public class Connection {
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {}});
-
     }
 
     public void saveUserToFirebase(User user) {
@@ -95,7 +96,6 @@ public class Connection {
                     Toast.makeText(context, "Register Failed", Toast.LENGTH_SHORT).show();
                 });
 
-
         FirebaseDatabase.getInstance().getReference("HealthTacker")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -108,11 +108,5 @@ public class Connection {
 
                     }
                 });
-
-
     }
-
-
-
-
 }

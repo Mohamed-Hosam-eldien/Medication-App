@@ -7,11 +7,17 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/launch"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicationApp">
+        <activity
+            android:name=".snooze_refill.view.RefillActivity"
+            android:exported="false" />
+        <activity
+            android:name=".snooze_refill.view.SnoozeActivity"
+            android:exported="false" />
         <activity
             android:name=".splash.Splash"
             android:exported="true">
@@ -29,11 +35,8 @@
             android:exported="false" />
         <activity
             android:name=".home.view.MainActivity"
-            android:exported="true">
-        </activity>
-
+            android:exported="true" />
         <activity android:name=".caring.view.AdditionalCare" />
-
     </application>
 
 </manifest>

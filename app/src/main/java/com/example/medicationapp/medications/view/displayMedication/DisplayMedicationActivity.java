@@ -9,30 +9,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.medicationapp.R;
-import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityDisplayMedicationBinding;
 import com.example.medicationapp.databinding.DialogRefillBinding;
-import com.example.medicationapp.home.view.MainActivity;
 import com.example.medicationapp.medications.view.addEditMed.AddEditActivity;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.repository.Repository;
 import com.example.medicationapp.utils.Helper;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayMedicationActivity extends AppCompatActivity {

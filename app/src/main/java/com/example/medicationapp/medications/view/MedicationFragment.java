@@ -31,7 +31,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicationFragment extends Fragment implements MedicationViewInterface{
+public class MedicationFragment extends Fragment implements MedicationViewInterface {
 
     List<Medication> activeList;
     List<Medication> suspendedList;
@@ -45,6 +45,7 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
     ActiveAdapter activeAdapter;
     ActiveAdapter suspendedAdapter;
     MedicationPresenter medicationPresenter;
+
     public MedicationFragment() {
         // Required empty public constructor
     }
@@ -57,15 +58,13 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
         activeList = new ArrayList<>();
         medDetailsList = new ArrayList<>();
         suspendedList = new ArrayList<>();
-
-
         return inflater.inflate(R.layout.fragment_medication, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FloatingActionsMenu floatingActionsMenu= getActivity().findViewById(R.id.flaoting);
+        FloatingActionsMenu floatingActionsMenu = getActivity().findViewById(R.id.flaoting);
         floatingActionsMenu.setVisibility(View.GONE);
         activeRecyclerView = view.findViewById(R.id.recyclerView);
         suspendedRecyclerView = view.findViewById(R.id.suspendedRecyclerView);
@@ -82,29 +81,29 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
         suspendedAdapter = new ActiveAdapter(getContext(), suspendedList, new OnDisplayAdapterClickListener() {
             @Override
             public void onClick(Medication medication) {
-                Intent in=new Intent(getActivity(), DisplayMedicationActivity.class);
-                Bundle b=new Bundle();
-                b.putParcelable("med",medication);
-                in.putExtra("bundle",b);
+                Intent in = new Intent(getActivity(), DisplayMedicationActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("med", medication);
+                in.putExtra("bundle", b);
                 startActivity(in);
 
             }
         });
 
-                activeAdapter = new ActiveAdapter(getContext(), activeList, new OnDisplayAdapterClickListener() {
-                    @Override
-                    public void onClick(Medication medication) {
-                        Intent in = new Intent(getActivity(), DisplayMedicationActivity.class);
-                        Bundle b = new Bundle();
-                        b.putParcelable("med", medication);
-                        in.putExtra("bundle", b);
-                        startActivity(in);
-                    }
-                });
-                activeRecyclerView.setAdapter(activeAdapter);
+        activeAdapter = new ActiveAdapter(getContext(), activeList, new OnDisplayAdapterClickListener() {
+            @Override
+            public void onClick(Medication medication) {
+                Intent in = new Intent(getActivity(), DisplayMedicationActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("med", medication);
+                in.putExtra("bundle", b);
+                startActivity(in);
+            }
+        });
+        activeRecyclerView.setAdapter(activeAdapter);
         suspendedRecyclerView.setAdapter(suspendedAdapter);
 
-        medicationPresenter = new MedicationPresenter(getActivity() ,this);
+        medicationPresenter = new MedicationPresenter(getActivity(), this);
         medicationPresenter.getActiveMedications();
         medicationPresenter.getInActiveMedications();
     }

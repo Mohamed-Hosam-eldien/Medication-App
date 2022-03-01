@@ -128,13 +128,13 @@
                     android:text="Prescription Refill"
                     android:textColor="@color/purple_500" />
 
-                                <Button
-                                    android:id="@+id/showDrugBtnRefill"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignBaseline="@id/showDrugTvPrescriptionTxt"
-                                    android:layout_alignParentEnd="true"
-                                    android:text="refill" />
+                <Button
+                    android:id="@+id/showDrugBtnRefill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/showDrugTvPrescriptionTxt"
+                    android:layout_alignParentEnd="true"
+                    android:text="refill" />
 
                 <TextView
                     android:id="@+id/showDrugTvPrescriptionRefillTxt"

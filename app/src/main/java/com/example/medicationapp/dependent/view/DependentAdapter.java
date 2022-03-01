@@ -82,9 +82,9 @@ public class DependentAdapter extends RecyclerView.Adapter<DependentAdapter.View
             }
         });
 
-        HomeAdapter adapter = new HomeAdapter(medication.getMedicationList(), context, this);
-        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        holder.recyclerView.setAdapter(adapter);
+//        HomeAdapter adapter = new HomeAdapter(medication.getMedicationList(), context, this);
+//        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+//        holder.recyclerView.setAdapter(adapter);
     }
 
     @Override

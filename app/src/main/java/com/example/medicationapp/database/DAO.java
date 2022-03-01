@@ -37,16 +37,19 @@ public interface DAO {
     LiveData<List<Medication>> getAllMedicationWithAllDays();
 
     @Query("update Medication set isActive =:active where name =:medName")
-    void updateActive(int active,String medName);
+    void updateActive(int active, String medName);
+
     @Query("update Medication set totalPills =:amount where name =:medName")
-    void refill(int amount,String medName);
+    void refill(int amount, String medName);
 
     @Query("update Medication set refillNo=:refillNo,isActive=:isActive" +
             ",medDetails=:medDetails,image=:img,midStrength=:midStrength," +
             "timeToFood=:timeToFood,startDate=:startDate,days=:days," +
             "allDays= :allDays where name=:name")
-    void update(String name, int refillNo, int isActive, List<MedDetails>medDetails
-            ,int img,int midStrength,String timeToFood,
-                String startDate,List<String>days,int allDays);
+    void update(String name, int refillNo, int isActive, List<MedDetails> medDetails
+            , int img, int midStrength, String timeToFood,
+                String startDate, List<String> days, int allDays);
 
+    //    @Query("update Medication set =:refillNo-1")
+    //            void updateRefillNo(int refillNo);
 }

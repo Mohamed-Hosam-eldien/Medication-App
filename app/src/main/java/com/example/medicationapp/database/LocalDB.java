@@ -103,7 +103,7 @@ public class LocalDB implements LocalInterface{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                medicationDao.updateActive(amount,medName);
+                medicationDao.refill(amount,medName);
             }
         }).start();
 
