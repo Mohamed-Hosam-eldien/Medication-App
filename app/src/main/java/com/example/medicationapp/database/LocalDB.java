@@ -69,7 +69,7 @@ public class LocalDB implements LocalInterface {
     }
 
     @Override
-    public void update(String id, String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, int current, String startDate, List<String> days, int allDays) {
+    public void update(String id, String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, int current, long startDate, List<String> days, int allDays) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -99,8 +99,8 @@ public class LocalDB implements LocalInterface {
     }
 
     @Override
-    public LiveData<List<Medication>> getMedicationInAllDays() {
-        return medicationDao.getAllMedicationWithAllDays();
+    public LiveData<List<Medication>> getMedicationInAllDays(long date) {
+        return medicationDao.getAllMedicationWithAllDays(date);
     }
 
     public void refill(int amount, String id) {

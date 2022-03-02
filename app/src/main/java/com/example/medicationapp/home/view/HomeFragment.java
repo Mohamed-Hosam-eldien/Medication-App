@@ -63,9 +63,9 @@ public class HomeFragment extends Fragment {
                 .build();
 
         binding.txtToday.setOnClickListener(v -> {
-            Log.d("Current Date : " , Calendar.getInstance()+"");
-            Log.d("Selected Date : " , horizontalCalendar.getSelectedDate()+"");
-            if(!horizontalCalendar.getSelectedDate().equals(Calendar.getInstance())) {
+            Log.d("Current Date : ", Calendar.getInstance() + "");
+            Log.d("Selected Date : ", horizontalCalendar.getSelectedDate() + "");
+            if (!horizontalCalendar.getSelectedDate().equals(Calendar.getInstance())) {
                 horizontalCalendar.selectDate(Calendar.getInstance(), true);
             }
         });
@@ -73,14 +73,12 @@ public class HomeFragment extends Fragment {
 
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
-            public void onDateSelected(Calendar date, int position) {
+            public void onDateSelected(Calendar calendar, int position) {
                 OnDateSelect select = (OnDateSelect) getActivity();
-                select.onDateSelected(Helper.convertLongToDateFormat(date.getTime().getTime()));
+                select.onDateSelected(calendar.getTimeInMillis());
             }
-
             @Override
-            public void onCalendarScroll(HorizontalCalendarView calendarView, int dx, int dy) {}
-        });
+            public void onCalendarScroll(HorizontalCalendarView calendarView, int dx, int dy) {}});
 
     }
 
@@ -88,7 +86,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FloatingActionsMenu floatingActionsMenu= getActivity().findViewById(R.id.flaoting);
+        FloatingActionsMenu floatingActionsMenu = getActivity().findViewById(R.id.flaoting);
         floatingActionsMenu.setVisibility(View.VISIBLE);
     }
 }

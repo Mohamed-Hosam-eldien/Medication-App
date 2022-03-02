@@ -1,6 +1,5 @@
 package com.example.medicationapp.home.view;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
@@ -11,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +33,7 @@ import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.utils.Helper;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HomeMedFragment extends Fragment implements ShowBottomDialog{
@@ -41,11 +42,11 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
 
     HomePresenter presenter;
     Calendar calendar;
-    Bundle b;
+    private HomeAdapter adapter;
+
     public HomeMedFragment() {
         // Required empty public constructor
         calendar = Helper.getCurrentCalender();
-
     }
 
 
@@ -72,102 +73,24 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
         super.onViewCreated(view, savedInstanceState);
         binding.lottieMain.setAnimation(R.raw.pick);
 
-        //calendarr.set(2022, 2, 19, 9, 20);
-//        Date date = calendarr.getTime();
-//        Log.d("TIME", date.getHours() + ":"  +date.getMinutes());
-
-//        List<Medication> medicationList = new ArrayList<>();
-
-
-//        List<String> list = new ArrayList<>();
-//        list.add("sunday");
-//        list.add("friday");
-//
-//        ArrayList<MedDetails> arrayList = new ArrayList<>();
-//        MedScheduler scheduler = new MedScheduler("5/5/2022", list);
-//
-//        calendar = Calendar.getInstance();
-//        calendar.set(2022, 2, 19, 5, 20);
-//        arrayList.add(new MedDetails(calendar,  1, "",0));
-//
-//        calendar = Calendar.getInstance();
-//        calendar.set(2022, 2, 19, 7, 20);
-//        arrayList.add(new MedDetails(calendar,  1, "",0));
-//
-//        calendar = Calendar.getInstance();
-//        calendar.set(2022, 2, 19, 10, 20);
-//        arrayList.add(new MedDetails(calendar,  1, "",0));
-
-
-//        medicationList.add(new Medication("Cold and flow", 4, 1, arrayList, 5,100,"after food","12/5/2022", null, 1));
-
-//
-//        List<String> list2 = new ArrayList<>();
-//        list2.add("sunday");
-//        list2.add("friday");
-//
-//        ArrayList<MedDetails> arrayList2 = new ArrayList<>();
-//        //MedScheduler scheduler2 = new MedScheduler("5/5/2022", list2);
-//
-//        calendar = Calendar.getInstance();
-//        calendar.set(2022, 2, 19, 8, 0);
-//        arrayList2.add(new MedDetails(calendar,  1, "",0));
-//
-//        calendar = Calendar.getInstance();
-//        calendar.set(2022, 2, 19, 16, 0);
-//        arrayList2.add(new MedDetails(calendar,  1, "",0));
-//
-//        calendar = Calendar.getInstance();
-//        calendar.set(2022, 2, 19, 24, 0);
-//        arrayList2.add(new MedDetails(calendar,  1, "",0));
-
-
-        ///////////////////////////////////////////////////////////
-
-
-//
-//        ArrayList<MedDetails> arrayList3 = new ArrayList<>();
-//        //MedScheduler scheduler2 = new MedScheduler("5/5/2022", list2);
-//
-//        calendar = Calendar.getInstance();
-//        calendar.set(2022, 2, 19, 8, 0);
-//        arrayList3.add(new MedDetails(calendar,  1, "",0));
-//
-//        calendar = Calendar.getInstance();
-//        calendar.set(2022, 2, 19, 16, 0);
-//        arrayList3.add(new MedDetails(calendar,  1, "",0));
-//
-//        calendar = Calendar.getInstance();
-//        calendar.set(2022, 2, 19, 24, 0);
-//        arrayList3.add(new MedDetails(calendar,  1, "",0));
-//
-////        medicationList.add(new Medication("Go to hell", 3, 1,
-////                arrayList3, 100,"before food","11/3/2022", null, 0));
-//
-//        presenter.addMedication(medicationList.get(0));
-//        presenter.addMedication(medicationList.get(1));
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        getDate(null, getActivity());
-
+        getDate(Calendar.getInstance().getTimeInMillis(), getActivity());
     }
 
-    public void getDate(String date, LifecycleOwner lifecycleOwner) {
-        //Log.d("DATE 1 : " , date);
-        //Log.d("DATE 2 : " , Helper.convertLongToDateFormat(calendar.getTime().getTime()));
-
-        presenter.getMedicationListByAllDay().observe(lifecycleOwner, medications -> {
-            if (medications.size() > 0) {
-                HomeAdapter adapter = new HomeAdapter(medications, getActivity(), this);
-                binding.homeRecyclerMid.setLayoutManager(new LinearLayoutManager(getActivity()));
-                binding.homeRecyclerMid.setAdapter(adapter);
-                binding.lottieMain.setVisibility(View.GONE);
-            } else {
-                binding.lottieMain.setVisibility(View.VISIBLE);
-            }
-        });
+    public void getDate(long currentDate, LifecycleOwner lifecycleOwner) {
+        Log.d("CURRENT DATE : " , currentDate+"");
+        HomeAdapter adapter = new HomeAdapter(new ArrayList<>(), getActivity(), this);
+        presenter.getMedicationListByAllDay(currentDate).observe(lifecycleOwner, medications -> {
+                if (medications.size() > 0) {
+                    adapter.setList(medications);
+                    binding.homeRecyclerMid.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    binding.homeRecyclerMid.setAdapter(adapter);
+                    binding.lottieMain.setVisibility(View.GONE);
+                } else {
+                    binding.lottieMain.setVisibility(View.VISIBLE);
+                    adapter.setList(new ArrayList<>());
+                    adapter.notifyDataSetChanged();
+                }
+            });
 
     }
 
@@ -181,27 +104,24 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
     @Override
     public void showMedDialog(MedDetails detail, Medication medication) {
         Dialog dialog = new Dialog(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_bottom_dialog, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_bottom_dialog,null);
         dialog.setContentView(view);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         HomeBottomDialogBinding dialogBinding = HomeBottomDialogBinding.bind(view);
         dialogBinding.txtName.setText(medication.getName());
-        dialogBinding.txtTime.setText("take at " + getRemainingTime(detail.getTime()));
-        dialogBinding.txtDose.setText("Take " + detail.getDose() + " " + medication.getTimeToFood());
+        dialogBinding.txtTime.setText(new StringBuilder(getString(R.string.take_at)).append(getRemainingTime(detail.getTime())));
+        dialogBinding.txtDose.setText(new StringBuilder(getString(R.string.take))
+                .append(detail.getDose())
+                .append(" ")
+                .append(medication.getTimeToFood()));
 
-        dialogBinding.imgInfo.setOnClickListener(view1 -> {
-           navigateToInfo(medication);
-        });
+        dialogBinding.imgInfo.setOnClickListener(view1 -> navigateToInfo(medication));
 
-        dialogBinding.imgEdit.setOnClickListener(view1 -> {
-            navigateToInfo(medication);
-        });
+        dialogBinding.imgEdit.setOnClickListener(view1 -> navigateToInfo(medication));
 
-        dialogBinding.imgDelete.setOnClickListener(view1 -> {
-            showBackDialog(medication);
+        dialogBinding.imgDelete.setOnClickListener(view1 -> showBackDialog(medication));
 
-        });
         dialogBinding.btnTakeDialog.setOnClickListener(view1 -> {
             presenter.updateRefill(medication.getTotalPills() - 1, medication.getId());
             if (medication.getTotalPills() <= medication.getRefillNo()) {
@@ -264,8 +184,7 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
         startActivity(in);
     }
 
-    void showBackDialog(Medication medication)
-    {
+    void showBackDialog(Medication medication) {
         AlertDialog.Builder dialog=new AlertDialog.Builder(getContext());
         dialog.setTitle("Are you sure Delete Medicine ?").setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
@@ -276,12 +195,9 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
         dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
         });
-
         dialog.show();
-
     }
  /*   private void snoozeIntent(PendingIntent s) {
         Intent snoozeIntent = new Intent(getContext(), SnoozeActivity.class);

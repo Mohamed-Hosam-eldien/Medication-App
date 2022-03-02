@@ -10,7 +10,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import io.paperdb.Paper;
 
@@ -54,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         Paper.init(this);
         presenter = new CaringPresenter(this);
 
+        checkOverlayPermission();
+
         addData();
 
         initNavController();
@@ -65,6 +72,18 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         initFabButton();
 
         setUserDetails();
+    }
+
+    // method to ask user to grant the Overlay permission
+    public void checkOverlayPermission(){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                // send user to the device settings
+                Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                startActivity(myIntent);
+            }
+        }
     }
 
     private void addData() {
@@ -129,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
     }
 
     @Override
-    public void onDateSelected(String date) {
+    public void onDateSelected(long date) {
         homeMedFragment.getDate(date, this);
     }
 

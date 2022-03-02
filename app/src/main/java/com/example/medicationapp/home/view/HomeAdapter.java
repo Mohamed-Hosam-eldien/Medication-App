@@ -19,7 +19,7 @@ import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> implements  ClickToMed {
 
-    private final List<Medication> medicationList;
+    private List<Medication> medicationList;
     private final Context context;
     ShowBottomDialog bottomDialog;
     Medication medication;
@@ -76,4 +76,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
             recyclerView = itemView.findViewById(R.id.recyclerMedicine);
         }
     }
+
+    public void setList(List<Medication> list) {
+        medicationList = list;
+        notifyDataSetChanged();
+    }
+
 }

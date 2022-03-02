@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/transBlack">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="45sp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:src="@drawable/popup_pill" />
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:text="@string/hello_it_s_time_to_take_your_med"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:text="05:20"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="@dimen/_12sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="cold and flow"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_18sdp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txtDose"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="take 1 dose"
+                                android:textSize="@dimen/_16sdp" />
+
+                            <TextView
+                                android:id="@+id/txtFood"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="before eating"
+                                android:textSize="@dimen/_16sdp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:orientation="horizontal">
+
+
+                        <Button
+                            android:id="@+id/btnSnooze"
+                            android:layout_width="65dp"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/_16sdp"
+                            android:drawableStart="@drawable/ic_baseline_snooze_24"
+                            android:background="@drawable/round_button_blue"/>
+
+                        <Button
+                            android:id="@+id/btnTake"
+                            android:layout_width="65dp"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_16sdp"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:drawableStart="@drawable/ic_baseline_done_all_24"
+                            android:background="@drawable/round_button"/>
+
+
+                        <Button
+                            android:id="@+id/btnRefuse"
+                            android:layout_width="65dp"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/_16sdp"
+                            android:drawableStart="@drawable/ic_baseline_clear_24"
+                            android:background="@drawable/round_button_red"/>
+
+
+
+                    </LinearLayout>
+
+                    <net.cachapa.expandablelayout.ExpandableLayout
+                        android:id="@+id/expandLayoutSnooze"
+                        app:el_duration="500"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:padding="@dimen/_8sdp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                            <RadioGroup
+                                android:id="@+id/radioAddSnooze"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/snooze1Minute"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/snooze_1_minute" />
+
+                                <RadioButton
+                                    android:id="@+id/snooze5Minutes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/snooze_5_minutes" />
+
+
+                                <RadioButton
+                                    android:id="@+id/snooze15Minutes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/snooze_15_minutes" />
+
+
+                            </RadioGroup>
+
+
+                            <Button
+                                android:id="@+id/btnSnoozeNow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="16dp"
+                                android:backgroundTint="@color/purple_700"
+                                android:text="@string/snooze"/>
+
+                        </LinearLayout>
+
+
+                    </net.cachapa.expandablelayout.ExpandableLayout>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

@@ -86,7 +86,7 @@ public class Helper {
 
     @SuppressLint("SimpleDateFormat")
     public static String convertLongToDateFormat(long time) {
-        return new SimpleDateFormat("MM/dd/yyyy").format(new Date(time));
+        return new SimpleDateFormat("yyyy/MM/dd").format(new Date(time));
     }
 
     public static int convertLongToHours(long milliseconds) {

@@ -37,8 +37,8 @@ public interface DAO {
     @Query("Select * FROM Medication WHERE isActive = 0")
     public LiveData<List<Medication>> getInActiveMedicines();
 
-    @Query("Select * FROM Medication where allDays = 1 and isActive = 1")
-    LiveData<List<Medication>> getAllMedicationWithAllDays();
+    @Query("Select * FROM Medication where allDays = 1 and isActive = 1 and startDate <=:currentDate")
+    LiveData<List<Medication>> getAllMedicationWithAllDays(long currentDate);
 
     @Query("update Medication set isActive =:active where id =:id")
     void updateActive(int active,String id);
@@ -51,8 +51,6 @@ public interface DAO {
             "allDays= :allDays where id=:id")
     void update(String id,String name, int refillNo, int isActive, List<MedDetails>medDetails
             ,int img,int midStrength,String timeToFood,int current,
-                String startDate,List<String>days,int allDays);
+                long startDate,List<String>days,int allDays);
 
-    //    @Query("update Medication set =:refillNo-1")
-    //            void updateRefillNo(int refillNo);
 }
