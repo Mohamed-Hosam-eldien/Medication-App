@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.utils.Helper;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HomeMedFragment extends Fragment implements ShowBottomDialog{
@@ -40,6 +42,7 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
 
     HomePresenter presenter;
     Calendar calendar;
+    private HomeAdapter adapter;
 
     public HomeMedFragment() {
         // Required empty public constructor
@@ -75,17 +78,17 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
 
     public void getDate(long currentDate, LifecycleOwner lifecycleOwner) {
         Log.d("CURRENT DATE : " , currentDate+"");
-
+        HomeAdapter adapter = new HomeAdapter(new ArrayList<>(), getActivity(), this);
         presenter.getMedicationListByAllDay(currentDate).observe(lifecycleOwner, medications -> {
                 if (medications.size() > 0) {
-                    adapter = new HomeAdapter(medications, getActivity(), this);
+                    adapter.setList(medications);
                     binding.homeRecyclerMid.setLayoutManager(new LinearLayoutManager(getActivity()));
                     binding.homeRecyclerMid.setAdapter(adapter);
                     binding.lottieMain.setVisibility(View.GONE);
                 } else {
                     binding.lottieMain.setVisibility(View.VISIBLE);
-                    adapter.notifyDataSetChanged();
                     adapter.setList(new ArrayList<>());
+                    adapter.notifyDataSetChanged();
                 }
             });
 
@@ -113,18 +116,12 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
                 .append(" ")
                 .append(medication.getTimeToFood()));
 
-        dialogBinding.imgInfo.setOnClickListener(view1 -> {
-           navigateToInfo(medication);
-        });
+        dialogBinding.imgInfo.setOnClickListener(view1 -> navigateToInfo(medication));
 
-        dialogBinding.imgEdit.setOnClickListener(view1 -> {
-            navigateToInfo(medication);
-        });
+        dialogBinding.imgEdit.setOnClickListener(view1 -> navigateToInfo(medication));
 
-        dialogBinding.imgDelete.setOnClickListener(view1 -> {
-            showBackDialog(medication);
+        dialogBinding.imgDelete.setOnClickListener(view1 -> showBackDialog(medication));
 
-        });
         dialogBinding.btnTakeDialog.setOnClickListener(view1 -> {
             presenter.updateRefill(medication.getTotalPills() - 1, medication.getId());
             if (medication.getTotalPills() <= medication.getRefillNo()) {
@@ -187,8 +184,7 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
         startActivity(in);
     }
 
-    void showBackDialog(Medication medication)
-    {
+    void showBackDialog(Medication medication) {
         AlertDialog.Builder dialog=new AlertDialog.Builder(getContext());
         dialog.setTitle("Are you sure Delete Medicine ?").setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
@@ -199,12 +195,9 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
         dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
         });
-
         dialog.show();
-
     }
  /*   private void snoozeIntent(PendingIntent s) {
         Intent snoozeIntent = new Intent(getContext(), SnoozeActivity.class);

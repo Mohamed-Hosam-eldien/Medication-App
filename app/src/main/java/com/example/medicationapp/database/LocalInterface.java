@@ -19,7 +19,7 @@ public interface LocalInterface {
 
     void update(String id,String name, int refillNo, int isActive, List<MedDetails>medDetails
             ,int img,int midStrength,String timeToFood,int current,
-                String startDate,List<String>days,int allDays);
+                long startDate,List<String>days,int allDays);
 
     LiveData<List<Medication>> getAllMedications();
 

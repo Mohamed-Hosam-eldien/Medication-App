@@ -42,11 +42,9 @@ public class Medication implements Parcelable {
     public Medication() {
     }
 
-    public Medication(@NonNull String name, int refillNo, int isActive, List<MedDetails> medDetails, int image
-            , int midStrength, String timeToFood, long startDate, List<String> days, int allDays, int totalPills) {
     public Medication(@NonNull String id, @NonNull String name, int refillNo, int isActive,
                       List<MedDetails> medDetails, int image, int midStrength, String timeToFood,
-                      String startDate, List<String> days, int allDays, int totalPills) {
+                      long startDate, List<String> days, int allDays, int totalPills) {
         this.id = id;
         this.name = name;
         this.refillNo = refillNo;

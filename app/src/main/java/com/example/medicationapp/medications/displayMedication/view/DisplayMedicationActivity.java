@@ -1,4 +1,4 @@
-package com.example.medicationapp.medications.view.displayMedication;
+package com.example.medicationapp.medications.displayMedication.view;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +33,7 @@ import com.example.medicationapp.utils.Helper;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DisplayMedicationActivity extends AppCompatActivity {
@@ -162,7 +163,10 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         setDayToTextView(medication.getAllDays(), medication.getDays());
         setTextToPrescriptionTV(0, medication.getRefillNo());
         setTextToHowtoUseTv(medication.getTimeToFood());
-        binding.showDrugStartDate.setText(medication.getStartDate());
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        binding.showDrugStartDate.setText(format.format(medication.getStartDate()));
+
         binding.showDrugStrength.setText(medication.getMidStrength() + "");
         binding.displayCurrentPillsTv.setText(medication.getTotalPills() + "");
 

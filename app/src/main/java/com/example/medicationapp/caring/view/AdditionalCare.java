@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.caring.presenter.CaringPresenter;
+import com.example.medicationapp.databinding.InfoDialogBinding;
 import com.example.medicationapp.databinding.RegisterDialogBinding;
 import com.example.medicationapp.home.presenter.HomePresenter;
 import com.example.medicationapp.model.Request;
@@ -28,9 +29,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import io.paperdb.Paper;
 
-public class AdditionalCare extends AppCompatActivity {
+public class AdditionalCare extends AppCompatActivity implements CaringViewInterface{
 
     BottomSheetDialog bottomSheetDialog;
     EditText edtEmail;
@@ -95,13 +98,10 @@ public class AdditionalCare extends AppCompatActivity {
                 if (!edtEmail.getText().toString().equals(Paper.book().read(Common.emailUserPaper))) {
                     if (checkUserRegistration()) {
                         bottomSheetDialog.show();
-//                        showInfoDialog();
-//                        sendRequest();
                     }
                 } else {
                     Toast.makeText(this, "you can't send request to your email", Toast.LENGTH_SHORT).show();
                 }
-                //sendToEmail();
             } else {
                 Toast.makeText(AdditionalCare.this, "network Failed", Toast.LENGTH_SHORT).show();
             }
