@@ -50,12 +50,23 @@
         <entry key="..\:/android_studio_projects/MedicationApp/app/src/main/res/layout/layout_nav_include.xml" value="0.171875" />
         <entry key="..\:/android_studio_projects/MedicationApp/app/src/main/res/menu/app_menu.xml" value="0.171875" />
         <entry key="..\:/android_studio_projects/MedicationApp/app/src/main/res/menu/bar_menu.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable-v24/round_button_blue.xml" value="0.163" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable-v24/round_button_red.xml" value="0.163" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/btn_menu_home.xml" value="0.174" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/ic_baseline_snooze_24.xml" value="0.1845" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/round_button.xml" value="0.163" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/rounded_rectangle.xml" value="0.1695" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_add_edit.xml" value="0.20754716981132076" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_additional_care.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_main.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/fragment_home_med.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/home_mid_layout.xml" value="0.25" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/layout_nav_include.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/popup_med_layout.xml" value="0.22" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/register_dialog.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/snooze_layout.xml" value="0.25" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/menu/add_edit_menu.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/menu/bar_menu.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/menu/btn_menu.xml" value="0.171875" />
       </map>

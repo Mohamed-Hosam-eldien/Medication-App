@@ -23,7 +23,7 @@ public class Medication implements Parcelable {
     private int image;
     private int midStrength;
     private String timeToFood;
-    private String startDate;
+    private long startDate;
     private List <String> days;
     private int allDays;
     int totalPills;
@@ -41,7 +41,7 @@ public class Medication implements Parcelable {
     }
 
     public Medication(@NonNull String name, int refillNo, int isActive, List<MedDetails> medDetails, int image
-            , int midStrength, String timeToFood, String startDate, List<String> days, int allDays, int totalPills) {
+            , int midStrength, String timeToFood, long startDate, List<String> days, int allDays, int totalPills) {
         this.name = name;
         this.refillNo = refillNo;
         this.isActive = isActive;
@@ -77,11 +77,11 @@ public class Medication implements Parcelable {
         this.allDays = allDays;
     }
 
-    public String getStartDate() {
+    public long getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(long startDate) {
         this.startDate = startDate;
     }
 
@@ -172,7 +172,7 @@ public class Medication implements Parcelable {
         dest.writeInt(this.image);
         dest.writeInt(this.midStrength);
         dest.writeString(this.timeToFood);
-        dest.writeString(this.startDate);
+        dest.writeLong(this.startDate);
         dest.writeStringList(this.days);
         dest.writeInt(this.allDays);
         dest.writeInt(this.totalPills);
@@ -187,7 +187,7 @@ public class Medication implements Parcelable {
         this.image = source.readInt();
         this.midStrength = source.readInt();
         this.timeToFood = source.readString();
-        this.startDate = source.readString();
+        this.startDate = source.readLong();
         this.days = source.createStringArrayList();
         this.allDays = source.readInt();
         this.totalPills = source.readInt();
@@ -197,12 +197,12 @@ public class Medication implements Parcelable {
         this.name = in.readString();
         this.refillNo = in.readInt();
         this.isActive = in.readInt();
-        this.medDetails = new ArrayList<MedDetails>();
+        this.medDetails = new ArrayList<>();
         in.readList(this.medDetails, MedDetails.class.getClassLoader());
         this.image = in.readInt();
         this.midStrength = in.readInt();
         this.timeToFood = in.readString();
-        this.startDate = in.readString();
+        this.startDate = in.readLong();
         this.days = in.createStringArrayList();
         this.allDays = in.readInt();
         this.totalPills = in.readInt();

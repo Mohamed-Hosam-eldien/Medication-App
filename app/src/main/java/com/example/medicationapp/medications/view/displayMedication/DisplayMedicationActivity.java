@@ -32,6 +32,7 @@ import com.example.medicationapp.repository.Repository;
 import com.example.medicationapp.utils.Helper;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,7 +155,9 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         setDayToTextView(medication.getAllDays(), medication.getDays());
         setTextToPrescriptionTV(0, medication.getRefillNo());
         setTextToHowtoUseTv(medication.getTimeToFood());
-        binding.showDrugStartDate.setText(medication.getStartDate());
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        binding.showDrugStartDate.setText(format.format(medication.getStartDate()));
         binding.showDrugStrength.setText(medication.getMidStrength() + "");
         binding.displayCurrentPillsTv.setText(medication.getTotalPills() + "");
 

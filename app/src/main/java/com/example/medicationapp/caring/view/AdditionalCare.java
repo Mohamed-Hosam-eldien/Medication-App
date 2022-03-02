@@ -73,6 +73,7 @@ public class AdditionalCare extends AppCompatActivity {
         }
     }
 
+
     private void sendRequest() {
         HomePresenter homePresenter = new HomePresenter(AdditionalCare.this);
         homePresenter.getMedicationList().observe(AdditionalCare.this, medications -> {

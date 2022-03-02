@@ -45,7 +45,7 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public void update(String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, String startDate, List<String> days, int allDays) {
+    public void update(String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, long startDate, List<String> days, int allDays) {
         localDB.update(name, refillNo, isActive, medDetails, img, midStrength, timeToFood, startDate, days, allDays);
     }
 
@@ -70,8 +70,8 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public LiveData<List<Medication>> getAllMedicationInAllDay() {
-        return localDB.getMedicationInAllDays();
+    public LiveData<List<Medication>> getAllMedicationInAllDay(long currentDay) {
+        return localDB.getMedicationInAllDays(currentDay);
     }
 
     @Override

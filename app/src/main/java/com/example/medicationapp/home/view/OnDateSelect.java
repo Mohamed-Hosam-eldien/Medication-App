@@ -1,5 +1,5 @@
 package com.example.medicationapp.home.view;
 
 public interface OnDateSelect {
-    void onDateSelected(String calendar);
+    void onDateSelected(long date);
 }

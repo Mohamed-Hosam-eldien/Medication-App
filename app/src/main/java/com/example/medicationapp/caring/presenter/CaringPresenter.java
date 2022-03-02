@@ -20,14 +20,6 @@ public class CaringPresenter implements NetworkInterface {
         //this.repository = Repository.getInstance(context);
         connection = Connection.getInstance(this, context);
     }
-//
-//    public void sendRequest(Request request) {
-//        repository.onSendRequest(request);
-//    }
-//
-//    public void saveUserData(User user) {
-//        repository.onSaveUserData(user);
-//    }
 
     @Override
     public void onSendRequest(Request request) {

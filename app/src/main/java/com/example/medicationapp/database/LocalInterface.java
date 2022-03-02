@@ -17,7 +17,7 @@ public interface LocalInterface {
 
     void update(String name, int refillNo, int isActive, List<MedDetails>medDetails
             ,int img,int midStrength,String timeToFood,
-                String startDate,List<String>days,int allDays);
+                long startDate,List<String>days,int allDays);
 
     LiveData<List<Medication>> getAllMedications();
 
@@ -27,7 +27,7 @@ public interface LocalInterface {
 
     LiveData<List<Medication>> getAllInActiveMedicines();
 
-    LiveData<List<Medication>> getMedicationInAllDays();
+    LiveData<List<Medication>> getMedicationInAllDays(long currentDay);
 
     void refill(int amount,String medName);
 

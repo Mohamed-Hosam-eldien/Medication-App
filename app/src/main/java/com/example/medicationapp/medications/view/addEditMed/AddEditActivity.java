@@ -1,15 +1,19 @@
 package com.example.medicationapp.medications.view.addEditMed;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.work.Data;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,26 +28,24 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.medicationapp.R;
-import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityAddEditBinding;
 import com.example.medicationapp.medications.view.addEditMed.model.ReminderTime;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
+import com.example.medicationapp.utils.TimerWorker;
 
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class AddEditActivity extends AppCompatActivity {
     ActivityAddEditBinding binding;
 
-    LocalDB localDB;
     int comeFrom, medStrength, noDays = 0, totalAmount = 0;
     Medication medication, medFroEdit;
     MedDetails medDetails;
@@ -101,8 +103,7 @@ public class AddEditActivity extends AppCompatActivity {
         binding.addMedScheduleStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                calendarFroDate = showDateDialog();
+                showDateDialog();
             }
         });
 
@@ -124,13 +125,10 @@ public class AddEditActivity extends AppCompatActivity {
         });
 
 
-
-
         binding.addMedRBtnSpecificDays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (comeFrom == 3) {
-
                     showSpecificDaysDialog(medFroEdit.getDays());
                 } else
                     showSpecificDaysDialog(null);
@@ -197,13 +195,15 @@ public class AddEditActivity extends AppCompatActivity {
             binding.addToolbar.setTitle("Edit Medication");
             setDataToInputField(medFroEdit);
             binding.addMedEtMedName.setEnabled(false);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH); //yyyy-MM-dd
             noDays=medFroEdit.getAllDays();
-            try {
-                calendarFroDate.setTime(sdf.parse(medFroEdit.getStartDate()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            //try {
+                //calendarFroDate.setTime(sdf.parse(medFroEdit.getStartDate()));
+                calendarFroDate.setTimeInMillis(medFroEdit.getStartDate());
+                //calendarFroDate.setTime(medFroEdit.getStartDate());
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
@@ -215,7 +215,6 @@ public class AddEditActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        localDB = LocalDB.getInstance(this);
         switch (item.getItemId()) {
             case R.id.addEditMenuSave: {
                collectDataFromUser();
@@ -288,19 +287,53 @@ public class AddEditActivity extends AppCompatActivity {
             medication.setTotalPills(totalAmount);
             if (days.size() > 0)
                 medication.setDays(days);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            medication.setStartDate(sdf.format(calendarFroDate.getTime()));
+            //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            //medication.setStartDate(sdf.format(calendarFroDate.getTime()));
+            medication.setStartDate(removeAllHours(calendarFroDate));
+
+            long[] listOfTimes = new long[reminderTimes.size()];
+
+            int i=0;
+
             for (ReminderTime r : reminderTimes) {
+
                 Calendar c = Calendar.getInstance();
-                c.set(calendarFroDate.getTime()
-                        .getYear(), calendarFroDate.getTime()
-                        .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
+
+                c.setTime(calendarFroDate.getTime());
+                c.set(Calendar.HOUR_OF_DAY, r.getHour());
+                c.set(Calendar.MINUTE, r.getMinute());
+
+                Log.d("Calender Time2", c.getTimeInMillis() + "");
+
                 medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
+
+                // work manager
+                listOfTimes[i] = c.getTimeInMillis();
+                i+=1;
             }
+            Log.d("Before : ", listOfTimes[0]  + "");
             medication.setMedDetails(medDetails1);
+
+            WorkRequest saveRequest =
+                    new PeriodicWorkRequest.Builder(TimerWorker.class,
+                            24, TimeUnit.HOURS)
+                            .setInputData(
+                                    new Data.Builder()
+                                            .putLongArray("times",listOfTimes)
+                                            .putString("medName", medName)
+                                            .putInt("dose", medication.getMedDetails().get(0).getDose())
+                                            .putString("medFood", medication.getTimeToFood())
+                                            .build()
+                            )
+                            .addTag(medName)
+                            .build();
+
+            WorkManager.getInstance(this).enqueue(saveRequest);
+
             AddEditPresenter presenter=new AddEditPresenter(this);
             if (comeFrom == 1||comeFrom==2) {
                 presenter.insertMedication(medication);
+                Log.d("TAG", "inserted time : " + medication.getStartDate());
                 Toast.makeText(this, "insert", Toast.LENGTH_SHORT).show();
             }
             else{
@@ -317,12 +350,22 @@ public class AddEditActivity extends AppCompatActivity {
 
     }
 
+    private long removeAllHours(Calendar calendar) {
+        calendar.set(Calendar.HOUR,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        return calendar.getTimeInMillis();
+    }
+
     void showTimeDialog(ReminderTime time, int index) {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_time, null);
         TextView btnPlus = view.findViewById(R.id.dialogTimeBtnPlus);
         TextView btnMinus = view.findViewById(R.id.dialogTimeBtnMinus);
         EditText etAmout = view.findViewById(R.id.dialogTimeEtNumber);
         TimePicker timePicker = view.findViewById(R.id.dialogTimePicker);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             timePicker.setHour(time.getHour());
@@ -342,6 +385,7 @@ public class AddEditActivity extends AppCompatActivity {
                     etAmout.setText((Integer.parseInt(etAmout.getText().toString()) - 1) + "");
             }
         });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view).setTitle("When do you need to take this dose ?").
                 setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -368,8 +412,8 @@ public class AddEditActivity extends AppCompatActivity {
         }
     }
 
-    private Calendar showDateDialog() {
-        Calendar calendar = Calendar.getInstance();
+    private void showDateDialog() {
+        //Calendar calendar = Calendar.getInstance();
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_date_picker_view, null);
         DatePicker datePicker = view.findViewById(R.id.addDatePicker);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -380,13 +424,15 @@ public class AddEditActivity extends AppCompatActivity {
         }).setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+                calendarFroDate.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth()); //calender and return calender
+
+                Log.d("Calender 4" , calendarFroDate.getTimeInMillis()+"");
+
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                String dateString = sdf.format(calendar.getTime());
+                String dateString = sdf.format(calendarFroDate.getTime());
                 binding.addMedScheduleStartDate.setText(dateString);
             }
         }).show();
-        return calendar;
     }
 
     private void showNoDaysDialog() {
@@ -516,7 +562,10 @@ public class AddEditActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         binding.addMedEtStrength.setText(medication.getMidStrength() + "");
         binding.addMedNoPillToRemind.setText(medication.getRefillNo() + "");
-        binding.addMedScheduleStartDate.setText(medication.getStartDate());
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        binding.addMedScheduleStartDate.setText(format.format(medication.getStartDate()));
+
         if (medication.getAllDays() == 1)
             binding.addMedRBtnEveryDay.setChecked(true);
         else {

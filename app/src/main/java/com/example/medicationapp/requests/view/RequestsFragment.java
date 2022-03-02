@@ -91,7 +91,6 @@ public class RequestsFragment extends Fragment {
                     holder.Description.setText(model.getDescription());
                     holder.btnReject.setOnClickListener(View -> {
                         firebaseRecyclerAdapter.getRef(position).removeValue();
-
                     });
                     holder.btnAccept.setOnClickListener(view -> {
                         firebaseRecyclerAdapter.getRef(position).child("request").setValue(true);

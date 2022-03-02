@@ -14,7 +14,7 @@ public class LocalDB implements LocalInterface{
     DAO medicationDao;
     Context context;
     DatabaseBuilder databaseBuilder;
-    private LiveData<List<Medication>> allMedications;
+    private final LiveData<List<Medication>> allMedications;
     private static LocalDB localDB = null;
 
     private LocalDB(Context context){
@@ -64,7 +64,7 @@ public class LocalDB implements LocalInterface{
     }
 
     @Override
-    public void update(String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, String startDate, List<String> days, int allDays) {
+    public void update(String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, long startDate, List<String> days, int allDays) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -94,8 +94,8 @@ public class LocalDB implements LocalInterface{
     }
 
     @Override
-    public LiveData<List<Medication>> getMedicationInAllDays() {
-        return medicationDao.getAllMedicationWithAllDays();
+    public LiveData<List<Medication>> getMedicationInAllDays(long currentDay) {
+        return medicationDao.getAllMedicationWithAllDays(currentDay);
     }
 
     public void refill(int amount, String medName)
