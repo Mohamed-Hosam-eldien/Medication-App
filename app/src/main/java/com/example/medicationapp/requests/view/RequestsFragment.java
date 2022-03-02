@@ -45,7 +45,6 @@ public class RequestsFragment extends Fragment implements OnRequestClick {
     FirebaseRecyclerAdapter<Request, RecyclerView.ViewHolder> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Request> firebaseRecyclerOptions;
     RecyclerView.LayoutManager layoutManager;
-    //    RecyclerView.Adapter adapter;
     RecyclerView recyclerView;
     List<Request> myList;
     Request request;
@@ -66,6 +65,7 @@ public class RequestsFragment extends Fragment implements OnRequestClick {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_requests, container, false);
         recyclerView = view.findViewById(R.id.requestRecycler);
         cardArraySize = view.findViewById(R.id.cardArraySize);

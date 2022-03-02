@@ -37,8 +37,8 @@ public class HomePresenter {
         return repository.getAllMedications();
     }
 
-    public LiveData<List<Medication>> getMedicationListByAllDay() {
-        return repository.getAllMedicationInAllDay();
+    public LiveData<List<Medication>> getMedicationListByAllDay(long currentDay) {
+        return repository.getAllMedicationInAllDay(currentDay);
     }
 
     public void updateRefill(int amount, String name){

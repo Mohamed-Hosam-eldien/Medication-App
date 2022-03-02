@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.medicationapp.R;
-import com.example.medicationapp.medications.presenter.MedicationPresenter;
 import com.example.medicationapp.medications.displayMedication.view.DisplayMedicationActivity;
+import com.example.medicationapp.medications.presenter.MedicationPresenter;
 
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.MedScheduler;

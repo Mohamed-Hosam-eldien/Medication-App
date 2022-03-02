@@ -20,7 +20,7 @@ public interface RepositoryInterface {
 
     void update(String id,String name, int refillNo, int isActive, List<MedDetails>medDetails
             ,int img,int midStrength,String timeToFood,int current,
-                String startDate,List<String>days,int allDays);
+                long startDate,List<String>days,int allDays);
 
     public LiveData<List<Medication>> getAllMedications();
 
@@ -30,7 +30,7 @@ public interface RepositoryInterface {
 
     public LiveData<List<Medication>> getInActiveMedicines();
 
-    LiveData<List<Medication>> getAllMedicationInAllDay();
+    LiveData<List<Medication>> getAllMedicationInAllDay(long currentDay);
 
     void refill(int amount,String id);
 

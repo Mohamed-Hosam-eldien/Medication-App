@@ -7,14 +7,10 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,7 +20,6 @@ import com.example.medicationapp.caring.presenter.CaringPresenter;
 import com.example.medicationapp.databinding.InfoDialogBinding;
 import com.example.medicationapp.databinding.RegisterDialogBinding;
 import com.example.medicationapp.home.presenter.HomePresenter;
-import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
@@ -36,11 +31,9 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.util.Objects;
-
 import io.paperdb.Paper;
 
-public class AdditionalCare extends AppCompatActivity implements CaringViewInterface {
+public class AdditionalCare extends AppCompatActivity implements CaringViewInterface{
 
     BottomSheetDialog bottomSheetDialog;
     EditText edtEmail;
@@ -105,13 +98,10 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
                 if (!edtEmail.getText().toString().equals(Paper.book().read(Common.emailUserPaper))) {
                     if (checkUserRegistration()) {
                         bottomSheetDialog.show();
-//                        showInfoDialog();
-//                        sendRequest();
                     }
                 } else {
                     Toast.makeText(this, "you can't send request to your email", Toast.LENGTH_SHORT).show();
                 }
-                //sendToEmail();
             } else {
                 Toast.makeText(AdditionalCare.this, "network Failed", Toast.LENGTH_SHORT).show();
             }

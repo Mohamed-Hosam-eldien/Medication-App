@@ -25,7 +25,7 @@ public class Medication implements Parcelable {
     private int image;
     private int midStrength;
     private String timeToFood;
-    private String startDate;
+    private long startDate;
     private List <String> days;
     private int allDays;
     int totalPills;
@@ -44,7 +44,7 @@ public class Medication implements Parcelable {
 
     public Medication(@NonNull String id, @NonNull String name, int refillNo, int isActive,
                       List<MedDetails> medDetails, int image, int midStrength, String timeToFood,
-                      String startDate, List<String> days, int allDays, int totalPills) {
+                      long startDate, List<String> days, int allDays, int totalPills) {
         this.id = id;
         this.name = name;
         this.refillNo = refillNo;
@@ -58,6 +58,20 @@ public class Medication implements Parcelable {
         this.allDays = allDays;
         this.totalPills = totalPills;
     }
+//    public Medication(@NonNull String name, int refillNo, int isActive,
+//                      List<MedDetails> medDetails, int midStrength,
+//                      String timeToFood, String startDate, List<String> days, int allDays) {
+//        this.name = name;
+//        this.refillNo = refillNo;
+//        this.isActive = isActive;
+//        this.medDetails = medDetails;
+//        this.midStrength = midStrength;
+//        this.timeToFood = timeToFood;
+//        this.startDate = startDate;
+//        this.days = days;
+//        this.allDays = allDays;
+//    }
+
 
     public int getAllDays() {
         return allDays;
@@ -67,11 +81,11 @@ public class Medication implements Parcelable {
         this.allDays = allDays;
     }
 
-    public String getStartDate() {
+    public long getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(long startDate) {
         this.startDate = startDate;
     }
 
@@ -167,11 +181,11 @@ public class Medication implements Parcelable {
         dest.writeString(this.name);
         dest.writeInt(this.refillNo);
         dest.writeInt(this.isActive);
-        dest.writeTypedList(this.medDetails);
+        dest.writeList(this.medDetails);
         dest.writeInt(this.image);
         dest.writeInt(this.midStrength);
         dest.writeString(this.timeToFood);
-        dest.writeString(this.startDate);
+        dest.writeLong(this.startDate);
         dest.writeStringList(this.days);
         dest.writeInt(this.allDays);
         dest.writeInt(this.totalPills);
@@ -182,11 +196,12 @@ public class Medication implements Parcelable {
         this.name = source.readString();
         this.refillNo = source.readInt();
         this.isActive = source.readInt();
-        this.medDetails = source.createTypedArrayList(MedDetails.CREATOR);
+        this.medDetails = new ArrayList<MedDetails>();
+        source.readList(this.medDetails, MedDetails.class.getClassLoader());
         this.image = source.readInt();
         this.midStrength = source.readInt();
         this.timeToFood = source.readString();
-        this.startDate = source.readString();
+        this.startDate = source.readLong();
         this.days = source.createStringArrayList();
         this.allDays = source.readInt();
         this.totalPills = source.readInt();
@@ -197,11 +212,12 @@ public class Medication implements Parcelable {
         this.name = in.readString();
         this.refillNo = in.readInt();
         this.isActive = in.readInt();
-        this.medDetails = in.createTypedArrayList(MedDetails.CREATOR);
+        this.medDetails = new ArrayList<MedDetails>();
+        in.readList(this.medDetails, MedDetails.class.getClassLoader());
         this.image = in.readInt();
         this.midStrength = in.readInt();
         this.timeToFood = in.readString();
-        this.startDate = in.readString();
+        this.startDate = in.readLong();
         this.days = in.createStringArrayList();
         this.allDays = in.readInt();
         this.totalPills = in.readInt();

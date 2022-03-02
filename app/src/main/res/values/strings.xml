@@ -84,6 +84,13 @@
     <string name="btnTake">Take</string>
     <string name="btnSnooze">Snooze</string>
     <string name="btnRefill">Refill</string>
+    <string name="hello_it_s_time_to_take_your_med">Hello it\'s time to take your Med</string>
+    <string name="snooze_1_minute">snooze 1 m</string>
+    <string name="snooze_5_minutes">snooze 5 m</string>
+    <string name="snooze_15_minutes">snooze 15 m</string>
+    <string name="snooze">snooze</string>
+    <string name="take_at">Take it</string>
+    <string name="take">Take</string>
     <string name="radiobtn1min">1 Minute</string>
     <string name="radiobtn1Hr">1 Hour</string>
     <string name="radiobtn2hr">2 Hours</string>

@@ -108,4 +108,17 @@ dependencies {
     // paper
     implementation 'io.github.pilgr:paperdb:2.7.2'
 
+
+    def work_version = "2.7.1"
+
+    // (Java only)
+    implementation "androidx.work:work-runtime:$work_version"
+
+//    // optional - RxJava2 support
+//    implementation "androidx.work:work-rxjava2:$work_version"
+
+//    // optional - GCMNetworkManager support
+//    implementation "androidx.work:work-gcm:$work_version"
+
+
 }

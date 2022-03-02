@@ -1,17 +1,20 @@
 package com.example.medicationapp.medications.addEditMed.view;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.work.Data;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,12 +32,15 @@ import android.widget.Toast;
 import com.example.medicationapp.R;
 import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityAddEditBinding;
-import com.example.medicationapp.medications.addEditMed.presenter.AddEditPresenter;
 import com.example.medicationapp.medications.addEditMed.model.ReminderTime;
+import com.example.medicationapp.medications.addEditMed.presenter.AddEditPresenter;
+import com.example.medicationapp.medications.addEditMed.view.OnAdapterClickListener;
+import com.example.medicationapp.medications.addEditMed.view.ReminderTimesRecycleAdapter;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
+import com.example.medicationapp.utils.TimerWorker;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -42,18 +48,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class AddEditActivity extends AppCompatActivity {
     ActivityAddEditBinding binding;
+
     LocalDB localDB;
     int comeFrom, medStrength, noDays = 0, totalAmount = 0;
-    Medication medication;/*, medFroEdit;*/
+    Medication medication, medFroEdit;
     MedDetails medDetails;
     List<ReminderTime> timesArrayAdapter;
     List<String> days;
+    long[] listOfTimes ;
     ReminderTimesRecycleAdapter adapter;
     String takingInstruction = null, otherInstruction;
     Calendar calendarFroDate = null;
@@ -83,7 +92,6 @@ public class AddEditActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             calendarFroDate = Calendar.getInstance();
         }
-
 
         binding.addMedRBtnOngoing.setVisibility(View.GONE);
         binding.addMedRBtnNoDays.setVisibility(View.GONE);
@@ -214,12 +222,8 @@ public class AddEditActivity extends AppCompatActivity {
             binding.addMedEtMedName.setEnabled(false);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             noDays = medication.getAllDays();
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    calendarFroDate.setTime(sdf.parse(medication.getStartDate()));
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                calendarFroDate.setTimeInMillis(medication.getStartDate());
             }
         }
     }
@@ -236,7 +240,7 @@ public class AddEditActivity extends AppCompatActivity {
         localDB = LocalDB.getInstance(this);
         switch (item.getItemId()) {
             case R.id.addEditMenuSave: {
-                collectDataFromUser();
+               collectDataFromUser();
             }
         }
 
@@ -248,6 +252,7 @@ public class AddEditActivity extends AppCompatActivity {
         showBackDialog();
         return false;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void collectDataFromUser() {
@@ -264,7 +269,7 @@ public class AddEditActivity extends AppCompatActivity {
             medName = binding.addMedEtMedName.getText().toString();
             otherInstruction = binding.addMedInstrEtOtherInstr.getText().toString();
             reminderTimes = adapter.getAdapterList();
-            if (!binding.addMedEtStrength.getText().toString().equals(""))
+            if (!binding.addMedEtStrength.getText().toString().trim().equals(""))
                 medStrength = Integer.parseInt(binding.addMedEtStrength.getText().toString());
             amount = Integer.parseInt(binding.addMedNoPillToRemind.getText().toString());
             totalAmount = Integer.parseInt(binding.addMedCurrentPillsOfMedEt.getText().toString());
@@ -287,58 +292,185 @@ public class AddEditActivity extends AppCompatActivity {
             medication.setTimeToFood(takingInstruction);
             medication.setAllDays(everyDay);
             medication.setDays(days);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            medication.setStartDate(sdf.format(calendarFroDate.getTime()));
+            //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            medication.setStartDate(removeAllHours(calendarFroDate));
+
+            // hint
+            int i=0;
+
+            listOfTimes = new long[reminderTimes.size()];
 
             for (ReminderTime r : reminderTimes) {
                 Calendar c = Calendar.getInstance();
-                if (isDateSaved)
-                    if (c.getTime().getDate() == calendarFroDate.getTime().getDate())
-                        if (c.getTime().getHours() > r.getHour() || c.getTime().getMinutes() >= r.getMinute()) {
-                            Toast.makeText(this, "h" + c.getTime().getHours() + " " + r.getHour() + " m " + c.getTime().getMinutes() + " " + r.getMinute(), Toast.LENGTH_SHORT).show();
-                            isAllTimeOk = false;
-                            break;
-                        } else {
-                            isAllTimeOk = true;
-                            c.set(calendarFroDate.getTime()
-                                    .getYear(), calendarFroDate.getTime()
-                                    .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
-                            medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
-                            Log.i("TAG", "time: " + c.getTime().getHours() + " min " +
-                                    c.getTime().getMinutes() + "mill " + c.getTimeInMillis());
-                        }
-                    else {
-                        isAllTimeOk = true;
-                        c.set(calendarFroDate.getTime()
-                                .getYear(), calendarFroDate.getTime()
-                                .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
-                        medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
-                        Log.i("TAG", "time: " + c.getTime().getHours() + " min " +
-                                c.getTime().getMinutes() + "mill " + c.getTimeInMillis());
-                    }
+
+                c.setTime(calendarFroDate.getTime());
+                c.set(Calendar.HOUR_OF_DAY, r.getHour());
+                c.set(Calendar.MINUTE, r.getMinute());
+
+                Log.d("Calender Time2", c.getTimeInMillis() + "");
+
+                medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
+
+                // work manager
+                listOfTimes[i] = c.getTimeInMillis();
+                i+=1;
             }
-            if (isAllTimeOk)
-                medication.setMedDetails(medDetails1);
-            Toast.makeText(this, "" + isAllTimeOk, Toast.LENGTH_SHORT).show();
-            if ((comeFrom == 1 || comeFrom == 2) && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk)) {
+
+            medication.setMedDetails(medDetails1);
+            if ((comeFrom == 1 || comeFrom == 2) && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/)) {
                 insertIntoDatabase(medication);
-            } else if (comeFrom == 3 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
+            } else if (comeFrom == 3 && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/))
                 insertIntoFirebase(medication);
-            else if (comeFrom == 5 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
+            else if (comeFrom == 5 && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/))
                 updateDatabase(medication);
-            else if (comeFrom == 6 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk)) {
+            else if (comeFrom == 6 && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/)) {
                 updateFirebase(medication);
             }
-            if (isAllTimeOk)
-                if (isTotalPillGreaterThanNoPillToRemind)
-                    finish();
-                else
-                    Toast.makeText(this, "Number of to Remind can't be greater than Total pills", Toast.LENGTH_SHORT).show();
+            if (isTotalPillGreaterThanNoPillToRemind)
+                finish();
             else
-                Toast.makeText(this, "There is a time in the past ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Number of to Remind can't be greater than Total pills", Toast.LENGTH_SHORT).show();
 
+
+            WorkRequest saveRequest =
+                    new PeriodicWorkRequest.Builder(TimerWorker.class,
+                            24, TimeUnit.HOURS)
+                            .setInputData(
+                                    new Data.Builder()
+                                            .putLongArray("times",listOfTimes)
+                                            .putString("medName", medName)
+                                            .putInt("dose", medication.getMedDetails().get(0).getDose())
+                                            .putString("medFood", medication.getTimeToFood())
+                                            .build()
+                            )
+                            .addTag(medName)
+                            .build();
+
+            WorkManager.getInstance(this).enqueue(saveRequest);
         }
     }
+
+//
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    private void collectDataFromUser() {
+//        List<ReminderTime> reminderTimes;
+//        List<MedDetails> medDetails1 = new ArrayList<>();
+//        if (comeFrom == 1 || comeFrom == 2 || comeFrom == 3)
+//            medication = new Medication();
+//
+//        String medName = null;
+//        int amount = -1;
+//        int everyDay = 0;
+//
+//        if (validate1()) {
+//            medName = binding.addMedEtMedName.getText().toString();
+//            otherInstruction = binding.addMedInstrEtOtherInstr.getText().toString();
+//            reminderTimes = adapter.getAdapterList();
+//            if (!binding.addMedEtStrength.getText().toString().equals(""))
+//                medStrength = Integer.parseInt(binding.addMedEtStrength.getText().toString());
+//            amount = Integer.parseInt(binding.addMedNoPillToRemind.getText().toString());
+//            totalAmount = Integer.parseInt(binding.addMedCurrentPillsOfMedEt.getText().toString());
+//            if (amount >= totalAmount) {
+//                isTotalPillGreaterThanNoPillToRemind = false;
+//                Toast.makeText(this, "Number of to Remind can't be greater than Total pills", Toast.LENGTH_SHORT).show();
+//                binding.addMedNoPillToRemind.setError("greater than total pills");
+//                binding.addMedCurrentPillsOfMedEt.setError("Smaller than number of pills to remind");
+//            } else {
+//                isTotalPillGreaterThanNoPillToRemind = true;
+//                medication.setRefillNo(amount);
+//                medication.setTotalPills(totalAmount);
+//            }
+//
+//            if (binding.addMedRBtnEveryDay.isChecked())
+//                everyDay = 1;
+//
+//            medication.setName(medName);
+//            medication.setMidStrength(medStrength);
+//            medication.setTimeToFood(takingInstruction);
+//            medication.setAllDays(everyDay);
+//            medication.setTotalPills(totalAmount);
+//            if (days.size() > 0)
+//                medication.setDays(days);
+//
+//            // hint
+//            medication.setStartDate(removeAllHours(calendarFroDate));
+//            int i=0;
+//
+//            listOfTimes = new long[reminderTimes.size()];
+//
+//            for (ReminderTime r : reminderTimes) {
+//                Calendar c = Calendar.getInstance();
+//
+//                c.setTime(calendarFroDate.getTime());
+//                c.set(Calendar.HOUR_OF_DAY, r.getHour());
+//                c.set(Calendar.MINUTE, r.getMinute());
+//
+//                Log.d("Calender Time2", c.getTimeInMillis() + "");
+//
+//                medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
+//
+//                // work manager
+//                listOfTimes[i] = c.getTimeInMillis();
+//                i+=1;
+//            }
+//
+//            Log.d("Before : ", listOfTimes[0]  + "");
+//            medication.setMedDetails(medDetails1);
+//
+//            WorkRequest saveRequest =
+//                    new PeriodicWorkRequest.Builder(TimerWorker.class,
+//                            24, TimeUnit.HOURS)
+//                            .setInputData(
+//                                    new Data.Builder()
+//                                            .putLongArray("times",listOfTimes)
+//                                            .putString("medName", medName)
+//                                            .putInt("dose", medication.getMedDetails().get(0).getDose())
+//                                            .putString("medFood", medication.getTimeToFood())
+//                                            .build()
+//                            )
+//                            .addTag(medName)
+//                            .build();
+//
+//            WorkManager.getInstance(this).enqueue(saveRequest);
+//
+//            AddEditPresenter presenter=new AddEditPresenter(this);
+//            if (comeFrom == 1||comeFrom==2) {
+//                presenter.insertMedication(medication);
+//                Log.d("TAG", "inserted time : " + medication.getStartDate());
+//                Toast.makeText(this, "insert", Toast.LENGTH_SHORT).show();
+//            }
+//            else{
+//                presenter.updateMedication(medication);
+//                Intent intent=new Intent();
+//                Bundle bundle=new Bundle();
+//                bundle.putParcelable("med",medication);
+//                intent.putExtra("bundle",bundle);
+//                setResult(6,intent);
+//                Toast.makeText(this, "update", Toast.LENGTH_SHORT).show();
+//            }
+//            finish();
+//        }
+//            if (isAllTimeOk)
+//                medication.setMedDetails(medDetails1);
+//            Toast.makeText(this, "" + isAllTimeOk, Toast.LENGTH_SHORT).show();
+//            if ((comeFrom == 1 || comeFrom == 2) && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk)) {
+//                insertIntoDatabase(medication);
+//            } else if (comeFrom == 3 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
+//                insertIntoFirebase(medication);
+//            else if (comeFrom == 5 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
+//                updateDatabase(medication);
+//            else if (comeFrom == 6 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk)) {
+//                updateFirebase(medication);
+//            }
+//            if (isAllTimeOk)
+//                if (isTotalPillGreaterThanNoPillToRemind)
+//                    finish();
+//                else
+//                    Toast.makeText(this, "Number of to Remind can't be greater than Total pills", Toast.LENGTH_SHORT).show();
+//            else
+//                Toast.makeText(this, "There is a time in the past ", Toast.LENGTH_SHORT).show();
+//
+//        }
 
     boolean validate1() {
         if (!binding.addMedEtMedName.getText().toString().trim().equals(""))
@@ -405,48 +537,48 @@ public class AddEditActivity extends AppCompatActivity {
         ref.child(Common.Request).child(requestId).child("medicationList").child(medication.getId()).setValue(medication);
     }
 
+    private long removeAllHours(Calendar calendar) {
+        calendar.set(Calendar.HOUR,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        return calendar.getTimeInMillis();
+    }
+
     void showTimeDialog(ReminderTime time, int index) {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_time, null);
         TextView btnPlus = view.findViewById(R.id.dialogTimeBtnPlus);
         TextView btnMinus = view.findViewById(R.id.dialogTimeBtnMinus);
         EditText etAmout = view.findViewById(R.id.dialogTimeEtNumber);
         TimePicker timePicker = view.findViewById(R.id.dialogTimePicker);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             timePicker.setHour(time.getHour());
             timePicker.setMinute(time.getMinute());
             etAmout.setText(time.getPill() + "");
         }
-        btnPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Integer.parseInt(etAmout.getText().toString()) < 5)
-                    etAmout.setText((Integer.parseInt(etAmout.getText().toString()) + 1) + "");
-            }
+        btnPlus.setOnClickListener(view12 -> {
+            if (Integer.parseInt(etAmout.getText().toString()) < 5)
+                etAmout.setText((Integer.parseInt(etAmout.getText().toString()) + 1) + "");
         });
-        btnMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Integer.parseInt(etAmout.getText().toString()) > 1)
-                    etAmout.setText((Integer.parseInt(etAmout.getText().toString()) - 1) + "");
-            }
+
+        btnMinus.setOnClickListener(view1 -> {
+            if (Integer.parseInt(etAmout.getText().toString()) > 1)
+                etAmout.setText((Integer.parseInt(etAmout.getText().toString()) - 1) + "");
         });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view).setTitle("When do you need to take this dose ?").
-                setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                setNegativeButton("Cancel", (dialogInterface, i) -> {
 
+                }).setPositiveButton("Save", (dialogInterface, i) -> {
+                    ReminderTime reminderTime = null;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        reminderTime = new ReminderTime(timePicker.getHour(), timePicker.getMinute(), Integer.parseInt(etAmout.getText().toString()));
                     }
-                }).setPositiveButton("Save", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                ReminderTime reminderTime = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    reminderTime = new ReminderTime(timePicker.getHour(), timePicker.getMinute(), Integer.parseInt(etAmout.getText().toString()));
-                }
-                adapter.updateList(reminderTime, index);
-            }
-        }).show();
+                    adapter.updateList(reminderTime, index);
+                }).show();
     }
 
     void addToArraylist(int num) {
@@ -460,6 +592,7 @@ public class AddEditActivity extends AppCompatActivity {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_date_picker_view, null);
         DatePicker datePicker = view.findViewById(R.id.addDatePicker);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        datePicker.setMinDate(System.currentTimeMillis() - 1000);
         builder.setView(view).setTitle("Set start date").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -481,6 +614,13 @@ public class AddEditActivity extends AppCompatActivity {
                     binding.addMedScheduleStartDate.setText(dateString);
                     isDateSaved = true;
                 }
+                calendarFroDate.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth()); //calender and return calender
+
+                Log.d("Calender 4" , calendarFroDate.getTimeInMillis()+"");
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String dateString = sdf.format(calendarFroDate.getTime());
+                binding.addMedScheduleStartDate.setText(dateString);
             }
         }).show();
     }
@@ -559,37 +699,27 @@ public class AddEditActivity extends AppCompatActivity {
                         fri.setChecked(true);
                         break;
                 }
+
+
             }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(v);
         builder.setTitle("Select days");
-        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        builder.setNegativeButton("cancel", (dialogInterface, i) -> {});
 
-            }
-        });
-        builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                days.clear();
-                setSpecificDays(sat);
-                setSpecificDays(sun);
-                setSpecificDays(mon);
-                setSpecificDays(tue);
-                setSpecificDays(wen);
-                setSpecificDays(thu);
-                setSpecificDays(fri);
-                setDaysNameToRadioBtnSpecificDays();
-            }
+        builder.setPositiveButton("Set", (dialogInterface, i) -> {
+            days.clear();
+            setSpecificDays(sat);
+            setSpecificDays(sun);
+            setSpecificDays(mon);
+            setSpecificDays(tue);
+            setSpecificDays(wen);
+            setSpecificDays(thu);
+            setSpecificDays(fri);
+            setDaysNameToRadioBtnSpecificDays();
         });
         builder.show();
-    }
-
-    private void setSpecificDays(CheckBox ch) {
-        if (ch.isChecked())
-            days.add(ch.getText().toString());
     }
 
     void setDaysNameToRadioBtnSpecificDays() {
@@ -604,15 +734,25 @@ public class AddEditActivity extends AppCompatActivity {
             binding.addMedRBtnSpecificDays.setText("Specific days of the week : " + daysText);
     }
 
+    private void setSpecificDays(CheckBox ch) {
+        if (ch.isChecked())
+            days.add(ch.getText().toString());
+    }
+
     void setDataToInputField(Medication medication) {
         binding.addMedEtMedName.setText(medication.getName());
+        List<ReminderTime> times = new ArrayList<>();
         for (MedDetails m : medication.getMedDetails()) {
             timesArrayAdapter.add(new ReminderTime(Helper.convertLongToHours(m.getTime()),
                     Helper.convertLongToMinuets(m.getTime()), m.getDose()));
         }
+        adapter.notifyDataSetChanged();
         binding.addMedEtStrength.setText(medication.getMidStrength() + "");
         binding.addMedNoPillToRemind.setText(medication.getRefillNo() + "");
-        binding.addMedScheduleStartDate.setText(medication.getStartDate());
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        binding.addMedScheduleStartDate.setText(format.format(medication.getStartDate()));
+
         if (medication.getAllDays() == 1)
             binding.addMedRBtnEveryDay.setChecked(true);
         else {
@@ -640,23 +780,10 @@ public class AddEditActivity extends AppCompatActivity {
         }
     }
 
-    void markSpecificDaysCheckBox(List<String> days) {
-
-    }
-
     void showBackDialog() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Are you sure to exit ?").setPositiveButton("exit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
-            }
-        });
-        dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        });
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        dialog.setTitle("Are you sure to exit ?").setPositiveButton("exit", (dialogInterface, i) -> finish());
+        dialog.setNegativeButton("cancel", (dialogInterface, i) -> {});
         dialog.show();
     }
 
