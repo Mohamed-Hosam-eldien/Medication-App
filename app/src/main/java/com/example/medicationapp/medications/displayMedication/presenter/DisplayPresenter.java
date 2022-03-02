@@ -26,6 +26,7 @@ public class DisplayPresenter {
     {
         repo.refill(amount, id);
     }
+    public void updateFirebase(int refill,String medId){}
 
 
 }

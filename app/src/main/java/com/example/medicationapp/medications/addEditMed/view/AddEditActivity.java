@@ -292,26 +292,37 @@ public class AddEditActivity extends AppCompatActivity {
 
             for (ReminderTime r : reminderTimes) {
                 Calendar c = Calendar.getInstance();
-                if (c.getTime().getHours() > r.getHour() || c.getTime().getMinutes() >= r.getMinute()) {
-                    Toast.makeText(this, "h"+c.getTime().getHours()+" "+r.getHour()+" m "+c.getTime().getMinutes()+" "+r.getMinute(), Toast.LENGTH_SHORT).show();
-                    isAllTimeOk = false;
-                    break;
-                } else {
-                    isAllTimeOk = true;
-                    c.set(calendarFroDate.getTime()
-                            .getYear(), calendarFroDate.getTime()
-                            .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
-                    medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
-                    Log.i("TAG", "time: " + c.getTime().getHours() + " min " +
-                            c.getTime().getMinutes() + "mill " + c.getTimeInMillis());
-                }
+                if (isDateSaved)
+                    if (c.getTime().getDate() == calendarFroDate.getTime().getDate())
+                        if (c.getTime().getHours() > r.getHour() || c.getTime().getMinutes() >= r.getMinute()) {
+                            Toast.makeText(this, "h" + c.getTime().getHours() + " " + r.getHour() + " m " + c.getTime().getMinutes() + " " + r.getMinute(), Toast.LENGTH_SHORT).show();
+                            isAllTimeOk = false;
+                            break;
+                        } else {
+                            isAllTimeOk = true;
+                            c.set(calendarFroDate.getTime()
+                                    .getYear(), calendarFroDate.getTime()
+                                    .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
+                            medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
+                            Log.i("TAG", "time: " + c.getTime().getHours() + " min " +
+                                    c.getTime().getMinutes() + "mill " + c.getTimeInMillis());
+                        }
+                    else {
+                        isAllTimeOk = true;
+                        c.set(calendarFroDate.getTime()
+                                .getYear(), calendarFroDate.getTime()
+                                .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
+                        medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
+                        Log.i("TAG", "time: " + c.getTime().getHours() + " min " +
+                                c.getTime().getMinutes() + "mill " + c.getTimeInMillis());
+                    }
             }
             if (isAllTimeOk)
                 medication.setMedDetails(medDetails1);
-            Toast.makeText(this, ""+isAllTimeOk, Toast.LENGTH_SHORT).show();
-            if ((comeFrom == 1 || comeFrom == 2 )&& (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk)) {
+            Toast.makeText(this, "" + isAllTimeOk, Toast.LENGTH_SHORT).show();
+            if ((comeFrom == 1 || comeFrom == 2) && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk)) {
                 insertIntoDatabase(medication);
-            } else if (comeFrom == 3 &&(isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
+            } else if (comeFrom == 3 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
                 insertIntoFirebase(medication);
             else if (comeFrom == 5 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
                 updateDatabase(medication);

@@ -59,13 +59,9 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         ref=database.getReference();
 
         presenter = new DisplayPresenter(DisplayMedicationActivity.this);
-
-        binding.showDrugBtnRefill.setVisibility(View.GONE);
-
-
         Intent in = getIntent();
         Bundle b = in.getBundleExtra("bundle");
-        med = (Medication) b.getParcelable("med");
+        med = b.getParcelable("med");
 
         Toolbar toolbar = findViewById(R.id.displayToolbar);
         toolbar.setTitle(med.getName());
@@ -183,7 +179,7 @@ public class DisplayMedicationActivity extends AppCompatActivity {
                 break;
             case R.id.displayMenuEdit:
                 Intent intent = new Intent(this, AddEditActivity.class);
-                intent.putExtra("comeFrom", 3);
+                intent.putExtra("comeFrom", 5);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("med", med);
                 intent.putExtra("bundle", bundle);
@@ -215,7 +211,6 @@ public class DisplayMedicationActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 presenter.deleteMedication(med);
-
                 ref.child(med.getId()).removeValue();
                 Toast.makeText(DisplayMedicationActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
                 finish();
@@ -270,10 +265,11 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         builder.setPositiveButton("save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(!(Integer.parseInt(editText.getText().toString())<0&&editText.getText().toString().equals(""))){
+                if(!(Integer.parseInt(editText.getText().toString())<0&&editText.getText().toString().trim().equals(""))){
                     med.setTotalPills(Integer.parseInt(editText.getText().toString()));
                     presenter.refill(Integer.parseInt(editText.getText().toString()),med.getId());
                     ref.child(med.getId()).setValue(med);
+                    binding.displayCurrentPillsTv.setText(Integer.parseInt(editText.getText().toString()));
                 }
             }
         });

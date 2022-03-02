@@ -124,15 +124,13 @@ public class Helper {
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .addAction(R.drawable.custom_accept, "snooze", snoozePIntent)
                     .addAction(R.drawable.launch, "Refill", refillP);
-
-
             NotificationManagerCompat nmc = NotificationManagerCompat.from(context);
             nmc.notify(NOTIFICATION_ID, builder.build());
 
         }
     }
 
-    public static String generateKey(){
+    public static String generateKey() {
         return FirebaseDatabase.getInstance().getReference().push().getKey();
     }
 
