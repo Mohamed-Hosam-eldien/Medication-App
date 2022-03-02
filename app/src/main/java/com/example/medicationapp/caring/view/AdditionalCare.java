@@ -79,12 +79,12 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
 
             if (infoDialogBinding.edtPatientName.getText().toString().trim().length() < 2) {
                 infoDialogBinding.edtPatientName.setError("at Least two characters");
-                infoDialogBinding.txtSuccess.setVisibility(View.VISIBLE);
-                infoDialogBinding.imgSuccess.setVisibility(View.VISIBLE);
             } else {
                 if (Paper.book().read(edtEmail.getText().toString()) == null){
                     sendRequest();
                     Paper.book().write((edtEmail.getText().toString()), "1");
+                    infoDialogBinding.txtSuccess.setVisibility(View.VISIBLE);
+                    infoDialogBinding.imgSuccess.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(this, "you already sent a request before", Toast.LENGTH_SHORT).show();
                 }

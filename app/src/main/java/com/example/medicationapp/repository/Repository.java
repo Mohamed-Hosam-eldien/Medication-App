@@ -30,6 +30,11 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public LiveData<String> getMedById(String id) {
+        return localDB.getMedNameById(id);
+    }
+
+    @Override
     public void insertMedication(Medication medication) {
         localDB.insertMedicine(medication);
     }

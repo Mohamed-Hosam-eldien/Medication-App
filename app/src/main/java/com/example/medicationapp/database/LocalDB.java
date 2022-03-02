@@ -10,26 +10,31 @@ import com.example.medicationapp.model.Medication;
 
 import java.util.List;
 
-public class LocalDB implements LocalInterface{
+public class LocalDB implements LocalInterface {
     DAO medicationDao;
     Context context;
     DatabaseBuilder databaseBuilder;
     private LiveData<List<Medication>> allMedications;
     private static LocalDB localDB = null;
 
-    private LocalDB(Context context){
-        databaseBuilder = DatabaseBuilder .getInstance(context);
+    private LocalDB(Context context) {
+        databaseBuilder = DatabaseBuilder.getInstance(context);
         Log.i("TAG", "LocalDB: created");
         this.context = context;
         medicationDao = databaseBuilder.getDao();
         allMedications = medicationDao.getAllMedicines();
     }
 
-    public static LocalDB getInstance(Context context){
-        if(localDB == null){
+    public static LocalDB getInstance(Context context) {
+        if (localDB == null) {
             localDB = new LocalDB(context);
         }
         return localDB;
+    }
+
+    @Override
+    public LiveData<String> getMedNameById(String id) {
+        return medicationDao.getMedicineByID(id);
     }
 
     @Override
@@ -57,18 +62,18 @@ public class LocalDB implements LocalInterface{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                medicationDao.updateActive(active,id);
+                medicationDao.updateActive(active, id);
             }
         }).start();
 
     }
 
     @Override
-    public void update(String id,String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood,int current, String startDate, List<String> days, int allDays) {
+    public void update(String id, String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, int current, String startDate, List<String> days, int allDays) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                medicationDao.update(id,name, refillNo, isActive, medDetails, img, midStrength, timeToFood,current, startDate, days, allDays);
+                medicationDao.update(id, name, refillNo, isActive, medDetails, img, midStrength, timeToFood, current, startDate, days, allDays);
             }
         }).start();
     }
@@ -98,12 +103,11 @@ public class LocalDB implements LocalInterface{
         return medicationDao.getAllMedicationWithAllDays();
     }
 
-    public void refill(int amount, String id)
-    {
+    public void refill(int amount, String id) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                medicationDao.refill(amount,id);
+                medicationDao.refill(amount, id);
             }
         }).start();
 

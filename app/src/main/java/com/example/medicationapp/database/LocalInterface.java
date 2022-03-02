@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface LocalInterface {
 
+    public LiveData<String> getMedNameById(String id);
+
     public void insertMedicine(Medication medication);
 
     public void deleteMedication(Medication medication);

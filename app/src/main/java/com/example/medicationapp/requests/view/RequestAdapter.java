@@ -1,4 +1,4 @@
-package com.example.medicationapp.requests;
+package com.example.medicationapp.requests.view;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -18,6 +19,9 @@ import com.example.medicationapp.R;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.requests.view.AcceptedRequestRow;
 import com.example.medicationapp.requests.view.OnRequestClick;
+import com.example.medicationapp.utils.Helper;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.snackbar.SnackbarContentLayout;
 
 import java.util.ArrayList;
 
@@ -51,13 +55,20 @@ public class RequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }else{
             ViewHolder myHolder = (ViewHolder) holder;
             myHolder.txtSenderName.setText(requestList.get(position).getSenderName());
-            myHolder.txtRreceiverName.setText(requestList.get(position).getReceiverEmail());
+            myHolder.txtRreceiverName.setText(requestList.get(position).getSenderEmail());
             myHolder.notificationBody.setText(requestList.get(position).getDescription());
             myHolder.btnAccept.setOnClickListener(view -> {
-                onRequestClick.onAcceptClick(requestList.get(position));
+                if(Helper.isNetworkAvailable(context)){
+                    onRequestClick.onAcceptClick(requestList.get(position));
+                }else{
+                    Toast.makeText(context, "You are not connected", Toast.LENGTH_SHORT).show();
+                }
             });
             myHolder.btnReject.setOnClickListener(view -> {
-                showBackDialog(position);
+                if(Helper.isNetworkAvailable(context)){
+                    showBackDialog(position);
+                }
+                Toast.makeText(context, "You are not connected", Toast.LENGTH_SHORT).show();
             });
         }
     }

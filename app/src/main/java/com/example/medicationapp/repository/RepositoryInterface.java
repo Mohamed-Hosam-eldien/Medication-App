@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface RepositoryInterface {
 
+    public LiveData<String> getMedById(String id);
+
     public void insertMedication(Medication medication);
 
     public void deleteMedication(Medication medication);

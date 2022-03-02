@@ -3,6 +3,8 @@ package com.example.medicationapp.snooze_refill.presenter;
 
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.repository.Repository;
 import com.example.medicationapp.snooze_refill.view.SnoozeRefill_Interface;
@@ -17,8 +19,14 @@ public class SnoozeRefillPresenter implements SnoozeRefill_Interface {
     }
 
 
+
     @Override
     public void Refill(int num, String name) {
         repository.refill(num, name);
+    }
+
+    @Override
+    public LiveData<String> getMedNameById(String id) {
+        return repository.getMedById(id);
     }
 }

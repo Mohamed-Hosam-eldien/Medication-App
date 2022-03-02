@@ -16,9 +16,11 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.databinding.FragmentHomeMedBinding;
@@ -223,8 +225,12 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
                     );
                 }
                 PendingIntent refillPendingIntent = null;
-                Intent refillIntent = new Intent(getContext(), RefillActivity.class);
-                refillIntent.putExtra("medicine", medication.getName());
+                Intent refillIntent = new Intent(getActivity(), RefillActivity.class);
+                refillIntent.putExtra("medicine", medication.getId());
+
+
+                refillIntent.putExtra("med", medication.getName());
+
                 refillIntent.addCategory(Intent.CATEGORY_LAUNCHER);
                 refillIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //                b = new Bundle();

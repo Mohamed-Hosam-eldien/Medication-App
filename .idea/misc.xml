@@ -40,6 +40,7 @@
         <entry key="..\:/ITI/Medication-App/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1265" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/drawable/ic_baseline_snooze_24.xml" value="0.1" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/ITI/Medication-App/app/src/main/res/drawable/ic_person_remove_black_24dp.xml" value="0.1" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/drawable/ic_reject.xml" value="0.1435" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout-v28/activity_additional_care.xml" value="0.1125" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout-v31/info_dialog.xml" value="0.25416666666666665" />
@@ -60,7 +61,7 @@
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/fragment_home.xml" value="0.17135416666666667" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/fragment_home_med.xml" value="0.1609375" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/fragment_medication.xml" value="0.2" />
-        <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/fragment_requests.xml" value="0.25416666666666665" />
+        <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/fragment_requests.xml" value="0.176" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/home_bottom_dialog.xml" value="0.2" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/info_dialog.xml" value="0.20555555555555555" />
         <entry key="..\:/ITI/Medication-App/app/src/main/res/layout/layout_nav_include.xml" value="0.25416666666666665" />

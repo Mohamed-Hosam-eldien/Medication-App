@@ -30,6 +30,10 @@ public interface DAO {
     @Query("Select * FROM Medication WHERE isActive = 1")
     public LiveData<List<Medication>> getActiveMedicines();
 
+    //get medicine name by id
+    @Query("select name from medication where id=:id")
+    public LiveData<String> getMedicineByID(String id);
+
     @Query("Select * FROM Medication WHERE isActive = 0")
     public LiveData<List<Medication>> getInActiveMedicines();
 
