@@ -9,15 +9,17 @@ import java.util.List;
 
 public interface LocalInterface {
 
+    public LiveData<String> getMedNameById(String id);
+
     public void insertMedicine(Medication medication);
 
     public void deleteMedication(Medication medication);
 
-    void updateActive(int active,String medName);
+    void updateActive(int active,String id);
 
-    void update(String name, int refillNo, int isActive, List<MedDetails>medDetails
-            ,int img,int midStrength,String timeToFood,
-                long startDate,List<String>days,int allDays);
+    void update(String id,String name, int refillNo, int isActive, List<MedDetails>medDetails
+            ,int img,int midStrength,String timeToFood,int current,
+                String startDate,List<String>days,int allDays);
 
     LiveData<List<Medication>> getAllMedications();
 
@@ -29,6 +31,6 @@ public interface LocalInterface {
 
     LiveData<List<Medication>> getMedicationInAllDays(long currentDay);
 
-    void refill(int amount,String medName);
+    void refill(int amount,String id);
 
 }

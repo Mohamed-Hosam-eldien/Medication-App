@@ -1,4 +1,4 @@
-package com.example.medicationapp.medications.view.addEditMed;
+package com.example.medicationapp.medications.addEditMed.presenter;
 
 import android.content.Context;
 
@@ -23,9 +23,9 @@ public class AddEditPresenter {
 
     public void updateMedication(Medication medication)
     {
-        repo.update(medication.getName(),medication.getRefillNo(),medication.getIsActive(),
+        repo.update(medication.getId(),medication.getName(),medication.getRefillNo(),medication.getIsActive(),
                 medication.getMedDetails(),medication.getImage(),medication.getMidStrength(),
-                medication.getTimeToFood(),medication.getStartDate(),medication.getDays(), medication.getAllDays());
+                medication.getTimeToFood(),medication.getTotalPills(),medication.getStartDate(),medication.getDays(), medication.getAllDays());
     }
 
 }

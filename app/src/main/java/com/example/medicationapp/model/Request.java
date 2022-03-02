@@ -6,34 +6,38 @@ import android.os.Parcelable;
 import java.util.List;
 
 public class Request {
+    String id;
     String senderName;
     String patientName;
     String description;
     String receiverEmail;
     String senderEmail;
     boolean request;
-    List<Medication> medicationList;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Request() {
     }
 
-    public Request(String senderName, String patientName, String description, String receiverEmail, String senderEmail, boolean request, List<Medication> medicationList) {
+    public Request(String id, String senderName, String patientName, String description,
+                   String receiverEmail, String senderEmail, boolean request) {
         this.senderName = senderName;
         this.patientName = patientName;
         this.description = description;
         this.receiverEmail = receiverEmail;
         this.senderEmail = senderEmail;
+        this.id = id;
         this.request = request;
-        this.medicationList = medicationList;
     }
 
-    public List<Medication> getMedicationList() {
-        return medicationList;
-    }
 
-    public void setMedicationList(List<Medication> medicationList) {
-        this.medicationList = medicationList;
-    }
 
     public String getPatientName() {
         return patientName;

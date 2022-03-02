@@ -74,7 +74,7 @@
                     android:layout_toEndOf="@+id/showDrugStartDateTxt"
                     />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/showDrugBtnSuspend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,13 +128,15 @@
                     android:text="Prescription Refill"
                     android:textColor="@color/purple_500" />
 
-                                <Button
-                                    android:id="@+id/showDrugBtnRefill"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignBaseline="@id/showDrugTvPrescriptionTxt"
-                                    android:layout_alignParentEnd="true"
-                                    android:text="refill" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/showDrugBtnRefill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/showDrugTvPrescriptionTxt"
+                    android:layout_alignParentEnd="true"
+                    android:text="refill"
+                    android:layout_below="@+id/showDrug"
+                    />
 
                 <TextView
                     android:id="@+id/showDrugTvPrescriptionRefillTxt"
@@ -207,16 +209,16 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/showDrugTvReasonOfTaking"
                     android:layout_marginTop="10dp" />
+
                 <TextView
                     android:id="@+id/displayCurrentTxt"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_below="@+id/showDrugTvOtherInstruction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/displayCurrentAmountTxt"
+                    android:layout_below="@+id/showDrugTvOtherInstruction"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
-                    android:textColor="@color/black"
-                    />
+                    android:text="@string/displayCurrentAmountTxt"
+                    android:textColor="@color/black" />
                 <TextView
                     android:id="@+id/displayCurrentPillsTv"
                     android:layout_marginTop="@dimen/_15sdp"

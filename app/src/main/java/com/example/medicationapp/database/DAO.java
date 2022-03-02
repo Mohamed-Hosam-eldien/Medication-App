@@ -24,11 +24,15 @@ public interface DAO {
     @Delete
     public void deleteMedication(Medication medication);
 
-    @Query("SELECT * FROM Medication WHERE name=:name")
-    public LiveData<Medication> getMedication(String name);
+    @Query("SELECT * FROM Medication WHERE id=:id")
+    public LiveData<Medication> getMedication(String id);
 
     @Query("Select * FROM Medication WHERE isActive = 1")
     public LiveData<List<Medication>> getActiveMedicines();
+
+    //get medicine name by id
+    @Query("select name from medication where id=:id")
+    public LiveData<String> getMedicineByID(String id);
 
     @Query("Select * FROM Medication WHERE isActive = 0")
     public LiveData<List<Medication>> getInActiveMedicines();
@@ -36,18 +40,17 @@ public interface DAO {
     @Query("Select * FROM Medication where allDays = 1 and isActive = 1 and startDate <=:currentDate")
     LiveData<List<Medication>> getAllMedicationWithAllDays(long currentDate);
 
-    @Query("update Medication set isActive =:active where name =:medName")
-    void updateActive(int active,String medName);
+    @Query("update Medication set isActive =:active where id =:id")
+    void updateActive(int active,String id);
+    @Query("update Medication set totalPills =:amount where id =:id")
+    void refill(int amount,String id);
 
-    @Query("update Medication set totalPills =:amount where name =:medName")
-    void refill(int amount,String medName);
-
-    @Query("update Medication set refillNo=:refillNo,isActive=:isActive" +
+    @Query("update Medication set name=:name,refillNo=:refillNo,isActive=:isActive" +
             ",medDetails=:medDetails,image=:img,midStrength=:midStrength," +
-            "timeToFood=:timeToFood,startDate=:startDate,days=:days," +
-            "allDays= :allDays where name=:name")
-    void update(String name, int refillNo, int isActive, List<MedDetails>medDetails
-            ,int img,int midStrength,String timeToFood,
-                long startDate,List<String>days,int allDays);
+            "timeToFood=:timeToFood,startDate=:startDate,days=:days,totalPills=:current," +
+            "allDays= :allDays where id=:id")
+    void update(String id,String name, int refillNo, int isActive, List<MedDetails>medDetails
+            ,int img,int midStrength,String timeToFood,int current,
+                String startDate,List<String>days,int allDays);
 
 }

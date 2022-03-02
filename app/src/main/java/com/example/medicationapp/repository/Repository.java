@@ -30,6 +30,11 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public LiveData<String> getMedById(String id) {
+        return localDB.getMedNameById(id);
+    }
+
+    @Override
     public void insertMedication(Medication medication) {
         localDB.insertMedicine(medication);
     }
@@ -40,13 +45,13 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public void updateActive(int active, String medName) {
-        localDB.updateActive(active,medName);
+    public void updateActive(int active, String id) {
+        localDB.updateActive(active,id);
     }
 
     @Override
-    public void update(String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, long startDate, List<String> days, int allDays) {
-        localDB.update(name, refillNo, isActive, medDetails, img, midStrength, timeToFood, startDate, days, allDays);
+    public void update(String id,String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood,int current, String startDate, List<String> days, int allDays) {
+        localDB.update(id,name, refillNo, isActive, medDetails, img, midStrength, timeToFood,current, startDate, days, allDays);
     }
 
     @Override
@@ -75,8 +80,8 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public void refill(int amount, String medName) {
-        localDB.refill(amount, medName);
+    public void refill(int amount, String id) {
+        localDB.refill(amount, id);
     }
 
 

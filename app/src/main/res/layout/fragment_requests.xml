@@ -3,12 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
-    tools:context=".requests.view.RequestsFragment" >
+
+    tools:context=".requests.view.RequestsFragment">
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/requestRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
+        tools:listitem="@layout/requests_custom_row" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        app:cardCornerRadius="12dp"
+        android:visibility="gone"
+        android:id="@+id/cardArraySize"
+        android:elevation="8dp"
+        android:layout_centerInParent="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_32sdp"
+                android:gravity="center"
+                android:text="You dont have any requests" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_person_remove_black_24dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <ProgressBar
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/progressRequest"/>
+
 </RelativeLayout>

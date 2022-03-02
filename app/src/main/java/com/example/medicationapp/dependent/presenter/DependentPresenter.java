@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.medicationapp.connection.Connection;
 import com.example.medicationapp.connection.GetAllMedication;
 import com.example.medicationapp.connection.NetworkInterface;
+import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.model.User;
 import com.example.medicationapp.repository.Repository;
@@ -41,4 +42,10 @@ public class DependentPresenter implements NetworkInterface {
     public void onSaveUserData(User user) {
 
     }
+
+    @Override
+    public void onSendMedicine(List<Medication> medications, String requestId) {
+
+    }
+
 }

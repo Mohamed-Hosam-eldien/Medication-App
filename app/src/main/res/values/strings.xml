@@ -13,7 +13,7 @@
     <string name="add_health_taker">Add Health Taker</string>
     <string name="activeList">Active Medicines</string>
     <string name="SuspendedList">Suspended Medicines</string>
-    <string name="title">Gmail Invitation</string>
+    <string name="title">Share Medicines</string>
     <string name="sendInvitation">Send Invitation</string>
     <string name="emalHint">USER@gmail.com</string>
     <string name="requests">Requests</string>
@@ -58,6 +58,7 @@
     <string name="addMedTotalAmountOfMedHint">Total amounts of Med</string>
     <string name="addMedNoPillToRemindTxt">Number of Pills to remind to refill when reached</string>
     <string name="displayCurrentAmountTxt">Current amount of pills</string>
+    <string name="notificationBody"> pills are about to end, Dont forget to Refill it</string>
 
     <string-array name="addSpinnerArray">
         <item>Choose Time</item>
@@ -76,17 +77,11 @@
 
     <string name="notification_body">send you an invitation to take care of</string>
     <string name="acceptString">You\'ve accepted the Request, you can see all Patient Details in Home Screen</string>
-    <string name="hintInfoDialog">this wille be send to the Health Taker</string>
+    <string name="hintInfoDialog">This will be send to the Health Taker</string>
     <string name="btnSend">Send</string>
     <string name="dialogTitle">Enter the Patient\'s name</string>
-    <string name="succesfullyAdded">Succesfully added</string>
-    <string name="snooze">Snooze</string>
-    <string name="hello_it_s_time_to_take_your_med">Hello, it\'s time to take your med</string>
-    <string name="take">Take</string>
-    <string name="snooze_5_minutes">5 minutes</string>
-    <string name="snooze_1_minute">1 minute</string>
-    <string name="snooze_15_minutes">15 minu..</string>
-    <string name="snooze_30_minutes">30 minutes</string>
-    <string name="take_at">\"take at \"</string>
-
+    <string name="succesfullyAdded">Succesfully Sent</string>
+    <string name="btnTake">Take</string>
+    <string name="btnSnooze">Snooze</string>
+    <string name="btnRefill">Refill</string>
 </resources>

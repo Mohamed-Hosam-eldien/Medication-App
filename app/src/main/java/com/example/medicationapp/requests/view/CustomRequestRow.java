@@ -18,8 +18,8 @@ public class CustomRequestRow extends RecyclerView.ViewHolder {
 
     public CustomRequestRow(@NonNull View itemView) {
         super(itemView);
-        btnAccept = itemView.findViewById(R.id.btnAcceptRequestActivity);
-        btnReject = itemView.findViewById(R.id.btnReject);
+        btnAccept = itemView.findViewById(R.id.btnCardAccept);
+        btnReject = itemView.findViewById(R.id.btnCardReject);
         senderName = itemView.findViewById(R.id.txtSenderName);
         Description = itemView.findViewById(R.id.txtnotifBody);
         patientName = itemView.findViewById(R.id.txtPersonName);

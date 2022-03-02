@@ -10,9 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +22,7 @@ import com.example.medicationapp.caring.presenter.CaringPresenter;
 import com.example.medicationapp.caring.view.AdditionalCare;
 import com.example.medicationapp.databinding.ActivityMainBinding;
 import com.example.medicationapp.medications.view.addEditMed.AddEditActivity;
+import com.example.medicationapp.medications.view.displayMedication.DisplayMedicationActivity;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;

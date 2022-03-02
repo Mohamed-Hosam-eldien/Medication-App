@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
+
 
 public class Connection {
 
@@ -46,7 +48,7 @@ public class Connection {
 
     public void sendRequest(Request request) {
         firebaseDatabase.getReference(Common.Request)
-                .push().setValue(request)
+                .child(request.getId()).setValue(request)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -61,6 +63,14 @@ public class Connection {
         });
     }
 
+    public void sendMedicine(List<Medication>medications,String requestId)
+    {
+
+        for(Medication m:medications)
+        firebaseDatabase.getReference(Common.Request)
+                .child(requestId).child("medicationList").child(m.getId()).setValue(m);
+    }
+
     public void receiveMedication() {
         firebaseDatabase.getReference(Common.Request)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -71,7 +81,7 @@ public class Connection {
                         for(DataSnapshot sanp : snapshot.getChildren()) {
                             Request request = sanp.getValue(Request.class);
 
-                            if(request.isRequest() && request.getReceiverEmail().equals("mohamedhosameldien07@gmail.com")) {
+                            if(request.isRequest() && request.getReceiverEmail().equals(Paper.book().read(Common.emailUserPaper))) {
                                 requests.add(request);
                             }
                             networkInterface.onReceiveMedication(requests);
@@ -90,7 +100,7 @@ public class Connection {
                 .child(user.getUid())
                 .setValue(user)
                 .addOnSuccessListener(unused -> {
-                    Toast.makeText(context, "Register Completed Successfully", Toast.LENGTH_SHORT).show();
+
                 }).addOnFailureListener(e -> {
                     Toast.makeText(context, "Register Failed", Toast.LENGTH_SHORT).show();
                 });

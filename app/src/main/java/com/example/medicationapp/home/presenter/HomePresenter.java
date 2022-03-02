@@ -41,6 +41,14 @@ public class HomePresenter {
         return repository.getAllMedicationInAllDay(currentDay);
     }
 
+    public void updateRefill(int amount, String name){
+        repository.refill(amount, name);
+    }
+
+    public void deleteMedicine(Medication medication){
+        repository.deleteMedication(medication);
+    }
+
 //
 //    @Override
 //    public void onSendRequest(Request request) {

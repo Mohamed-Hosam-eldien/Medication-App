@@ -32,10 +32,13 @@ import io.paperdb.Paper;
 
 public class AdditionalCare extends AppCompatActivity {
 
-    private EditText edtEmail;
-    private CaringPresenter presenter;
-    private GoogleSignInClient mGoogleSignInClient;
+    BottomSheetDialog bottomSheetDialog;
+    EditText edtEmail;
+    Button btnSend;
+    CaringPresenter presenter;
+    GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1001;
+    public final static String RECEIVER_NAME = "RECEIVER_NAME";
 
     Dialog dialog;
 
@@ -44,12 +47,44 @@ public class AdditionalCare extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_additional_care);
         edtEmail = findViewById(R.id.edtTxtEmail);
-        Button btnSend = findViewById(R.id.btnSendInvitation);
+        btnSend = findViewById(R.id.btnSendInvitation);
         Paper.init(this);
-
+        bottomSheetDialog = new BottomSheetDialog(this);
         presenter = new CaringPresenter(this);
-
+        createDialog();
         btnSend.setOnClickListener(view -> sendMedicationRequest());
+        Paper.init(this);
+//        sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
+
+    }
+
+    private void createDialog() {
+        View view = getLayoutInflater().inflate(R.layout.info_dialog, null, false);
+        InfoDialogBinding infoDialogBinding = InfoDialogBinding.bind(view);
+        bottomSheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        infoDialogBinding.btnCancel.setOnClickListener(view1 -> {
+            bottomSheetDialog.cancel();
+        });
+        infoDialogBinding.btnSendInfoDialog.setOnClickListener(view1 -> {
+
+            if (infoDialogBinding.edtPatientName.getText().toString().trim().length() < 2) {
+                infoDialogBinding.edtPatientName.setError("at Least two characters");
+            } else {
+                if (Paper.book().read(edtEmail.getText().toString()) == null){
+                    sendRequest();
+                    Paper.book().write((edtEmail.getText().toString()), "1");
+                    infoDialogBinding.txtSuccess.setVisibility(View.VISIBLE);
+                    infoDialogBinding.imgSuccess.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(this, "you already sent a request before", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        infoDialogBinding.btnSendEmail.setOnClickListener(view1 -> {
+            sendToEmail();
+        });
+        bottomSheetDialog.setContentView(view);
     }
 
     private void sendMedicationRequest() {
@@ -57,9 +92,11 @@ public class AdditionalCare extends AppCompatActivity {
         boolean isNetworkConnected = Helper.isNetworkAvailable(getApplicationContext());
         if (validationResult) {
             if (isNetworkConnected) {
-                if(!edtEmail.getText().toString().equals(Paper.book().read(Common.emailUserPaper))) {
+                if (!edtEmail.getText().toString().equals(Paper.book().read(Common.emailUserPaper))) {
                     if (checkUserRegistration()) {
-                        sendRequest();
+                        bottomSheetDialog.show();
+//                        showInfoDialog();
+//                        sendRequest();
                     }
                 } else {
                     Toast.makeText(this, "you can't send request to your email", Toast.LENGTH_SHORT).show();
@@ -74,18 +111,18 @@ public class AdditionalCare extends AppCompatActivity {
     }
 
 
-    private void sendRequest() {
+    @Override
+    public void sendRequest() {
         HomePresenter homePresenter = new HomePresenter(AdditionalCare.this);
         homePresenter.getMedicationList().observe(AdditionalCare.this, medications -> {
-            if(medications.size() != 0) {
+            if (medications.size() != 0) {
                 Request request;
-                request = new Request(Common.currentUser.getName(), "Peter",
-                        "please accept to request", edtEmail.getText().toString(),
-                        Common.currentUser.getEmail(), false, medications);
-
-                presenter.onSaveUserData(Common.currentUser);
+                request = new Request(Helper.generateKey(), Common.currentUser.getName(), "Peter",
+                        "sent you a Medical Request", edtEmail.getText().toString(),
+                        Common.currentUser.getEmail(), false);
 
                 presenter.onSendRequest(request);
+                presenter.onSaveUserData(Common.currentUser);
 
             } else {
                 Toast.makeText(this, "you don't have any medication list", Toast.LENGTH_SHORT).show();
@@ -93,8 +130,8 @@ public class AdditionalCare extends AppCompatActivity {
         });
     }
 
-
-    private void sendToEmail() {
+    @Override
+    public void sendToEmail() {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         i.putExtra(Intent.EXTRA_EMAIL, new String[]{edtEmail.getText().toString()});
@@ -125,7 +162,7 @@ public class AdditionalCare extends AppCompatActivity {
             Log.d("TAG", Common.currentUser.getEmail());
             Log.d("TAG", Common.currentUser.getUid());
 
-            //presenter.onSaveUserData(Common.currentUser);
+            presenter.onSaveUserData(Common.currentUser);
 
             writeToPaper();
             return true;
@@ -175,7 +212,7 @@ public class AdditionalCare extends AppCompatActivity {
             Log.d("USER DATA", Common.currentUser.getName());
             presenter.onSaveUserData(Common.currentUser);
 
-            if(dialog != null)
+            if (dialog != null)
                 dialog.dismiss();
 
         } catch (ApiException e) {
