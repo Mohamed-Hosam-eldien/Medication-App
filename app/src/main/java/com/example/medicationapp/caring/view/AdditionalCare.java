@@ -201,27 +201,6 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
         dialog.show();
     }
 
-   /* private void showInfoDialog() {
-        dialog = new Dialog(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.info_dialog,null);
-        dialog.setContentView(view);
-
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        InfoDialogBinding infoDialogBinding = InfoDialogBinding.bind(view);
-        infoDialogBinding.btnSendInfoDialog.setOnClickListener(view1 -> {
-            if(infoDialogBinding.edtPatientName.toString().trim().length() < 2){
-                infoDialogBinding.edtPatientName.setError("at Least two characters");
-            }else{
-                sendRequest();
-            }
-        });
-        infoDialogBinding.btnSendEmail.setOnClickListener(view1 -> {
-            sendToEmail();
-        });
-        dialog.show();
-    }*/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

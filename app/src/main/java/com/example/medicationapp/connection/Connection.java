@@ -91,7 +91,7 @@ public class Connection {
                 .child(user.getUid())
                 .setValue(user)
                 .addOnSuccessListener(unused -> {
-                    Toast.makeText(context, "Register Completed Successfully", Toast.LENGTH_SHORT).show();
+
                 }).addOnFailureListener(e -> {
                     Toast.makeText(context, "Register Failed", Toast.LENGTH_SHORT).show();
                 });

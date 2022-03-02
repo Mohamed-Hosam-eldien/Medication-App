@@ -15,7 +15,7 @@ import com.example.medicationapp.home.view.MainActivity;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.snooze_refill.presenter.SnoozeRefillPresenter;
 
-public class RefillActivity extends AppCompatActivity{
+public class RefillActivity extends AppCompatActivity {
 
     Button btnRefill;
     EditText edtRefill;
@@ -26,6 +26,7 @@ public class RefillActivity extends AppCompatActivity{
     SnoozeRefillPresenter snoozeRefillPresenter;
     String extras;
     static int counter = 1;
+    Intent backIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,34 +39,37 @@ public class RefillActivity extends AppCompatActivity{
         medicineName = findViewById(R.id.medicineName);
         medicineName.setText(extras);
         txtPlus.setOnClickListener(view -> {
-            counter +=1;
+            counter += 1;
             edtRefill.setText(String.valueOf(counter));
         });
         txtMinus.setOnClickListener(view -> {
-            if(counter >1) {
-                counter -=1;
+            if (counter > 1) {
+                counter -= 1;
                 edtRefill.setText(String.valueOf(counter));
             }
         });
-        if(extras != null){
-            Log.i( "TAG","Extra:" +extras );
-            Toast.makeText(this, ""+extras, Toast.LENGTH_SHORT).show();
-        }else {
-            Log.i( "TAG","null:" + extras );
-        }
 
         snoozeRefillPresenter = new SnoozeRefillPresenter(this);
         btnRefill = findViewById(R.id.btnRefill);
         btnRefill.setOnClickListener(view -> {
-            snoozeRefillPresenter.Refill(Integer.parseInt(String.valueOf(edtRefill.getText())), extras);
+            if (!edtRefill.getText().toString().isEmpty() && !edtRefill.getText().toString().equals("0")) {
+                snoozeRefillPresenter.Refill(Integer.parseInt
+                        (String.valueOf(edtRefill.getText())), extras);
+                Toast.makeText(this, "Refill succeeded", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RefillActivity.this, MainActivity.class);
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "please insert a number", Toast.LENGTH_SHORT).show();
+            }
 
         });
 
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent back = new Intent(RefillActivity.this, MainActivity.class);
-        startActivity(back);
+        backIntent = new Intent(RefillActivity.this, MainActivity.class);
+        startActivity(backIntent);
     }
 }

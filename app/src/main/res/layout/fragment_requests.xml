@@ -10,5 +10,5 @@
         android:id="@+id/requestRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
+        tools:listitem="@layout/requests_custom_row" />
 </RelativeLayout>

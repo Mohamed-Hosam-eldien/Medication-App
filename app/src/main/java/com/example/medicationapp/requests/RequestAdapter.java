@@ -1,7 +1,9 @@
 package com.example.medicationapp.requests;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicationapp.R;
@@ -54,9 +57,27 @@ public class RequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 onRequestClick.onAcceptClick(requestList.get(position));
             });
             myHolder.btnReject.setOnClickListener(view -> {
-                onRequestClick.onRejectClick(requestList.get(position));
+                showBackDialog(position);
             });
         }
+    }
+
+    void showBackDialog(int position){
+        AlertDialog.Builder dialog=new AlertDialog.Builder(context);
+        dialog.setTitle("Are you sure to Reject ?").setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onRequestClick.onRejectClick(requestList.get(position));
+            }
+        });
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+
+        dialog.show();
+
     }
 
     @Override
@@ -73,15 +94,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView txtSenderName;
         TextView notificationBody;
         TextView txtRreceiverName;
-        Button btnAccept;
-        Button btnReject;
+        CardView btnAccept;
+        CardView btnReject;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtSenderName = itemView.findViewById(R.id.txtSenderName);
             txtRreceiverName = itemView.findViewById(R.id.txtPersonName);
             notificationBody = itemView.findViewById(R.id.txtnotifBody);
-            btnAccept =  itemView.findViewById(R.id.btnAcceptRequestActivity);
-            btnReject =  itemView.findViewById(R.id.btnReject);
+            btnAccept =  itemView.findViewById(R.id.btnCardAccept);
+            btnReject =  itemView.findViewById(R.id.btnCardReject);
         }
     }
 
