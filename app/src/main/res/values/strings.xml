@@ -84,4 +84,7 @@
     <string name="btnTake">Take</string>
     <string name="btnSnooze">Snooze</string>
     <string name="btnRefill">Refill</string>
+    <string name="radiobtn1min">1 Minute</string>
+    <string name="radiobtn1Hr">1 Hour</string>
+    <string name="radiobtn2hr">2 Hours</string>
 </resources>
