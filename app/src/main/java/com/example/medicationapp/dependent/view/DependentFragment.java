@@ -63,7 +63,6 @@ public class DependentFragment extends Fragment implements ShowBottomDialog, Get
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter.getPatientMed();
-
     }
 
     @Override

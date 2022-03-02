@@ -83,20 +83,18 @@ public class AddEditActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             calendarFroDate = Calendar.getInstance();
         }
-
-
         binding.addMedRBtnOngoing.setVisibility(View.GONE);
         binding.addMedRBtnNoDays.setVisibility(View.GONE);
         binding.addMedTextRg1.setVisibility(View.GONE);
-
         Intent intent = getIntent();
-
         comeFrom = intent.getIntExtra("comeFrom", 15);
         if (comeFrom == 5 || comeFrom == 6)//5 update offline, 6 update firebase
+        {
             medication = intent.getBundleExtra("bundle").getParcelable("med");
-        if (comeFrom == 3 || comeFrom == 6)// 3 insert into firebase, 6 update firebase
+            isDateSaved = true;
+        }
+        if (comeFrom == 3)// 3 insert into firebase, 6 update firebase
             requestId = intent.getStringExtra("requestId");
-
         binding.addMedInstrRadGro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -239,7 +237,6 @@ public class AddEditActivity extends AppCompatActivity {
                 collectDataFromUser();
             }
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -264,7 +261,7 @@ public class AddEditActivity extends AppCompatActivity {
             medName = binding.addMedEtMedName.getText().toString();
             otherInstruction = binding.addMedInstrEtOtherInstr.getText().toString();
             reminderTimes = adapter.getAdapterList();
-            if (!binding.addMedEtStrength.getText().toString().equals(""))
+            if (!binding.addMedEtStrength.getText().toString().trim().equals(""))
                 medStrength = Integer.parseInt(binding.addMedEtStrength.getText().toString());
             amount = Integer.parseInt(binding.addMedNoPillToRemind.getText().toString());
             totalAmount = Integer.parseInt(binding.addMedCurrentPillsOfMedEt.getText().toString());
@@ -289,25 +286,11 @@ public class AddEditActivity extends AppCompatActivity {
             medication.setDays(days);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             medication.setStartDate(sdf.format(calendarFroDate.getTime()));
-
+            Calendar c = Calendar.getInstance();
             for (ReminderTime r : reminderTimes) {
-                Calendar c = Calendar.getInstance();
-                if (isDateSaved)
-                    if (c.getTime().getDate() == calendarFroDate.getTime().getDate())
-                        if (c.getTime().getHours() > r.getHour() || c.getTime().getMinutes() >= r.getMinute()) {
-                            Toast.makeText(this, "h" + c.getTime().getHours() + " " + r.getHour() + " m " + c.getTime().getMinutes() + " " + r.getMinute(), Toast.LENGTH_SHORT).show();
-                            isAllTimeOk = false;
-                            break;
-                        } else {
-                            isAllTimeOk = true;
-                            c.set(calendarFroDate.getTime()
-                                    .getYear(), calendarFroDate.getTime()
-                                    .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
-                            medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
-                            Log.i("TAG", "time: " + c.getTime().getHours() + " min " +
-                                    c.getTime().getMinutes() + "mill " + c.getTimeInMillis());
-                        }
-                    else {
+//                Log.i("TAG", "collectDataFromUser: " + r.getHour() + " cal " + c.getTime().getHours());
+//                if (r.getHour() >= c.getTime().getHours()) {
+//                    if (r.getMinute() >= c.getTime().getMinutes()) {
                         isAllTimeOk = true;
                         c.set(calendarFroDate.getTime()
                                 .getYear(), calendarFroDate.getTime()
@@ -315,27 +298,30 @@ public class AddEditActivity extends AppCompatActivity {
                         medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
                         Log.i("TAG", "time: " + c.getTime().getHours() + " min " +
                                 c.getTime().getMinutes() + "mill " + c.getTimeInMillis());
-                    }
+//                    }
+//                } else {
+//                    isAllTimeOk = false;
+//                    break;
+//                }
             }
-            if (isAllTimeOk)
+//            if (isAllTimeOk)
                 medication.setMedDetails(medDetails1);
-            Toast.makeText(this, "" + isAllTimeOk, Toast.LENGTH_SHORT).show();
-            if ((comeFrom == 1 || comeFrom == 2) && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk)) {
+            if ((comeFrom == 1 || comeFrom == 2) && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/)) {
                 insertIntoDatabase(medication);
-            } else if (comeFrom == 3 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
+            } else if (comeFrom == 3 && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/))
                 insertIntoFirebase(medication);
-            else if (comeFrom == 5 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
+            else if (comeFrom == 5 && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/))
                 updateDatabase(medication);
-            else if (comeFrom == 6 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk)) {
+            else if (comeFrom == 6 && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/)) {
                 updateFirebase(medication);
             }
-            if (isAllTimeOk)
+//            if (isAllTimeOk)
                 if (isTotalPillGreaterThanNoPillToRemind)
                     finish();
                 else
                     Toast.makeText(this, "Number of to Remind can't be greater than Total pills", Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(this, "There is a time in the past ", Toast.LENGTH_SHORT).show();
+//            else
+//                Toast.makeText(this, "There is a time in the past ", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -460,6 +446,7 @@ public class AddEditActivity extends AppCompatActivity {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_date_picker_view, null);
         DatePicker datePicker = view.findViewById(R.id.addDatePicker);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        datePicker.setMinDate(System.currentTimeMillis() - 1000);
         builder.setView(view).setTitle("Set start date").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

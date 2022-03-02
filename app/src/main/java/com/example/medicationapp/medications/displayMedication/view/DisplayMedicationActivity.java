@@ -65,7 +65,8 @@ public class DisplayMedicationActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.displayToolbar);
         toolbar.setTitle(med.getName());
-        toolbar.setLogo(R.drawable.gmail);
+        toolbar.setLogo(R.drawable.pill1);
+        toolbar.setTitleMarginStart(15);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.close);
