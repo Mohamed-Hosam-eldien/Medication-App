@@ -1,4 +1,4 @@
-package com.example.medicationapp.medications.view.displayMedication;
+package com.example.medicationapp.medications.displayMedication.view;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,20 +9,30 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.medicationapp.R;
+import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityDisplayMedicationBinding;
 import com.example.medicationapp.databinding.DialogRefillBinding;
-import com.example.medicationapp.medications.view.addEditMed.AddEditActivity;
+import com.example.medicationapp.medications.addEditMed.view.AddEditActivity;
+import com.example.medicationapp.medications.displayMedication.presenter.DisplayPresenter;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.repository.Repository;
 import com.example.medicationapp.utils.Helper;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 public class DisplayMedicationActivity extends AppCompatActivity {
@@ -32,6 +42,8 @@ public class DisplayMedicationActivity extends AppCompatActivity {
     ActivityDisplayMedicationBinding binding;
     boolean isActive = true;
     DisplayPresenter presenter;
+    FirebaseDatabase database;
+    DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +55,13 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         tvLastTime = findViewById(R.id.showDrugTvLastTime);
         tvReasonOfTaking = findViewById(R.id.showDrugTvReasonOfTaking);
 
+        database=FirebaseDatabase.getInstance();
+        ref=database.getReference();
+
         presenter = new DisplayPresenter(DisplayMedicationActivity.this);
-
-        binding.showDrugBtnRefill.setVisibility(View.GONE);
-
-
         Intent in = getIntent();
         Bundle b = in.getBundleExtra("bundle");
-        med = (Medication) b.getParcelable("med");
+        med = b.getParcelable("med");
 
         Toolbar toolbar = findViewById(R.id.displayToolbar);
         toolbar.setTitle(med.getName());
@@ -78,13 +89,16 @@ public class DisplayMedicationActivity extends AppCompatActivity {
                 Toast.makeText(DisplayMedicationActivity.this, ""+med.getName()+" "+med.getIsActive(), Toast.LENGTH_SHORT).show();
                 if (isActive) {
                     binding.showDrugBtnSuspend.setText("Active");
-                    presenter.updateActive(0,med.getName());
+                    med.setIsActive(0);
+                    presenter.updateActive(0,med.getId());
                     isActive = false;
                 } else {
                     binding.showDrugBtnSuspend.setText("Suspend");
-                    presenter.updateActive(1,med.getName());
+                    presenter.updateActive(1,med.getId());
+                    med.setIsActive(1);
                     isActive = true;
                 }
+                ref.child(med.getId()).setValue(med);
             }
         });
 
@@ -165,7 +179,7 @@ public class DisplayMedicationActivity extends AppCompatActivity {
                 break;
             case R.id.displayMenuEdit:
                 Intent intent = new Intent(this, AddEditActivity.class);
-                intent.putExtra("comeFrom", 3);
+                intent.putExtra("comeFrom", 5);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("med", med);
                 intent.putExtra("bundle", bundle);
@@ -197,6 +211,7 @@ public class DisplayMedicationActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 presenter.deleteMedication(med);
+                ref.child(med.getId()).removeValue();
                 Toast.makeText(DisplayMedicationActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -250,8 +265,12 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         builder.setPositiveButton("save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(!(Integer.parseInt(editText.getText().toString())<0&&editText.getText().toString().equals("")))
-                    presenter.refill(Integer.parseInt(editText.getText().toString()),med.getName());
+                if(!(Integer.parseInt(editText.getText().toString())<0&&editText.getText().toString().trim().equals(""))){
+                    med.setTotalPills(Integer.parseInt(editText.getText().toString()));
+                    presenter.refill(Integer.parseInt(editText.getText().toString()),med.getId());
+                    ref.child(med.getId()).setValue(med);
+                    binding.displayCurrentPillsTv.setText(Integer.parseInt(editText.getText().toString()));
+                }
             }
         });
 

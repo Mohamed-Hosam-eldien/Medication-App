@@ -67,6 +67,7 @@ public class RequestsFragment extends Fragment implements OnRequestClick {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_requests, container, false);
         recyclerView = view.findViewById(R.id.requestRecycler);
 
@@ -131,6 +132,9 @@ public class RequestsFragment extends Fragment implements OnRequestClick {
         databaseReference.child(request.getId()).removeValue();
     }
 
+    private void loadRequest() {
+        Log.i("TAG", "loadRequest: " + i);
+    }
 
 //    @Override
 //    public void onResume() {

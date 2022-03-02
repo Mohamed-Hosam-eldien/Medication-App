@@ -6,14 +6,22 @@ import android.os.Parcelable;
 import java.util.List;
 
 public class Request {
+    String id;
     String senderName;
     String patientName;
     String description;
     String receiverEmail;
     String senderEmail;
-    String id;
     boolean request;
 
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Request() {
     }
@@ -29,13 +37,8 @@ public class Request {
         this.request = request;
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+
     public String getPatientName() {
         return patientName;
     }

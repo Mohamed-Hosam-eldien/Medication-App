@@ -1,15 +1,18 @@
-package com.example.medicationapp.medications.view.addEditMed;
+package com.example.medicationapp.medications.addEditMed.view;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,32 +29,42 @@ import android.widget.Toast;
 import com.example.medicationapp.R;
 import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityAddEditBinding;
-import com.example.medicationapp.medications.view.addEditMed.model.ReminderTime;
+import com.example.medicationapp.medications.addEditMed.presenter.AddEditPresenter;
+import com.example.medicationapp.medications.addEditMed.model.ReminderTime;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class AddEditActivity extends AppCompatActivity {
     ActivityAddEditBinding binding;
-
     LocalDB localDB;
     int comeFrom, medStrength, noDays = 0, totalAmount = 0;
-    Medication medication, medFroEdit;
+    Medication medication;/*, medFroEdit;*/
     MedDetails medDetails;
     List<ReminderTime> timesArrayAdapter;
     List<String> days;
     ReminderTimesRecycleAdapter adapter;
     String takingInstruction = null, otherInstruction;
     Calendar calendarFroDate = null;
+    AddEditPresenter presenter;
+    FirebaseDatabase database;
+    DatabaseReference ref;
+    private FirebaseDatabase firebaseDatabase = null;
+    private String requestId;
+    private boolean isDateSaved = false, isAllTimeOk = false;
+    private boolean isTotalPillGreaterThanNoPillToRemind = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,23 +72,30 @@ public class AddEditActivity extends AppCompatActivity {
         binding = ActivityAddEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        presenter = new AddEditPresenter(this);
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
         days = new ArrayList<>();
         timesArrayAdapter = new ArrayList<>();
         medDetails = new MedDetails();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            calendarFroDate = Calendar.getInstance();
+        }
 
-        calendarFroDate=Calendar.getInstance();
 
         binding.addMedRBtnOngoing.setVisibility(View.GONE);
         binding.addMedRBtnNoDays.setVisibility(View.GONE);
         binding.addMedTextRg1.setVisibility(View.GONE);
 
-
-
         Intent intent = getIntent();
 
-        comeFrom = intent.getIntExtra("comeFrom", 5);
-        if(comeFrom==3)
-        medFroEdit = intent.getBundleExtra("bundle").getParcelable("med");
+        comeFrom = intent.getIntExtra("comeFrom", 15);
+        if (comeFrom == 5 || comeFrom == 6)//5 update offline, 6 update firebase
+            medication = intent.getBundleExtra("bundle").getParcelable("med");
+        if (comeFrom == 3 || comeFrom == 6)// 3 insert into firebase, 6 update firebase
+            requestId = intent.getStringExtra("requestId");
 
         binding.addMedInstrRadGro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -101,8 +121,7 @@ public class AddEditActivity extends AppCompatActivity {
         binding.addMedScheduleStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                calendarFroDate = showDateDialog();
+                showDateDialog();
             }
         });
 
@@ -123,17 +142,13 @@ public class AddEditActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         binding.addMedRBtnSpecificDays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (comeFrom == 3) {
-
-                    showSpecificDaysDialog(medFroEdit.getDays());
+                    manageSpecificDaysDialog(medication.getDays());
                 } else
-                    showSpecificDaysDialog(null);
+                    manageSpecificDaysDialog(null);
             }
         });
 
@@ -191,16 +206,18 @@ public class AddEditActivity extends AppCompatActivity {
         setSupportActionBar(binding.addToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.close);
-        if (comeFrom == 1 || comeFrom == 2)
+        if (comeFrom == 1 || comeFrom == 2 || comeFrom == 3)
             binding.addToolbar.setTitle("Add Medication");
-        else if (comeFrom == 3) {
+        else if (comeFrom == 5 || comeFrom == 6) {
             binding.addToolbar.setTitle("Edit Medication");
-            setDataToInputField(medFroEdit);
+            setDataToInputField(medication);
             binding.addMedEtMedName.setEnabled(false);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            noDays=medFroEdit.getAllDays();
+            noDays = medication.getAllDays();
             try {
-                calendarFroDate.setTime(sdf.parse(medFroEdit.getStartDate()));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    calendarFroDate.setTime(sdf.parse(medication.getStartDate()));
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -213,12 +230,13 @@ public class AddEditActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         localDB = LocalDB.getInstance(this);
         switch (item.getItemId()) {
             case R.id.addEditMenuSave: {
-               collectDataFromUser();
+                collectDataFromUser();
             }
         }
 
@@ -231,90 +249,160 @@ public class AddEditActivity extends AppCompatActivity {
         return false;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void collectDataFromUser() {
-        medication = new Medication();
+        List<ReminderTime> reminderTimes;
+        List<MedDetails> medDetails1 = new ArrayList<>();
+        if (comeFrom == 1 || comeFrom == 2 || comeFrom == 3)
+            medication = new Medication();
 
         String medName = null;
         int amount = -1;
-        medName = binding.addMedEtMedName.getText().toString();
-        List<ReminderTime> reminderTimes = adapter.getAdapterList();
-
-        if (binding.addMedInstrEtOtherInstr.getText().toString() != null && !binding.addMedInstrEtOtherInstr.getText().equals(""))
-            otherInstruction = binding.addMedInstrEtOtherInstr.getText().toString();
-        if (binding.addMedEtStrength.getText().toString() != null && !binding.addMedEtStrength.getText().toString().equals(""))
-            medStrength = Integer.parseInt(binding.addMedEtStrength.getText().toString());
-        if (binding.addMedNoPillToRemind.getText().toString() != null && !binding.addMedNoPillToRemind.getText().toString().equals(""))
-            amount = Integer.parseInt(binding.addMedNoPillToRemind.getText().toString());
         int everyDay = 0;
-        if (binding.addMedRBtnEveryDay.isChecked())
-            everyDay = 1;
-        if (binding.addMedPresAmountOfMedEt.getText().toString() != null && !binding.addMedPresAmountOfMedEt.getText().toString().equals(""))
-            totalAmount = Integer.parseInt(binding.addMedPresAmountOfMedEt.getText().toString());
-        boolean allIsFull = true;
-        if (medName == null || medName.equals("")) {
-            allIsFull = false;
-            binding.addMedEtMedName.setError("Enter name");
-            Toast.makeText(this, "Name is empty", Toast.LENGTH_LONG).show();
-        }
-        if (reminderTimes.size() == 0) {
-            allIsFull = false;
-            Toast.makeText(this, "Please add time and pill(s) to remind you ", Toast.LENGTH_SHORT).show();
-        }
-        if (binding.addMedScheduleStartDate.getText() == null||binding.addMedScheduleStartDate.getText().equals("")) {
-            allIsFull = false;
-            Toast.makeText(this, "Please choose start date ", Toast.LENGTH_SHORT).show();
-        }
-        if (everyDay == 0 && days.size() == 0) {
-            allIsFull = false;
-            Toast.makeText(this, "Please choose day to remind you ", Toast.LENGTH_SHORT).show();
-        }
-        if (takingInstruction == null) {
-            allIsFull = false;
-            Toast.makeText(this, "Please Choose when you want to take a dose ", Toast.LENGTH_SHORT).show();
-        }
-        if (amount < 0) {
-            allIsFull = false;
-            Toast.makeText(this, "Enter number of pills to remind you when to refill reached", Toast.LENGTH_SHORT).show();
-            binding.addMedEtStrength.setError("Enter amount");
-        }
-        List<MedDetails> medDetails1 = new ArrayList<>();
-        if (allIsFull) {
+
+        if (validate1()) {
+            medName = binding.addMedEtMedName.getText().toString();
+            otherInstruction = binding.addMedInstrEtOtherInstr.getText().toString();
+            reminderTimes = adapter.getAdapterList();
+            if (!binding.addMedEtStrength.getText().toString().equals(""))
+                medStrength = Integer.parseInt(binding.addMedEtStrength.getText().toString());
+            amount = Integer.parseInt(binding.addMedNoPillToRemind.getText().toString());
+            totalAmount = Integer.parseInt(binding.addMedCurrentPillsOfMedEt.getText().toString());
+            if (amount >= totalAmount) {
+                isTotalPillGreaterThanNoPillToRemind = false;
+                Toast.makeText(this, "Number of to Remind can't be greater than Total pills", Toast.LENGTH_SHORT).show();
+                binding.addMedNoPillToRemind.setError("greater than total pills");
+                binding.addMedCurrentPillsOfMedEt.setError("Smaller than number of pills to remind");
+            } else {
+                isTotalPillGreaterThanNoPillToRemind = true;
+                medication.setRefillNo(amount);
+                medication.setTotalPills(totalAmount);
+            }
+
+            if (binding.addMedRBtnEveryDay.isChecked())
+                everyDay = 1;
+
             medication.setName(medName);
-            if (medStrength != 0)
-                medication.setMidStrength(medStrength);
+            medication.setMidStrength(medStrength);
             medication.setTimeToFood(takingInstruction);
-            medication.setRefillNo(amount);
             medication.setAllDays(everyDay);
-            medication.setTotalPills(totalAmount);
-            if (days.size() > 0)
-                medication.setDays(days);
+            medication.setDays(days);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             medication.setStartDate(sdf.format(calendarFroDate.getTime()));
+
             for (ReminderTime r : reminderTimes) {
                 Calendar c = Calendar.getInstance();
-                c.set(calendarFroDate.getTime()
-                        .getYear(), calendarFroDate.getTime()
-                        .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
-                medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
+                if (isDateSaved)
+                    if (c.getTime().getDate() == calendarFroDate.getTime().getDate())
+                        if (c.getTime().getHours() > r.getHour() || c.getTime().getMinutes() >= r.getMinute()) {
+                            Toast.makeText(this, "h" + c.getTime().getHours() + " " + r.getHour() + " m " + c.getTime().getMinutes() + " " + r.getMinute(), Toast.LENGTH_SHORT).show();
+                            isAllTimeOk = false;
+                            break;
+                        } else {
+                            isAllTimeOk = true;
+                            c.set(calendarFroDate.getTime()
+                                    .getYear(), calendarFroDate.getTime()
+                                    .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
+                            medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
+                            Log.i("TAG", "time: " + c.getTime().getHours() + " min " +
+                                    c.getTime().getMinutes() + "mill " + c.getTimeInMillis());
+                        }
+                    else {
+                        isAllTimeOk = true;
+                        c.set(calendarFroDate.getTime()
+                                .getYear(), calendarFroDate.getTime()
+                                .getMonth(), calendarFroDate.getTime().getDay(), r.getHour(), r.getMinute());
+                        medDetails1.add(new MedDetails(c.getTimeInMillis(), r.getPill(), "pill", 0));
+                        Log.i("TAG", "time: " + c.getTime().getHours() + " min " +
+                                c.getTime().getMinutes() + "mill " + c.getTimeInMillis());
+                    }
             }
-            medication.setMedDetails(medDetails1);
-            AddEditPresenter presenter=new AddEditPresenter(this);
-            if (comeFrom == 1||comeFrom==2) {
-                presenter.insertMedication(medication);
-                Toast.makeText(this, "insert", Toast.LENGTH_SHORT).show();
+            if (isAllTimeOk)
+                medication.setMedDetails(medDetails1);
+            Toast.makeText(this, "" + isAllTimeOk, Toast.LENGTH_SHORT).show();
+            if ((comeFrom == 1 || comeFrom == 2) && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk)) {
+                insertIntoDatabase(medication);
+            } else if (comeFrom == 3 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
+                insertIntoFirebase(medication);
+            else if (comeFrom == 5 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk))
+                updateDatabase(medication);
+            else if (comeFrom == 6 && (isTotalPillGreaterThanNoPillToRemind && isAllTimeOk)) {
+                updateFirebase(medication);
             }
-            else{
-                presenter.updateMedication(medication);
-                Intent intent=new Intent();
-                Bundle bundle=new Bundle();
-                bundle.putParcelable("med",medication);
-                intent.putExtra("bundle",bundle);
-                setResult(6,intent);
-                Toast.makeText(this, "update", Toast.LENGTH_SHORT).show();
-            }
-            finish();
-        }
+            if (isAllTimeOk)
+                if (isTotalPillGreaterThanNoPillToRemind)
+                    finish();
+                else
+                    Toast.makeText(this, "Number of to Remind can't be greater than Total pills", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "There is a time in the past ", Toast.LENGTH_SHORT).show();
 
+        }
+    }
+
+    boolean validate1() {
+        if (!binding.addMedEtMedName.getText().toString().trim().equals(""))
+            if (adapter.getAdapterList().size() > 0)
+                if (isDateSaved) {
+                    if (validate2())
+                        return true;
+                } else
+                    Toast.makeText(this, "Please select date to remind you", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "Please select time(s) to remind you", Toast.LENGTH_SHORT).show();
+        else {
+            binding.addMedEtMedName.setError("is empty");
+            Toast.makeText(this, "Name can't be empty", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+    boolean validate2() {
+        if (binding.addMedRBtnEveryDay.isChecked() || binding.addMedRBtnSpecificDays.isChecked())
+            if (binding.addMedInstrRadGro.getCheckedRadioButtonId() != -1)
+                if (!binding.addMedCurrentPillsOfMedEt.getText().toString().trim().equals(""))
+                    if (!binding.addMedNoPillToRemind.getText().toString().trim().equals(""))
+                        return true;
+                    else {
+                        binding.addMedNoPillToRemind.setError("is empty");
+                        Toast.makeText(this, "Number of pill to remind you can't be empty", Toast.LENGTH_SHORT).show();
+                    }
+                else {
+                    binding.addMedCurrentPillsOfMedEt.setError("is empty");
+                    Toast.makeText(this, "Current pill you have can't be empty", Toast.LENGTH_SHORT).show();
+                }
+            else {
+                Toast.makeText(this, "Please select when you want to take your medicine", Toast.LENGTH_SHORT).show();
+            }
+        else {
+            Toast.makeText(this, "Please select day(s) to remind you", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+    void insertIntoDatabase(Medication medication) {
+        medication.setId(Helper.generateKey());
+        presenter.insertMedication(medication);
+        Toast.makeText(this, "insert", Toast.LENGTH_SHORT).show();
+    }
+
+    void updateDatabase(Medication medication) {
+        presenter.updateMedication(medication);
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("med", medication);
+        intent.putExtra("bundle", bundle);
+        setResult(6, intent);
+        Toast.makeText(this, "update", Toast.LENGTH_SHORT).show();
+    }
+
+    void insertIntoFirebase(Medication medication) {
+        medication.setId(Helper.generateKey());
+        ref.child(Common.Request).child(requestId).child("medicationList").child(medication.getId()).setValue(medication);
+    }
+
+    void updateFirebase(Medication medication) {
+        ref.child(Common.Request).child(requestId).child("medicationList").child(medication.getId()).setValue(medication);
     }
 
     void showTimeDialog(ReminderTime time, int index) {
@@ -323,7 +411,6 @@ public class AddEditActivity extends AppCompatActivity {
         TextView btnMinus = view.findViewById(R.id.dialogTimeBtnMinus);
         EditText etAmout = view.findViewById(R.id.dialogTimeEtNumber);
         TimePicker timePicker = view.findViewById(R.id.dialogTimePicker);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             timePicker.setHour(time.getHour());
             timePicker.setMinute(time.getMinute());
@@ -332,7 +419,8 @@ public class AddEditActivity extends AppCompatActivity {
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                etAmout.setText((Integer.parseInt(etAmout.getText().toString()) + 1) + "");
+                if (Integer.parseInt(etAmout.getText().toString()) < 5)
+                    etAmout.setText((Integer.parseInt(etAmout.getText().toString()) + 1) + "");
             }
         });
         btnMinus.setOnClickListener(new View.OnClickListener() {
@@ -368,8 +456,7 @@ public class AddEditActivity extends AppCompatActivity {
         }
     }
 
-    private Calendar showDateDialog() {
-        Calendar calendar = Calendar.getInstance();
+    private void showDateDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_date_picker_view, null);
         DatePicker datePicker = view.findViewById(R.id.addDatePicker);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -378,15 +465,24 @@ public class AddEditActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
             }
         }).setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                String dateString = sdf.format(calendar.getTime());
-                binding.addMedScheduleStartDate.setText(dateString);
+                Calendar calendar = Calendar.getInstance();
+                if (datePicker.getYear() < calendar.getTime().getYear() || datePicker.getMonth() < calendar.getTime().getMonth() || datePicker.getDayOfMonth() < calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH)) {
+                    Toast.makeText(AddEditActivity.this, "You can't choose date in past", Toast.LENGTH_SHORT).show();
+                    binding.addMedScheduleStartDate.setText("Press to add date ");
+                    isDateSaved = false;
+                } else {
+                    calendarFroDate.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+                    Log.i("TAG", "onClick: dialog " + calendarFroDate.getTime().getDay() + "time" + calendarFroDate.getTimeInMillis());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String dateString = sdf.format(calendarFroDate.getTime());
+                    binding.addMedScheduleStartDate.setText(dateString);
+                    isDateSaved = true;
+                }
             }
         }).show();
-        return calendar;
     }
 
     private void showNoDaysDialog() {
@@ -428,7 +524,7 @@ public class AddEditActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private void showSpecificDaysDialog(List<String> daysFroEdit) {
+    private void manageSpecificDaysDialog(List<String> daysFroEdit) {
         View v = LayoutInflater.from(this).inflate(R.layout.dialog_specific_days, null);
         CheckBox sat = v.findViewById(R.id.dialogChBoxSat);
         CheckBox sun = v.findViewById(R.id.dialogChBoxSun);
@@ -463,8 +559,6 @@ public class AddEditActivity extends AppCompatActivity {
                         fri.setChecked(true);
                         break;
                 }
-
-
             }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -487,15 +581,7 @@ public class AddEditActivity extends AppCompatActivity {
                 setSpecificDays(wen);
                 setSpecificDays(thu);
                 setSpecificDays(fri);
-                String daysText = null;
-                for (int k = 0; k < days.size(); k++) {
-                    if (daysText == null)
-                        daysText = days.get(k);
-                    else
-                        daysText = daysText + " , " + days.get(k);
-                }
-                if (daysText != null)
-                    binding.addMedRBtnSpecificDays.setText("Specific days of the week : " + daysText);
+                setDaysNameToRadioBtnSpecificDays();
             }
         });
         builder.show();
@@ -506,14 +592,24 @@ public class AddEditActivity extends AppCompatActivity {
             days.add(ch.getText().toString());
     }
 
+    void setDaysNameToRadioBtnSpecificDays() {
+        String daysText = null;
+        for (int k = 0; k < days.size(); k++) {
+            if (daysText == null)
+                daysText = days.get(k);
+            else
+                daysText = daysText + " , " + days.get(k);
+        }
+        if (daysText != null)
+            binding.addMedRBtnSpecificDays.setText("Specific days of the week : " + daysText);
+    }
+
     void setDataToInputField(Medication medication) {
         binding.addMedEtMedName.setText(medication.getName());
-        List<ReminderTime> times = new ArrayList<>();
         for (MedDetails m : medication.getMedDetails()) {
             timesArrayAdapter.add(new ReminderTime(Helper.convertLongToHours(m.getTime()),
                     Helper.convertLongToMinuets(m.getTime()), m.getDose()));
         }
-        adapter.notifyDataSetChanged();
         binding.addMedEtStrength.setText(medication.getMidStrength() + "");
         binding.addMedNoPillToRemind.setText(medication.getRefillNo() + "");
         binding.addMedScheduleStartDate.setText(medication.getStartDate());
@@ -522,10 +618,13 @@ public class AddEditActivity extends AppCompatActivity {
         else {
             binding.addMedRBtnSpecificDays.setChecked(true);
         }
-        if(medication.getTotalPills()>0)
-            binding.addMedPresAmountOfMedEt.setText(medication.getTotalPills()+"");
+        if (medication.getTotalPills() > 0)
+            binding.addMedCurrentPillsOfMedEt.setText(medication.getTotalPills() + "");
+        markInstructionRadioButtons(medication.getTimeToFood());
+    }
 
-        switch (medication.getTimeToFood()) {
+    void markInstructionRadioButtons(String time) {
+        switch (time) {
             case "After":
                 binding.addMedInstrRaBtnAfter.setChecked(true);
                 break;
@@ -541,9 +640,12 @@ public class AddEditActivity extends AppCompatActivity {
         }
     }
 
-    void showBackDialog()
-    {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+    void markSpecificDaysCheckBox(List<String> days) {
+
+    }
+
+    void showBackDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Are you sure to exit ?").setPositiveButton("exit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -553,12 +655,9 @@ public class AddEditActivity extends AppCompatActivity {
         dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
         });
-
         dialog.show();
-
     }
 
 }

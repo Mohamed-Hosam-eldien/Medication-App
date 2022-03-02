@@ -1,8 +1,7 @@
-package com.example.medicationapp.medications.view.displayMedication;
+package com.example.medicationapp.medications.displayMedication.presenter;
 
 import android.content.Context;
 
-import com.example.medicationapp.medications.view.MedicationViewInterface;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.repository.Repository;
 
@@ -14,19 +13,20 @@ public class DisplayPresenter {
         this.context = context;
         this.repo = Repository.getInstance(context);
     }
-    void  deleteMedication(Medication med)
+  public  void  deleteMedication(Medication med)
     {
         repo.deleteMedication(med);
     }
 
-    void updateActive(int active,String medName)
+   public void updateActive(int active,String id)
     {
-        repo.updateActive(active, medName);
+        repo.updateActive(active, id);
     }
-    void refill(int amount,String medName)
+  public  void refill(int amount,String id)
     {
-        repo.refill(amount, medName);
+        repo.refill(amount, id);
     }
+    public void updateFirebase(int refill,String medId){}
 
 
 }

@@ -23,10 +23,10 @@ import android.view.ViewGroup;
 import com.example.medicationapp.R;
 import com.example.medicationapp.databinding.FragmentHomeMedBinding;
 import com.example.medicationapp.databinding.HomeBottomDialogBinding;
+import com.example.medicationapp.medications.displayMedication.view.DisplayMedicationActivity;
 import com.example.medicationapp.snooze_refill.view.RefillActivity;
 import com.example.medicationapp.snooze_refill.view.SnoozeActivity;
 import com.example.medicationapp.home.presenter.HomePresenter;
-import com.example.medicationapp.medications.view.displayMedication.DisplayMedicationActivity;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.utils.Helper;
@@ -201,7 +201,7 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
 
         });
         dialogBinding.btnTakeDialog.setOnClickListener(view1 -> {
-            presenter.updateRefill(medication.getTotalPills() - 1, medication.getName());
+            presenter.updateRefill(medication.getTotalPills() - 1, medication.getId());
             if (medication.getTotalPills() <= medication.getRefillNo()) {
 
                 Intent resultIntent = new Intent(getContext(), MainActivity.class);

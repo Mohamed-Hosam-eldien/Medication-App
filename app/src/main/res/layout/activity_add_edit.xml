@@ -15,51 +15,53 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                app:cardCornerRadius="@dimen/_15sdp"
-                app:cardElevation="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/card1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                >
+                app:boxBackgroundColor="#fff"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
+                app:boxStrokeColor="#2196F3"
+                app:boxStrokeWidth="2dp">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/addMedEtMedName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/addMed_MedNameHint"
-                    android:paddingStart="5dp"
-                    tools:ignore="RtlSymmetry"
-                    android:textColor="@color/pink"
-                    />
-            </androidx.cardview.widget.CardView>
+                    android:maxLength="25"
+                    android:paddingStart="@dimen/_15sdp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="@dimen/_15sdp"
-                app:cardElevation="@dimen/_10sdp"
-                android:padding="@dimen/_20sdp"
                 android:id="@+id/card2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/card1"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                >
+                android:padding="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:id="@+id/rel1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/_15sdp"
-                    >
+                    android:padding="@dimen/_15sdp">
+
 
                     <TextView
                         android:id="@+id/addMedRemindTv"
@@ -69,12 +71,12 @@
                         android:paddingStart="@dimen/_5sdp"
                         tools:ignore="RtlSymmetry" />
 
-                    <Switch
-                        android:id="@+id/addMedReminderSwitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                    <!--                    <Switch-->
+                    <!--                        android:id="@+id/addMedReminderSwitch"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_alignParentEnd="true"-->
+                    <!--                        tools:ignore="UseSwitchCompatOrMaterialXml" />-->
 
                     <Spinner
                         android:id="@+id/addMedReminderTimeSp"
@@ -99,22 +101,20 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="@dimen/_15sdp"
-                app:cardElevation="@dimen/_10sdp"
                 android:id="@+id/card3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card2"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                >
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/_15sdp"
-                    >
+                    android:padding="@dimen/_15sdp">
 
                     <TextView
                         android:id="@+id/addMedTxtSchedule"
@@ -218,22 +218,21 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_15sdp"
-                app:cardElevation="@dimen/_10sdp"
-                android:padding="@dimen/_20sdp"
                 android:id="@+id/card4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/card3"
-                android:layout_marginTop="20dp">
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_15sdp"
-                    >
+                    android:padding="@dimen/_15sdp">
 
                     <TextView
                         android:id="@+id/medIconTxt"
@@ -253,60 +252,80 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_15sdp"
-                app:cardElevation="@dimen/_10sdp"
-                android:padding="@dimen/_20sdp"
                 android:id="@+id/card5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card4"
-                android:layout_marginTop="20dp">
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/_15sdp"
-                    >
+                    android:padding="@dimen/_15sdp">
 
                     <TextView
                         android:id="@+id/addMedTVStrength"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
                         android:layout_marginTop="10dp"
                         android:text="@string/addMed_MedStrengthTxt"
 
                         />
 
-                    <EditText
-                        android:id="@+id/addMedEtStrength"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/card15"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_toEndOf="@+id/addMedTVStrength"
-                        android:hint="@string/addMedAmountHint" />
+                        app:boxBackgroundColor="#fff"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="24dp"
+                        app:boxCornerRadiusTopStart="24dp"
+                        app:boxStrokeColor="#2196F3"
+                        app:boxStrokeWidth="2dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/addMedEtStrength"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/addMedAmountHint"
+                            android:inputType="number"
+                            android:maxLength="7"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:textAlignment="@+id/addMedTVStrength" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
 
             <androidx.cardview.widget.CardView
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_15sdp"
-                app:cardElevation="@dimen/_10sdp"
-                android:padding="@dimen/_20sdp"
                 android:id="@+id/card6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card5"
-                android:layout_marginTop="20dp">
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/_15sdp"
-                    >
+                    android:padding="@dimen/_15sdp">
 
                     <TextView
                         android:id="@+id/addMedTVInstr"
@@ -347,33 +366,50 @@
                             android:text="@string/addMedRBtnDoesnotTxt" />
                     </RadioGroup>
 
-                    <EditText
-                        android:id="@+id/addMedInstrEtOtherInstr"
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/addMedInstrRadGro"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/addMedAnyOtherInstrHint" />
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:boxBackgroundColor="#fff"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="24dp"
+                        app:boxCornerRadiusTopStart="24dp"
+                        app:boxStrokeColor="#2196F3"
+                        app:boxStrokeWidth="2dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/addMedInstrEtOtherInstr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/addMedAnyOtherInstrHint"
+                            android:maxLength="240"
+                            android:paddingStart="@dimen/_15sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_15sdp"
-                app:cardElevation="@dimen/_10sdp"
-                android:padding="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card6"
-                android:layout_marginTop="20dp">
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/_15sdp"
-                    >
+                    android:padding="@dimen/_15sdp">
 
                     <TextView
                         android:id="@+id/addMedPres1"
@@ -388,36 +424,67 @@
                         android:layout_below="@id/addMedPres1"
                         android:text="@string/addMedEnterAmountOfMedTxt" />
 
-                    <EditText
-                        android:id="@+id/addMedPresAmountOfMedEt"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/card12"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/addMedPres2"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:hint="@string/addMedTotalAmountOfMedHint"
-                        android:inputType="number"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:boxBackgroundColor="#fff"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="24dp"
+                        app:boxCornerRadiusTopStart="24dp"
+                        app:boxStrokeColor="#2196F3"
+                        app:boxStrokeWidth="2dp">
 
-                        />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/addMedCurrentPillsOfMedEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/addMedTotalAmountOfMedHint"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:paddingStart="@dimen/_15sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                     <TextView
                         android:id="@+id/addMedLastText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/addMedPresAmountOfMedEt"
+                        android:layout_below="@+id/card12"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:text="@string/addMedNoPillToRemindTxt" />
 
-                    <EditText
-                        android:id="@+id/addMedNoPillToRemind"
-                        android:layout_width="@dimen/_70sdp"
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/addMedLastText"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_15sdp"
-                        android:hint="@string/addMedAmountHint"
-                        android:inputType="number"
-                         />
+                        app:boxBackgroundColor="#fff"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="24dp"
+                        app:boxCornerRadiusTopStart="24dp"
+                        app:boxStrokeColor="#2196F3"
+                        app:boxStrokeWidth="2dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/addMedNoPillToRemind"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/addMedAmountHint"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:paddingStart="@dimen/_15sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
                 </RelativeLayout>

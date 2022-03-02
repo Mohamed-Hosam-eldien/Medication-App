@@ -52,6 +52,7 @@ public class Connection {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
+                        //Log.d("SUCCESS", "success");
                         Toast.makeText(context, "Request has been sent", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -62,8 +63,15 @@ public class Connection {
         });
     }
 
-    public void receiveMedication() {
+    public void sendMedicine(List<Medication>medications,String requestId)
+    {
 
+        for(Medication m:medications)
+        firebaseDatabase.getReference(Common.Request)
+                .child(requestId).child("medicationList").child(m.getId()).setValue(m);
+    }
+
+    public void receiveMedication() {
         firebaseDatabase.getReference(Common.Request)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -81,6 +89,7 @@ public class Connection {
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {}});
+
     }
 
     public void saveUserToFirebase(User user) {
@@ -96,6 +105,7 @@ public class Connection {
                     Toast.makeText(context, "Register Failed", Toast.LENGTH_SHORT).show();
                 });
 
+
         FirebaseDatabase.getInstance().getReference("HealthTacker")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -108,5 +118,11 @@ public class Connection {
 
                     }
                 });
+
+
     }
+
+
+
+
 }

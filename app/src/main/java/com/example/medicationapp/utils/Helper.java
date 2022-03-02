@@ -25,6 +25,9 @@ import com.example.medicationapp.home.view.MainActivity;
 import com.example.medicationapp.model.Medication;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -121,15 +124,13 @@ public class Helper {
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .addAction(R.drawable.custom_accept, "snooze", snoozePIntent)
                     .addAction(R.drawable.launch, "Refill", refillP);
-
-
             NotificationManagerCompat nmc = NotificationManagerCompat.from(context);
             nmc.notify(NOTIFICATION_ID, builder.build());
 
         }
     }
 
-    public static String generateKey(){
+    public static String generateKey() {
         return FirebaseDatabase.getInstance().getReference().push().getKey();
     }
 

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -25,6 +24,7 @@ import com.example.medicationapp.caring.presenter.CaringPresenter;
 import com.example.medicationapp.databinding.InfoDialogBinding;
 import com.example.medicationapp.databinding.RegisterDialogBinding;
 import com.example.medicationapp.home.presenter.HomePresenter;
+import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
@@ -190,7 +190,7 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
 
     private void showRegDialog() {
         dialog = new Dialog(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.register_dialog, null);
+        View view = LayoutInflater.from(this).inflate(R.layout.register_dialog,null);
         dialog.setContentView(view);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
