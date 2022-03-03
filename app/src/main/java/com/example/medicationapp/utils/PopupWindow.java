@@ -1,11 +1,8 @@
 package com.example.medicationapp.utils;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,7 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.medicationapp.R;
 import com.example.medicationapp.databinding.SnoozeLayoutBinding;
+import com.example.medicationapp.home.presenter.HomePresenter;
+import com.example.medicationapp.model.MedDetails;
+import com.example.medicationapp.model.Medication;
+
 import static android.content.Context.WINDOW_SERVICE;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.work.Data;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
@@ -27,7 +32,9 @@ import androidx.work.WorkRequest;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -37,16 +44,17 @@ public class PopupWindow {
     private final View mView;
     private WindowManager.LayoutParams mParams;
     private final WindowManager mWindowManager;
-    private final LayoutInflater layoutInflater;
     private int snooze;
     private final int dose;
     private final long time;
     private final long[] array;
     private final String name;
     private final String food;
+    HomePresenter presenter;
+    private final String id;
 
     @SuppressLint("DefaultLocale")
-    public PopupWindow(Context context, String name, long time, int dose, String food, long[] array) {
+    public PopupWindow(Context context, String name, long time, int dose, String food, long[] array, String id) {
         this.context = context;
 
         this.name = name;
@@ -54,6 +62,8 @@ public class PopupWindow {
         this.dose = dose;
         this.array = array;
         this.food = food;
+        presenter = new HomePresenter(context);
+        this.id = id;
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -73,7 +83,7 @@ public class PopupWindow {
 
         }
         // getting a LayoutInflater
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // inflating the view with the custom layout we created
         mView = layoutInflater.inflate(R.layout.popup_med_layout, null);
         RadioGroup radioGroup = mView.findViewById(R.id.radioAddSnooze);
@@ -108,19 +118,12 @@ public class PopupWindow {
             }
         });
 
-        mView.findViewById(R.id.btnTake).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "take", Toast.LENGTH_SHORT).show();
-            }
+        mView.findViewById(R.id.btnTake).setOnClickListener(view -> {
+            updateTaken(getPosition());
+            close();
         });
 
-        mView.findViewById(R.id.btnRefuse).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                close();
-            }
-        });
+        mView.findViewById(R.id.btnRefuse).setOnClickListener(view -> close());
 
 
         TextView txtName = mView.findViewById(R.id.txtName);
@@ -182,21 +185,15 @@ public class PopupWindow {
         }
     }
 
-    private void showDialog() {
-        Dialog dialog = new Dialog(context.getApplicationContext());
-        View view = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.snooze_layout,null);
-        dialog.setContentView(view);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        SnoozeLayoutBinding dialogBinding = SnoozeLayoutBinding.bind(view);
-
-        dialogBinding.btnSnooze.setOnClickListener(v -> {
-            submitSnooze();
-            dialog.dismiss();
+    private void updateTaken(int position) {
+        new Thread(() -> {
+            Medication medication =  presenter.getMedicationToPopup(id);
+            medication.getMedDetails().get(position).setTaken(1);
+            presenter.updateTaken(medication.getMedDetails(), medication.getId());
+            Log.d("MED", "" + position);
             close();
-        });
-
-        dialog.show();
+        }).start();
+        Toast.makeText(context, "mid is taken", Toast.LENGTH_SHORT).show();
     }
 
     private void submitSnooze() {
@@ -227,6 +224,16 @@ public class PopupWindow {
         WorkManager.getInstance(context).enqueue(saveRequest);
 
         close();
+    }
+
+    private int getPosition() {
+        int pos =0;
+        for(int i=0 ; i<array.length ; i++) {
+            if(array[i] == time) {
+                pos = i;
+            }
+        }
+        return pos;
     }
 
 }

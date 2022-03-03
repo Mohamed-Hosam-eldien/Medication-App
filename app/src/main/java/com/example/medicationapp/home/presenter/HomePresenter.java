@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.example.medicationapp.connection.Connection;
 import com.example.medicationapp.connection.GetAllMedication;
 import com.example.medicationapp.connection.NetworkInterface;
+import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.repository.Repository;
@@ -16,13 +17,10 @@ import java.util.List;
 public class HomePresenter {
 
     private final Repository repository;
-    Connection connection;
-    GetAllMedication getAllMedication;
 
 
     public HomePresenter(Context context) {
         this.repository = Repository.getInstance(context);
-        this.getAllMedication = getAllMedication;
     }
 
     public void addMedication(Medication medication) {
@@ -41,8 +39,16 @@ public class HomePresenter {
         return repository.getAllMedicationInAllDay(currentDay);
     }
 
+    public Medication getMedicationToPopup(String id) {
+        return repository.getMedToPopup(id);
+    }
+
     public void updateRefill(int amount, String name){
         repository.refill(amount, name);
+    }
+
+    public void updateTaken(List<MedDetails> details, String id){
+        repository.updateTaken(details, id);
     }
 
     public void deleteMedicine(Medication medication){

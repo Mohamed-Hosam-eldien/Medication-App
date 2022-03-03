@@ -20,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.databinding.FragmentHomeMedBinding;
@@ -78,16 +77,18 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
 
     public void getDate(long currentDate, LifecycleOwner lifecycleOwner) {
         Log.d("CURRENT DATE : " , currentDate+"");
-        HomeAdapter adapter = new HomeAdapter(new ArrayList<>(), getActivity(), this);
+
         presenter.getMedicationListByAllDay(currentDate).observe(lifecycleOwner, medications -> {
                 if (medications.size() > 0) {
-                    adapter.setList(medications);
+                    adapter = new HomeAdapter(medications, getActivity(), this, currentDate);
                     binding.homeRecyclerMid.setLayoutManager(new LinearLayoutManager(getActivity()));
                     binding.homeRecyclerMid.setAdapter(adapter);
                     binding.lottieMain.setVisibility(View.GONE);
                 } else {
                     binding.lottieMain.setVisibility(View.VISIBLE);
-                    adapter.setList(new ArrayList<>());
+                    adapter = new HomeAdapter(new ArrayList<>(), getActivity(), this, currentDate);
+                    binding.homeRecyclerMid.setAdapter(adapter);
+                    //adapter.setList(new ArrayList<>());
                     adapter.notifyDataSetChanged();
                 }
             });
@@ -102,7 +103,7 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
 
 
     @Override
-    public void showMedDialog(MedDetails detail, Medication medication) {
+    public void showMedDialog(MedDetails detail, Medication medication, int position) {
         Dialog dialog = new Dialog(getActivity());
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_bottom_dialog,null);
         dialog.setContentView(view);
@@ -110,22 +111,25 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
 
         HomeBottomDialogBinding dialogBinding = HomeBottomDialogBinding.bind(view);
         dialogBinding.txtName.setText(medication.getName());
-        dialogBinding.txtTime.setText(new StringBuilder(getString(R.string.take_at)).append(getRemainingTime(detail.getTime())));
+        dialogBinding.txtTime.setText(new StringBuilder(getString(R.string.take_at)).append(" ").append(getRemainingTime(detail.getTime())));
         dialogBinding.txtDose.setText(new StringBuilder(getString(R.string.take))
+                .append(" ")
                 .append(detail.getDose())
                 .append(" ")
+                .append(getString(R.string.dose))
+                .append(" ")
                 .append(medication.getTimeToFood()));
+        dialogBinding.txtRefile.setText(new StringBuilder().append(getString(R.string.refile_after)).append(medication.getRefillNo()).append(getString(R.string.pills)).toString());
 
         dialogBinding.imgInfo.setOnClickListener(view1 -> navigateToInfo(medication));
 
         dialogBinding.imgEdit.setOnClickListener(view1 -> navigateToInfo(medication));
 
-        dialogBinding.imgDelete.setOnClickListener(view1 -> showBackDialog(medication));
+        dialogBinding.imgDelete.setOnClickListener(view1 -> showBackDialog(medication, dialog));
 
         dialogBinding.btnTakeDialog.setOnClickListener(view1 -> {
             presenter.updateRefill(medication.getTotalPills() - 1, medication.getId());
             if (medication.getTotalPills() <= medication.getRefillNo()) {
-
                 Intent resultIntent = new Intent(getContext(), MainActivity.class);
                 resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 PendingIntent pendingIntent = null;
@@ -153,27 +157,30 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
 
                 refillIntent.addCategory(Intent.CATEGORY_LAUNCHER);
                 refillIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                b = new Bundle();
-//                b.putString("medicine", medication.getName());
-//                b.putParcelable("m", medication);
-//                refillIntent.putExtra("b", b);
 
-//                refillIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                     refillPendingIntent = PendingIntent.getActivity(
                             getContext(), 1, refillIntent, PendingIntent.FLAG_IMMUTABLE
                     );
                 }
 
-
                 Helper.showNotification(getContext(),
                         "Your " + medication.getName() +" "+ getString(R.string.notificationBody),
                         pendingIntent, snoozePendingIntent, refillPendingIntent);
 
             }
+
+            updateTaken(medication, position);
+
             dialog.dismiss();
         });
         dialog.show();
+    }
+
+    private void updateTaken(Medication medication, int position) {
+        medication.getMedDetails().get(position).setTaken(1);
+        presenter.updateTaken(medication.getMedDetails(), medication.getId());
+        Log.d("TAG Update Taken",""+medication.getMedDetails().get(position).getTaken());
     }
 
     public void navigateToInfo(Medication medication){
@@ -184,12 +191,13 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
         startActivity(in);
     }
 
-    void showBackDialog(Medication medication) {
+    void showBackDialog(Medication medication, Dialog dia) {
         AlertDialog.Builder dialog=new AlertDialog.Builder(getContext());
         dialog.setTitle("Are you sure Delete Medicine ?").setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 presenter.deleteMedicine(medication);
+                dia.dismiss();
             }
         });
         dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -199,24 +207,6 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
         });
         dialog.show();
     }
- /*   private void snoozeIntent(PendingIntent s) {
-        Intent snoozeIntent = new Intent(getContext(), SnoozeActivity.class);
-        snoozeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            PendingIntent snoozePendingIntent = PendingIntent.getActivity(
-                    getContext(), 1, snoozeIntent, PendingIntent.FLAG_IMMUTABLE
-            );
-        }
-    }*/
+
 }
 
-    /*private void intentTake(Medication medication) {
-        Intent snoozeIntent = new Intent(getContext(), SnoozeActivity.class);
-        snoozeIntent.putExtra("medicine", medication);
-        snoozeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            PendingIntent snoozePendingIntent = PendingIntent.getActivity(
-                    getContext(), 1, snoozeIntent, PendingIntent.FLAG_IMMUTABLE
-            );
-        }
-    }*/

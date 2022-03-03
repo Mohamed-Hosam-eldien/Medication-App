@@ -1,7 +1,6 @@
 package com.example.medicationapp.dependent.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicationapp.R;
-import com.example.medicationapp.home.view.HomeAdapter;
 import com.example.medicationapp.home.view.ShowBottomDialog;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
@@ -37,7 +34,7 @@ public class DependentAdapter extends RecyclerView.Adapter<DependentAdapter.View
     }
 
     @Override
-    public void showMedDialog(MedDetails detail, Medication medication) {
+    public void showMedDialog(MedDetails detail, Medication medication, int position) {
         Toast.makeText(context, "asd", Toast.LENGTH_SHORT).show();
     }
 

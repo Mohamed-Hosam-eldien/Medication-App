@@ -58,7 +58,7 @@ public class AddEditActivity extends AppCompatActivity {
 
     LocalDB localDB;
     int comeFrom, medStrength, noDays = 0, totalAmount = 0;
-    Medication medication, medFroEdit;
+    Medication medication;
     MedDetails medDetails;
     List<ReminderTime> timesArrayAdapter;
     List<String> days;
@@ -80,6 +80,7 @@ public class AddEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         presenter = new AddEditPresenter(this);
         database = FirebaseDatabase.getInstance();
@@ -110,17 +111,17 @@ public class AddEditActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.addMedInstrRaBtnAfter:
-                        takingInstruction = "After";
+                        takingInstruction = "after eating";
                         Toast.makeText(AddEditActivity.this, "" + takingInstruction, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.addMedInstrRaBtnBefore:
-                        takingInstruction = "Before";
+                        takingInstruction = "before eating";
                         break;
                     case R.id.addMedInstrRaBtnWhile:
-                        takingInstruction = "While";
+                        takingInstruction = "while eating";
                         break;
                     case R.id.addMedInstrRaBtnDoesnt:
-                        takingInstruction = "Doesn't";
+                        takingInstruction = "doesn't matter";
                         break;
                 }
             }
@@ -292,6 +293,7 @@ public class AddEditActivity extends AppCompatActivity {
             medication.setTimeToFood(takingInstruction);
             medication.setAllDays(everyDay);
             medication.setDays(days);
+            medication.setInstruction(otherInstruction);
             //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             medication.setStartDate(removeAllHours(calendarFroDate));
 
@@ -332,11 +334,12 @@ public class AddEditActivity extends AppCompatActivity {
                 Toast.makeText(this, "Number of to Remind can't be greater than Total pills", Toast.LENGTH_SHORT).show();
 
 
-            WorkRequest saveRequest =
-                    new PeriodicWorkRequest.Builder(TimerWorker.class,
+            WorkRequest saveRequest = new PeriodicWorkRequest
+                    .Builder(TimerWorker.class,
                             24, TimeUnit.HOURS)
                             .setInputData(
                                     new Data.Builder()
+                                            .putString("id", medication.getId())
                                             .putLongArray("times",listOfTimes)
                                             .putString("medName", medName)
                                             .putInt("dose", medication.getMedDetails().get(0).getDose())

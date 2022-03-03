@@ -34,9 +34,12 @@ public interface RepositoryInterface {
 
     void refill(int amount,String id);
 
+    Medication getMedToPopup(String id);
 
     void onSendRequest(Request request);
 
     List<Medication> onReceiveMedication();
+
+    void updateTaken(List<MedDetails> medDetails, String id);
 
 }

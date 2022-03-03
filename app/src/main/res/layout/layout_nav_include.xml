@@ -66,11 +66,11 @@
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
 
-            <!--ImageView
+            <ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                app:srcCompat="@drawable/googlle"
-                android:contentDescription="@null" /-->
+                app:srcCompat="@drawable/ic_baseline_assignment_ind_24"
+                android:contentDescription="@null"/>
 
 
             <TextView
@@ -91,39 +91,6 @@
             android:background="@color/gray"/>
 
 
-        <LinearLayout
-            android:id="@+id/layoutInfo"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginBottom="@dimen/_12sdp"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="28sp"
-                android:layout_height="28sp"
-                app:srcCompat="@drawable/ic_baseline_info_24"
-                android:contentDescription="@null" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="bold"
-                android:layout_marginStart="8sp"
-                android:text="@string/info"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray"/>
 
 
     </LinearLayout>

@@ -28,7 +28,7 @@
             android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />
 
-        <TextView
+        <!--TextView
             android:id="@+id/txtFoodTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:gravity="start"
             android:text="after food"
-            android:textSize="16sp" />
+            android:textSize="16sp" /-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMedicine"

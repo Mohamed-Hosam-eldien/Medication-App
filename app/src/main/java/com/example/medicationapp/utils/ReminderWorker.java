@@ -16,6 +16,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -31,7 +33,7 @@ public class ReminderWorker extends Worker {
     long time;
     String name;
     int dose;
-    String food;
+    String food, id;
     long[] list;
 
     public ReminderWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
@@ -48,6 +50,7 @@ public class ReminderWorker extends Worker {
         dose = getInputData().getInt("dose", 0);
         food = getInputData().getString("medFood");
         list = getInputData().getLongArray("list");
+        id = getInputData().getString("id");
 
 
         startService();
@@ -57,6 +60,33 @@ public class ReminderWorker extends Worker {
 
         return Result.success();
     }
+
+//
+//    public static void showNotification(Context context, String body, PendingIntent intent,
+//                                        PendingIntent snoozePIntent, PendingIntent refillP) {
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "reminder", NotificationManager.IMPORTANCE_HIGH);
+//            channel.setDescription(" description");
+//            NotificationManager nm = context.getSystemService(NotificationManager.class);
+//            nm.createNotificationChannel(channel);
+//            // Create an Intent for the activity you want to start
+//
+//        }
+//
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
+//            builder.setContentTitle("").setSmallIcon(R.drawable.launch)
+//                    .setContentText(body)
+//                    .setPriority(Notification.PRIORITY_DEFAULT).setContentIntent(intent)
+//                    .setAutoCancel(true)
+//                    .setColor(ContextCompat.getColor(context, R.color.darkBlue))
+//                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+//            NotificationManagerCompat nmc = NotificationManagerCompat.from(context);
+//            nmc.notify(2, builder.build());
+//
+//        }
+//    }
 
 
     public void startService(){
@@ -71,6 +101,7 @@ public class ReminderWorker extends Worker {
                 intent.putExtra("Dose", dose);
                 intent.putExtra("Time", time);
                 intent.putExtra("Food", food);
+                intent.putExtra("id", id);
 
                 Log.d("reminder_Time", time+"");
 
@@ -130,10 +161,10 @@ public class ReminderWorker extends Worker {
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
                     .setVibrate(new long[]{0,1000,500,1000})
                     .setSound(defaultSoundUri)
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .setDefaults(NotificationCompat.DEFAULT_ALL)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher_foreground));
+                    .setSmallIcon(R.drawable.launch);
 
             if(pendingIntent != null)
                 builder.setContentIntent(pendingIntent);

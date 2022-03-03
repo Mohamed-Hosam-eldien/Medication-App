@@ -34,6 +34,7 @@ public class TimerWorker extends Worker {
 
         array = getInputData().getLongArray("times");
         String name = getInputData().getString("medName");
+        String id = getInputData().getString("id");
 
         int dose = getInputData().getInt("dose", 0);
         String food = getInputData().getString("medFood");
@@ -53,6 +54,7 @@ public class TimerWorker extends Worker {
                         .setInputData(
                                 new Data.Builder()
                                         .putLong("alarm", l)
+                                        .putString("id", id)
                                         .putString("medName", name)
                                         .putInt("dose", dose)
                                         .putString("medFood", food)
@@ -66,22 +68,6 @@ public class TimerWorker extends Worker {
         }
         return Result.failure();
     }
-
-
-    public static boolean isConnected(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-
-        return wifiInfo != null && wifiInfo.isConnected() || mobileInfo != null && mobileInfo.isConnected();
-    }
-
-//    private PendingIntent getAlarmActionPendingIntent() {
-//        Intent intent = new Intent(context, AlarmActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        return PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//    }
 
 }
 

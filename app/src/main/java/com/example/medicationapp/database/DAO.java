@@ -27,6 +27,10 @@ public interface DAO {
     @Query("SELECT * FROM Medication WHERE id=:id")
     public LiveData<Medication> getMedication(String id);
 
+
+    @Query("SELECT * FROM Medication WHERE id=:id")
+    Medication getMedicationToPopupWin(String id);
+
     @Query("Select * FROM Medication WHERE isActive = 1")
     public LiveData<List<Medication>> getActiveMedicines();
 
@@ -42,8 +46,12 @@ public interface DAO {
 
     @Query("update Medication set isActive =:active where id =:id")
     void updateActive(int active,String id);
+
     @Query("update Medication set totalPills =:amount where id =:id")
     void refill(int amount,String id);
+
+    @Query("update Medication set medDetails =:details where id =:id")
+    void updateTaken(List<MedDetails> details,String id);
 
     @Query("update Medication set name=:name,refillNo=:refillNo,isActive=:isActive" +
             ",medDetails=:medDetails,image=:img,midStrength=:midStrength," +

@@ -1,6 +1,7 @@
 package com.example.medicationapp.database;
 
 import android.content.Context;
+import android.telecom.Call;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -39,43 +40,28 @@ public class LocalDB implements LocalInterface {
 
     @Override
     public void insertMedicine(Medication medication) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                medicationDao.insertMedication(medication);
-            }
-        }).start();
+        new Thread(() -> medicationDao.insertMedication(medication)).start();
     }
 
     @Override
     public void deleteMedication(Medication medication) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                medicationDao.deleteMedication(medication);
-            }
-        }).start();
+        new Thread(() -> medicationDao.deleteMedication(medication)).start();
     }
 
     @Override
     public void updateActive(int active, String id) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                medicationDao.updateActive(active, id);
-            }
-        }).start();
+        new Thread(() -> medicationDao.updateActive(active, id)).start();
 
     }
 
     @Override
+    public Medication getMedicationToPopup(String id) {
+        return medicationDao.getMedicationToPopupWin(id);
+    }
+
+    @Override
     public void update(String id, String name, int refillNo, int isActive, List<MedDetails> medDetails, int img, int midStrength, String timeToFood, int current, long startDate, List<String> days, int allDays) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                medicationDao.update(id, name, refillNo, isActive, medDetails, img, midStrength, timeToFood, current, startDate, days, allDays);
-            }
-        }).start();
+        new Thread(() -> medicationDao.update(id, name, refillNo, isActive, medDetails, img, midStrength, timeToFood, current, startDate, days, allDays)).start();
     }
 
     @Override
@@ -104,12 +90,10 @@ public class LocalDB implements LocalInterface {
     }
 
     public void refill(int amount, String id) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                medicationDao.refill(amount, id);
-            }
-        }).start();
+        new Thread(() -> medicationDao.refill(amount, id)).start();
+    }
 
+    public void updateTaken(List<MedDetails> details, String id) {
+        new Thread(() -> medicationDao.updateTaken(details, id)).start();
     }
 }

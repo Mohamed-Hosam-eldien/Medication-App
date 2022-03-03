@@ -24,6 +24,7 @@ public class Medication implements Parcelable {
     //private MedScheduler medScheduler;
     private int image;
     private int midStrength;
+    private String instruction;
     private String timeToFood;
     private long startDate;
     private List <String> days;
@@ -44,7 +45,7 @@ public class Medication implements Parcelable {
 
     public Medication(@NonNull String id, @NonNull String name, int refillNo, int isActive,
                       List<MedDetails> medDetails, int image, int midStrength, String timeToFood,
-                      long startDate, List<String> days, int allDays, int totalPills) {
+                      long startDate, List<String> days, int allDays, int totalPills, String instruction) {
         this.id = id;
         this.name = name;
         this.refillNo = refillNo;
@@ -57,6 +58,7 @@ public class Medication implements Parcelable {
         this.days = days;
         this.allDays = allDays;
         this.totalPills = totalPills;
+        this.instruction = instruction;
     }
 //    public Medication(@NonNull String name, int refillNo, int isActive,
 //                      List<MedDetails> medDetails, int midStrength,
@@ -72,6 +74,14 @@ public class Medication implements Parcelable {
 //        this.allDays = allDays;
 //    }
 
+
+    public String getInstruction() {
+        return instruction;
+    }
+
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
+    }
 
     public int getAllDays() {
         return allDays;

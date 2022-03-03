@@ -38,7 +38,7 @@ public class PopupService extends Service {
         // create the custom or default notification
         // based on the android version
 
-        String name, food;
+        String name, food, id;
         int dose;
         long time;
         long[] array = (long[]) intent.getSerializableExtra("list");
@@ -46,6 +46,7 @@ public class PopupService extends Service {
         time = intent.getLongExtra("Time",0);
         dose = intent.getIntExtra("Dose", 0);
         food = intent.getStringExtra("Food");
+        id = intent.getStringExtra("id");
 
         Log.d("SERVICE_ARRAY", array.length+"");
 
@@ -58,7 +59,7 @@ public class PopupService extends Service {
 
         // create an instance of Window class
         // and display the content on screen
-        PopupWindow window =new PopupWindow(this, name, time, dose, food, array);
+        PopupWindow window =new PopupWindow(this, name, time, dose, food, array, id);
         window.open();
 
         return START_NOT_STICKY;

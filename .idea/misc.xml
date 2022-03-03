@@ -83,13 +83,30 @@
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/ic_baseline_snooze_24.xml" value="0.1845" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/round_button.xml" value="0.163" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/drawable/rounded_rectangle.xml" value="0.1695" />
-        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_add_edit.xml" value="0.20754716981132076" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_add_edit.xml" value="0.25" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_additional_care.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_display_medication.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_login.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_main.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_sign_in.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/activity_splash.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/custom_row.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/dependent_layout.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/dialog_add_time.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/dialog_no_days.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/dialog_refill.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/dialog_specific_days.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/empty_view.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/fragment_dependent.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/fragment_home_med.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/fragment_medication.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/fragment_requests.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/home_bottom_dialog.xml" value="0.25" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/home_med_details_layout.xml" value="0.33" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/home_mid_layout.xml" value="0.25" />
-        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/layout_nav_include.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/info_dialog.xml" value="0.171875" />
+        <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/layout_nav_include.xml" value="0.33" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/popup_med_layout.xml" value="0.22" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/register_dialog.xml" value="0.171875" />
         <entry key="..\:/project/medication project/MedicationApp/app/src/main/res/layout/snooze_layout.xml" value="0.25" />

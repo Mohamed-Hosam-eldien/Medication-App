@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
 
         checkOverlayPermission();
 
-        addData();
-
         initNavController();
 
         initAllMedicationFragment();
@@ -86,18 +84,16 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         }
     }
 
-    private void addData() {
-
-    }
-
     private void initFabButton() {
         binding.btnAddMed.setOnClickListener(view1 -> {
+            binding.flaoting.collapse();
             Intent intent=new Intent(MainActivity.this, AddEditActivity.class);
             intent.putExtra("comeFrom",1);
             startActivity(intent);
         });
 
         binding.btnAddTaker.setOnClickListener(v -> {
+            binding.flaoting.collapse();
             startActivity(new Intent(this, AdditionalCare.class));
             binding.flaoting.collapse();
         });

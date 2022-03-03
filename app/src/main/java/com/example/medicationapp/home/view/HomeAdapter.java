@@ -17,18 +17,21 @@ import com.example.medicationapp.model.Medication;
 
 import java.util.List;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> implements  ClickToMed {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> implements ClickToMed {
 
     private List<Medication> medicationList;
     private final Context context;
     ShowBottomDialog bottomDialog;
     Medication medication;
+    private long currentDate;
 
-    public HomeAdapter(List<Medication> medication , Context context, ShowBottomDialog bottomDialog) {
+    public HomeAdapter(List<Medication> medication , Context context, ShowBottomDialog bottomDialog, long currentDate) {
         this.medicationList = medication;
         this.context = context;
         this.bottomDialog = bottomDialog;
+        this.currentDate = currentDate;
     }
+
 
     @NonNull
     @Override
@@ -42,7 +45,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         medication = medicationList.get(position);
         holder.txtTime.setText(medication.getName());
-        holder.txtTimeFood.setText(medication.getTimeToFood());
 
         Log.d("MMMM", medication.getMedDetails()+"");
 
@@ -50,7 +52,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
     }
 
     private void setDataToDose(List<MedDetails> medDetails, RecyclerView recyclerView, Medication medication) {
-        MedDetailsAdapter adapter = new MedDetailsAdapter(medDetails, medication, this);
+        MedDetailsAdapter adapter = new MedDetailsAdapter(medDetails, medication, this, context, currentDate);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
     }
@@ -61,8 +63,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
     }
 
     @Override
-    public void showMedDetails(MedDetails details) {
-        bottomDialog.showMedDialog(details, medication); // handle it
+    public void showMedDetails(MedDetails details, Medication medication, int position) {
+        bottomDialog.showMedDialog(details, medication, position); // handle it
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,7 +73,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            txtTimeFood = itemView.findViewById(R.id.txtFoodTime);
             txtTime = itemView.findViewById(R.id.txtDrugName);
             recyclerView = itemView.findViewById(R.id.recyclerMedicine);
         }

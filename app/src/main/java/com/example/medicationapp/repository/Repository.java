@@ -84,6 +84,11 @@ public class Repository implements RepositoryInterface {
         localDB.refill(amount, id);
     }
 
+    @Override
+    public Medication getMedToPopup(String id) {
+        return localDB.getMedicationToPopup(id);
+    }
+
 
     @Override
     public void onSendRequest(Request request) {
@@ -93,5 +98,10 @@ public class Repository implements RepositoryInterface {
     @Override
     public List<Medication> onReceiveMedication() {
         return null;
+    }
+
+    @Override
+    public void updateTaken(List<MedDetails> medDetails, String id) {
+        localDB.updateTaken(medDetails, id);
     }
 }
