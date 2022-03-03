@@ -137,8 +137,10 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
                 PendingIntent snoozePendingIntent = null;
                 Intent snoozeIntent = new Intent(getContext(), SnoozeActivity.class);
 
-//                snoozeIntent.putExtra("medicine",medication);
-                snoozeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+//                snoozeIntent.putExtra("snoozeName",medication.getName());
+                snoozeIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                snoozeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                     snoozePendingIntent = PendingIntent.getActivity(
                             getContext(), 1, snoozeIntent, PendingIntent.FLAG_IMMUTABLE
@@ -147,9 +149,10 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
                 PendingIntent refillPendingIntent = null;
                 Intent refillIntent = new Intent(getActivity(), RefillActivity.class);
                 refillIntent.putExtra("medicine", medication.getId());
+                Toast.makeText(getActivity(), ""+ medication.getId(), Toast.LENGTH_SHORT).show();
 
 
-                refillIntent.putExtra("med", medication.getName());
+//                refillIntent.putExtra("med", medication.getName());
 
                 refillIntent.addCategory(Intent.CATEGORY_LAUNCHER);
                 refillIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -164,10 +167,8 @@ public class HomeMedFragment extends Fragment implements ShowBottomDialog{
                             getContext(), 1, refillIntent, PendingIntent.FLAG_IMMUTABLE
                     );
                 }
-
-
                 Helper.showNotification(getContext(),
-                        "Your " + medication.getName() +" "+ getString(R.string.notificationBody),
+                        "Your " /*+ medication.getName()*/ +" "+ getString(R.string.notificationBody),
                         pendingIntent, snoozePendingIntent, refillPendingIntent);
 
             }

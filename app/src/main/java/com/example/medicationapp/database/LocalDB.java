@@ -38,6 +38,16 @@ public class LocalDB implements LocalInterface {
     }
 
     @Override
+    public int getRefillNo(String id) {
+        return localDB.getRefillNo(id);
+    }
+
+    @Override
+    public int getTotalPills(String id) {
+        return localDB.getTotalPills(id);
+    }
+
+    @Override
     public void insertMedicine(Medication medication) {
         new Thread(new Runnable() {
             @Override

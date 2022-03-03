@@ -11,6 +11,10 @@ public interface LocalInterface {
 
     public LiveData<String> getMedNameById(String id);
 
+    public int getRefillNo(String id);
+
+    public int getTotalPills(String id);
+
     public void insertMedicine(Medication medication);
 
     public void deleteMedication(Medication medication);

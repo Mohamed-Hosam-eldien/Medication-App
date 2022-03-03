@@ -68,6 +68,7 @@
                     android:hint="@string/hintInfoDialog"
                     android:drawablePadding="16dp"
                     android:inputType="textWebEmailAddress"
+                    android:maxLength="50"
                     android:padding="12dp" />
 
             </com.google.android.material.textfield.TextInputLayout>

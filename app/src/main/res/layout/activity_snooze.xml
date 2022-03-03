@@ -21,12 +21,14 @@
 
         <RadioGroup
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/radioGroup">
 
             <RadioButton
                 android:id="@+id/radiobtnMin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/radiobtn1min" />
 
             <RadioButton
@@ -48,6 +50,7 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/activityBtnSnooze"
         android:layout_margin="48dp"
         android:text="@string/btnSnooze"
         app:cornerRadius="16dp" />

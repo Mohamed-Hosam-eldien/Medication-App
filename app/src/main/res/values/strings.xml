@@ -91,7 +91,7 @@
     <string name="snooze">snooze</string>
     <string name="take_at">Take it</string>
     <string name="take">Take</string>
-    <string name="radiobtn1min">1 Minute</string>
+    <string name="radiobtn1min">30 Minute</string>
     <string name="radiobtn1Hr">1 Hour</string>
     <string name="radiobtn2hr">2 Hours</string>
 </resources>
