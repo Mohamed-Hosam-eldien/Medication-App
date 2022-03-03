@@ -20,8 +20,25 @@
             android:layout_height="@dimen/_150sdp"
             android:layout_alignParentTop="true"
             android:background="@color/purple_500"
+            >
 
-            />
+            <ImageView
+                android:id="@+id/toolbarImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/p5"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                />
+            <TextView
+                android:id="@+id/toolbarTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_25ssp"
+                android:text="mina"
+                />
+
+        </androidx.appcompat.widget.Toolbar>
     </androidx.cardview.widget.CardView>
 
     <ScrollView
@@ -59,9 +76,10 @@
                     android:layout_below="@+id/showDrugTvLastTime"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="15dp"
+                    android:layout_marginEnd="@dimen/_15sdp"
                     android:text="Start Date : "
                     android:textColor="@color/black"
-                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:textSize="@dimen/_14ssp"
                     />
 
                 <TextView
@@ -71,6 +89,7 @@
                     android:layout_below="@+id/showDrugTvLastTime"
                     android:layout_marginTop="15dp"
                     android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_14ssp"
                     android:layout_toEndOf="@+id/showDrugStartDateTxt"
                     />
 
@@ -91,6 +110,7 @@
                     android:layout_marginTop="15dp"
                     android:textColor="@color/black"
                     android:text="Days : "
+                    android:textSize="@dimen/_14ssp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     />
                 <TextView
@@ -100,7 +120,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/showDrugStartDate"
                     android:layout_marginTop="15dp"
-                    android:textColor="@color/purple_500" />
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_14ssp"
+                    />
                 <TextView
                     android:id="@+id/showDrug"
                     android:layout_width="wrap_content"
@@ -109,7 +131,9 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="15dp"
                     android:text="Reminders"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    />
 
                 <TextView
                     android:id="@+id/showDrugTvTime"
@@ -117,7 +141,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/showDrug"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/purple_500" />
+                    android:textColor="@color/purple_500"
+
+                    />
 
                 <TextView
                     android:id="@+id/showDrugTvPrescriptionTxt"
@@ -126,7 +152,9 @@
                     android:layout_below="@id/showDrugTvTime"
                     android:layout_marginTop="15dp"
                     android:text="Prescription Refill"
-                    android:textColor="@color/purple_500" />
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_11ssp"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/showDrugBtnRefill"
@@ -146,6 +174,7 @@
                     android:layout_marginTop="15dp"
                     android:text="Refill reminder : "
                     android:textColor="@color/black"
+                    android:textSize="@dimen/_17ssp"
                     />
                 <TextView
                     android:id="@+id/showDrugTvPrescriptionRefill"
@@ -154,6 +183,7 @@
                     android:layout_below="@+id/showDrugTvPrescriptionTxt"
                     android:layout_marginTop="15dp"
                     android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_14ssp"
                     android:layout_toEndOf="@+id/showDrugTvPrescriptionRefillTxt"
                     />
 
@@ -165,7 +195,9 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:text="How to use : "
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    />
 
                 <TextView
                     android:id="@+id/showDrugTvHowToUse"
@@ -174,7 +206,9 @@
                     android:layout_below="@id/showDrugTvPrescriptionRefill"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_toEndOf="@+id/showDrugTxt"
-                    android:textColor="@color/purple_500" />
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_14ssp"
+                    />
 
                 <TextView
                     android:id="@+id/showDrugStrengthTxt"
@@ -184,7 +218,9 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:text="Strength : "
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    />
 
                 <TextView
                     android:id="@+id/showDrugStrength"
@@ -194,7 +230,9 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_toEndOf="@+id/showDrugStrengthTxt"
-                    android:textColor="@color/purple_500" />
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_14ssp"
+                    />
 
                 <TextView
                     android:id="@+id/showDrugTvReasonOfTaking"
@@ -218,7 +256,9 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:text="@string/displayCurrentAmountTxt"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    />
                 <TextView
                     android:id="@+id/displayCurrentPillsTv"
                     android:layout_marginTop="@dimen/_15sdp"
@@ -227,6 +267,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/displayCurrentTxt"
                     android:textColor="@color/purple_500"
+                    android:textSize="@dimen/_14ssp"
                     />
 
             </RelativeLayout>

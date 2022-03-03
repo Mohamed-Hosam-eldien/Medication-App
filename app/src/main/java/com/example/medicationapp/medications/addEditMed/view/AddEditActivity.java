@@ -40,6 +40,7 @@ import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
+import com.example.medicationapp.utils.RefillSnoozeWorker;
 import com.example.medicationapp.utils.TimerWorker;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -58,7 +59,7 @@ public class AddEditActivity extends AppCompatActivity {
 
     LocalDB localDB;
     int comeFrom, medStrength, noDays = 0, totalAmount = 0;
-    Medication medication;
+    Medication medication, medFroEdit;
     MedDetails medDetails;
     List<ReminderTime> timesArrayAdapter;
     List<String> days;
@@ -73,6 +74,9 @@ public class AddEditActivity extends AppCompatActivity {
     private String requestId;
     private boolean isDateSaved = false, isAllTimeOk = false;
     private boolean isTotalPillGreaterThanNoPillToRemind = false;
+    String reqId;
+    ArrayList<Integer>images;
+    int image;
 
 
     @Override
@@ -81,11 +85,34 @@ public class AddEditActivity extends AppCompatActivity {
         binding = ActivityAddEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        images=new ArrayList<>();
+
+        images.add(R.drawable.p5);
+        images.add(R.drawable.p9);
+        images.add(R.drawable.p7);
+        images.add(R.drawable.p3);
+        images.add(R.drawable.p4);
+        images.add(R.drawable.p2);
+        images.add(R.drawable.p11);
+
+        ImageAdapter imageAdapter=new ImageAdapter(images, this, new OnImageAdapterListener() {
+            @Override
+            public void onImageClick(int index) {
+                image=index;
+            }
+        });
+
+        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        binding.addMedRvMedIcon.setLayoutManager(layoutManager);
+        binding.addMedRvMedIcon.setHasFixedSize(true);
+        binding.addMedRvMedIcon.setAdapter(imageAdapter);
 
         presenter = new AddEditPresenter(this);
         database = FirebaseDatabase.getInstance();
         ref = database.getReference();
         firebaseDatabase = FirebaseDatabase.getInstance();
+        reqId = Paper.book().read(RequestsFragment.ACEPTED_REQUEST_ID, "null");
 
         days = new ArrayList<>();
         timesArrayAdapter = new ArrayList<>();
@@ -101,27 +128,30 @@ public class AddEditActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         comeFrom = intent.getIntExtra("comeFrom", 15);
-        if (comeFrom == 5 || comeFrom == 6)//5 update offline, 6 update firebase
+        if (comeFrom == 5)//5 update offline, 6 update firebase
+        {
             medication = intent.getBundleExtra("bundle").getParcelable("med");
-        if (comeFrom == 3 || comeFrom == 6)// 3 insert into firebase, 6 update firebase
-            requestId = intent.getStringExtra("requestId");
+        isDateSaved=true;
+        }
+//        if (comeFrom == 3 )// 3 insert into firebase, 6 update firebase
+//            requestId = intent.getStringExtra("requestId");
 
         binding.addMedInstrRadGro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.addMedInstrRaBtnAfter:
-                        takingInstruction = "after eating";
+                        takingInstruction = "After";
                         Toast.makeText(AddEditActivity.this, "" + takingInstruction, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.addMedInstrRaBtnBefore:
-                        takingInstruction = "before eating";
+                        takingInstruction = "Before";
                         break;
                     case R.id.addMedInstrRaBtnWhile:
-                        takingInstruction = "while eating";
+                        takingInstruction = "While";
                         break;
                     case R.id.addMedInstrRaBtnDoesnt:
-                        takingInstruction = "doesn't matter";
+                        takingInstruction = "Doesn't";
                         break;
                 }
             }
@@ -154,7 +184,7 @@ public class AddEditActivity extends AppCompatActivity {
         binding.addMedRBtnSpecificDays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (comeFrom == 3) {
+                if (comeFrom == 1) {
                     manageSpecificDaysDialog(medication.getDays());
                 } else
                     manageSpecificDaysDialog(null);
@@ -265,10 +295,14 @@ public class AddEditActivity extends AppCompatActivity {
         String medName = null;
         int amount = -1;
         int everyDay = 0;
+        int totalPills = 0;
 
         if (validate1()) {
             medName = binding.addMedEtMedName.getText().toString();
             otherInstruction = binding.addMedInstrEtOtherInstr.getText().toString();
+
+            totalPills = Integer.parseInt(binding.addMedCurrentPillsOfMedEt.getText().toString());
+
             reminderTimes = adapter.getAdapterList();
             if (!binding.addMedEtStrength.getText().toString().trim().equals(""))
                 medStrength = Integer.parseInt(binding.addMedEtStrength.getText().toString());
@@ -293,7 +327,6 @@ public class AddEditActivity extends AppCompatActivity {
             medication.setTimeToFood(takingInstruction);
             medication.setAllDays(everyDay);
             medication.setDays(days);
-            medication.setInstruction(otherInstruction);
             //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             medication.setStartDate(removeAllHours(calendarFroDate));
 
@@ -319,27 +352,34 @@ public class AddEditActivity extends AppCompatActivity {
             }
 
             medication.setMedDetails(medDetails1);
+            if (image==0)
+                image=R.drawable.p5;
+            medication.setImage(image);
+
             if ((comeFrom == 1 || comeFrom == 2) && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/)) {
+                medication.setId(Helper.generateKey());
                 insertIntoDatabase(medication);
-            } else if (comeFrom == 3 && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/))
-                insertIntoFirebase(medication);
-            else if (comeFrom == 5 && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/))
+                if (!(reqId.equals("null") || reqId.equals("") || reqId == null))
+                    showFirebaseDialog(medication);
+            } else if (comeFrom == 5 && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/)) {
+
                 updateDatabase(medication);
-            else if (comeFrom == 6 && (isTotalPillGreaterThanNoPillToRemind /*&& isAllTimeOk*/)) {
-                updateFirebase(medication);
+                if (!(reqId.equals("null") || reqId.equals("") || reqId == null)){
+                    Toast.makeText(this, "update firebase", Toast.LENGTH_SHORT).show();
+                    showFirebaseDialog(medication);}
             }
-            if (isTotalPillGreaterThanNoPillToRemind)
-                finish();
-            else
+            if (isTotalPillGreaterThanNoPillToRemind) {
+                if ((reqId.equals("null") || reqId.equals("") || reqId == null))
+                    finish();
+            } else
                 Toast.makeText(this, "Number of to Remind can't be greater than Total pills", Toast.LENGTH_SHORT).show();
 
 
-            WorkRequest saveRequest = new PeriodicWorkRequest
-                    .Builder(TimerWorker.class,
+            WorkRequest saveRequest =
+                    new PeriodicWorkRequest.Builder(TimerWorker.class,
                             24, TimeUnit.HOURS)
                             .setInputData(
                                     new Data.Builder()
-                                            .putString("id", medication.getId())
                                             .putLongArray("times",listOfTimes)
                                             .putString("medName", medName)
                                             .putInt("dose", medication.getMedDetails().get(0).getDose())
@@ -532,8 +572,7 @@ public class AddEditActivity extends AppCompatActivity {
     }
 
     void insertIntoFirebase(Medication medication) {
-        medication.setId(Helper.generateKey());
-        ref.child(Common.Request).child(requestId).child("medicationList").child(medication.getId()).setValue(medication);
+        ref.child(reqId).child("medicationList").child(medication.getId()).setValue(medication);
     }
 
     void updateFirebase(Medication medication) {
@@ -786,7 +825,23 @@ public class AddEditActivity extends AppCompatActivity {
     void showBackDialog() {
         AlertDialog.Builder dialog=new AlertDialog.Builder(this);
         dialog.setTitle("Are you sure to exit ?").setPositiveButton("exit", (dialogInterface, i) -> finish());
-        dialog.setNegativeButton("cancel", (dialogInterface, i) -> {});
+        dialog.setNegativeButton("cancel", (dialogInterface, i) -> {
+        });
+        dialog.show();
+    }
+
+    void showFirebaseDialog(Medication med1) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Do you want to save to health taker").setPositiveButton("save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                insertIntoFirebase(med1);
+                Toast.makeText(AddEditActivity.this, "up2", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        dialog.setNegativeButton("cancel", (dialogInterface, i) -> {
+        });
         dialog.show();
     }
 

@@ -83,6 +83,7 @@
                     android:textSize="16sp"
                     tools:layout_editor_absoluteX="127dp"
                     android:drawablePadding="16dp"
+                    android:maxLength="100"
                     tools:layout_editor_absoluteY="57dp" />
             </com.google.android.material.textfield.TextInputLayout>
 

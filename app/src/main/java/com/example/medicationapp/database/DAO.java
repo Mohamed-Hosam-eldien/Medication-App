@@ -34,6 +34,12 @@ public interface DAO {
     @Query("Select * FROM Medication WHERE isActive = 1")
     public LiveData<List<Medication>> getActiveMedicines();
 
+    @Query("select refillNo from medication where id=:senderId ")
+    public int getRefillNo(String senderId);
+
+    @Query("select totalPills from medication where id=:senderId ")
+    public int getTotalPills(String senderId);
+
     //get medicine name by id
     @Query("select name from medication where id=:id")
     public LiveData<String> getMedicineByID(String id);

@@ -38,6 +38,7 @@ import io.paperdb.Paper;
 
 public class RequestsFragment extends Fragment implements OnRequestClick {
 
+    public static final String ACEPTED_REQUEST_ID = "acceptedRedId";
     LinearLayout linearLayout;
     ArrayList<Request> requestArrayList;
     FirebaseDatabase firebaseDatabase;
@@ -133,9 +134,10 @@ public class RequestsFragment extends Fragment implements OnRequestClick {
 
     @Override
     public void onAcceptClick(Request request) {
-        if (Paper.book().read(ACCEPTED_REQUEST) != null) {
+        if (Paper.book().read(ACCEPTED_REQUEST) == null) {
             databaseReference.child(request.getId()).child("request").setValue(true);
             Paper.book().write(ACCEPTED_REQUEST, "1");
+            Paper.book().write(ACEPTED_REQUEST_ID,request.getId());
         } else {
             Toast.makeText(getActivity(), "you cant accept more than one user", Toast.LENGTH_SHORT).show();
         }

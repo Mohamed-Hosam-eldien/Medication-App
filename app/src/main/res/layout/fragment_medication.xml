@@ -54,14 +54,14 @@
 
 
     <Button
+        android:id="@+id/btnAddMedActiveFragment"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:layout_centerHorizontal="true"
-        android:text="Add Medicine"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnAddMedActiveFragment"/>
+        android:text="Add Medicine" />
 
 </RelativeLayout>

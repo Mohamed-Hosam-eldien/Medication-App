@@ -19,8 +19,18 @@ import com.example.medicationapp.home.view.ShowBottomDialog;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
+import com.example.medicationapp.requests.view.RequestsFragment;
+import com.example.medicationapp.utils.Common;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import io.paperdb.Paper;
 
 public class DependentFragment extends Fragment implements ShowBottomDialog, GetAllMedication {
 
@@ -28,9 +38,13 @@ public class DependentFragment extends Fragment implements ShowBottomDialog, Get
     DependentPresenter presenter;
     DependentAdapter adapter;
     List<Request> requestList;
+    FirebaseDatabase database;
+    DatabaseReference reference;
+    List<Medication>medicationList;
 
     public DependentFragment() {
         // Required empty public constructor
+
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +62,9 @@ public class DependentFragment extends Fragment implements ShowBottomDialog, Get
         binding.recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recycler.setHasFixedSize(true);
 
+        database=FirebaseDatabase.getInstance();
+        reference=database.getReference(Common.Request);
+        medicationList=new ArrayList<>();
 
         presenter = new DependentPresenter(this, getActivity());
 
@@ -58,7 +75,51 @@ public class DependentFragment extends Fragment implements ShowBottomDialog, Get
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.getPatientMed();
+        //presenter.getPatientMed();
+
+        FirebaseDatabase.getInstance().getReference(Common.Request)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    final List<Request> requests = new ArrayList<>();
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot sanp : snapshot.getChildren()) {
+                            Request request = sanp.getValue(Request.class);
+                            Log.d("TAG", "onDataChange: request = "+request.getReceiverEmail() + request.getPatientName());
+
+
+                            if(request.isRequest() && request.getReceiverEmail().equals(Paper.book().read(Common.emailUserPaper))) {
+                                requests.add(request);
+                            }
+                            Log.d("TAG", "onDataChange: list = "+requests.size());
+                            Log.d("TAG", "onDataChange: email = "+ Paper.book().read(Common.emailUserPaper));
+                        }
+                        adapter = new DependentAdapter(getContext(), requests,medicationList);
+                        requestList = requests;
+                        binding.recycler.setAdapter(adapter);
+                        //networkInterface.onReceiveMedication(requests);
+                        String id= Paper.book().read(RequestsFragment.ACEPTED_REQUEST_ID,"null");
+                        Toast.makeText(getActivity(), "8"+id, Toast.LENGTH_SHORT).show();
+                        if(!(id.equals("null")||id.equals("")||id==null))
+                            Log.i("TAG", "getMedicationList: "+id);
+                        reference.child(id).child("medicationList").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                medicationList.clear();
+                                for(DataSnapshot s:snapshot.getChildren())
+                                    medicationList.add(s.getValue(Medication.class));
+                                adapter.setMedications(medicationList);
+                                adapter.notifyDataSetChanged();
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}});
 
     }
 
@@ -66,9 +127,10 @@ public class DependentFragment extends Fragment implements ShowBottomDialog, Get
     public void showMedDialog(MedDetails detail, Medication medication, int position) {}
 
     @Override
-    public void getMedicationList(List<Request> request) {
-        adapter = new DependentAdapter(getContext(), request);
-        requestList = request;
+    public void getMedicationList(List<Request> requests) {
+        Log.d("TAG", "getMedicationList: REQUEST " + requests.size());
+        adapter = new DependentAdapter(getContext(), requests);
+        requestList = requests;
         binding.recycler.setAdapter(adapter);
     }
 

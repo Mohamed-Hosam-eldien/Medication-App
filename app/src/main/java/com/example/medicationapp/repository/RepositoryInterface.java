@@ -12,6 +12,10 @@ public interface RepositoryInterface {
 
     public LiveData<String> getMedById(String id);
 
+    public int getRefillNo(String id);
+
+    public int getTotalPills(String id);
+
     public void insertMedication(Medication medication);
 
     public void deleteMedication(Medication medication);

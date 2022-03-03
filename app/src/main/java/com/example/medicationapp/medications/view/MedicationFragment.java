@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.medicationapp.R;
+import com.example.medicationapp.medications.addEditMed.view.AddEditActivity;
 import com.example.medicationapp.medications.displayMedication.view.DisplayMedicationActivity;
 import com.example.medicationapp.medications.presenter.MedicationPresenter;
 
@@ -41,6 +43,7 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
     ActiveAdapter activeAdapter;
     ActiveAdapter suspendedAdapter;
     MedicationPresenter medicationPresenter;
+    Button btnAdd;
 
     public MedicationFragment() {
         // Required empty public constructor
@@ -64,6 +67,8 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
         floatingActionsMenu.setVisibility(View.GONE);
         activeRecyclerView = view.findViewById(R.id.recyclerView);
         suspendedRecyclerView = view.findViewById(R.id.suspendedRecyclerView);
+
+        btnAdd=view.findViewById(R.id.btnAddMedActiveFragment);
 
         suspendedLayoutManager = new LinearLayoutManager(getContext());
         activeLayoutManager = new LinearLayoutManager(getContext());
@@ -102,6 +107,15 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
         medicationPresenter = new MedicationPresenter(getActivity(), this);
         medicationPresenter.getActiveMedications();
         medicationPresenter.getInActiveMedications();
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in=new Intent(getActivity(), AddEditActivity.class);
+                in.putExtra("comeFrom",1);
+                startActivity(in);
+            }
+        });
     }
 
     @Override

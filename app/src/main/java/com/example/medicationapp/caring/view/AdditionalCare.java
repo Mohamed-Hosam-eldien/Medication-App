@@ -122,6 +122,7 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
                         Common.currentUser.getEmail(), false);
 
                 presenter.onSendRequest(request);
+                presenter.onSendMedicine(medications,request.getId());
                 presenter.onSaveUserData(Common.currentUser);
 
             } else {
