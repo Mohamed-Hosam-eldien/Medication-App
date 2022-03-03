@@ -1,24 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center"
     android:layout_gravity="center"
-    android:padding="16dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TimePicker
-        android:id="@+id/snoozeDialog"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:timePickerMode="spinner"
-        android:layout_gravity="center"
-        android:layout_centerHorizontal="true"
-        />
+        android:elevation="0dp"
+        app:civ_circle_background_color="@color/white"
+        android:src="@drawable/snooze_black"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioGroup">
+
+            <RadioButton
+                android:id="@+id/radiobtnMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/radiobtn1min" />
+
+            <RadioButton
+                android:id="@+id/radiobtn1Hr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radiobtn1Hr" />
+
+            <RadioButton
+                android:id="@+id/radiobtn2Hr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radiobtn2hr" />
+        </RadioGroup>
+
+
+    </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/activityBtnSnooze"
         android:layout_margin="48dp"
         android:text="@string/btnSnooze"
         app:cornerRadius="16dp" />

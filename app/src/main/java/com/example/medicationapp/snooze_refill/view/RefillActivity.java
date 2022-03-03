@@ -34,7 +34,7 @@ public class RefillActivity extends AppCompatActivity {
         setContentView(R.layout.activity_refill);
 
         String id = getIntent().getStringExtra("medicine");
-        String medName = getIntent().getStringExtra("med");
+//        String medName = getIntent().getStringExtra("med");
         snoozeRefillPresenter=new SnoozeRefillPresenter(this);
 
 //        Toast.makeText(this, ""+medName, Toast.LENGTH_SHORT).show();
@@ -43,14 +43,15 @@ public class RefillActivity extends AppCompatActivity {
         txtMinus = findViewById(R.id.txtMinus);
         txtPlus = findViewById(R.id.txtPlus);
         medicineName = findViewById(R.id.medicineName);
+//        Toast.makeText(this, "yhj"+id, Toast.LENGTH_SHORT).show();
         snoozeRefillPresenter.getMedNameById(id).observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Toast.makeText(RefillActivity.this, ""+ s, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(RefillActivity.this, ""+ s, Toast.LENGTH_SHORT).show();
                 medicineName.setText(s);
             }
         });
-        Toast.makeText(this, ""+ med, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, ""+ med, Toast.LENGTH_SHORT).show();
 //        medicineName.setText(snoozeRefillPresenter.getMedNameById(medName));
         txtPlus.setOnClickListener(view -> {
             counter += 1;

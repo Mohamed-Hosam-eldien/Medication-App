@@ -38,9 +38,9 @@ import com.example.medicationapp.medications.addEditMed.view.OnAdapterClickListe
 import com.example.medicationapp.medications.addEditMed.view.ReminderTimesRecycleAdapter;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.requests.view.RequestsFragment;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
+import com.example.medicationapp.utils.RefillSnoozeWorker;
 import com.example.medicationapp.utils.TimerWorker;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -65,7 +65,7 @@ public class AddEditActivity extends AppCompatActivity {
     MedDetails medDetails;
     List<ReminderTime> timesArrayAdapter;
     List<String> days;
-    long[] listOfTimes;
+    long[] listOfTimes ;
     ReminderTimesRecycleAdapter adapter;
     String takingInstruction = null, otherInstruction;
     Calendar calendarFroDate = null;
@@ -273,7 +273,7 @@ public class AddEditActivity extends AppCompatActivity {
         localDB = LocalDB.getInstance(this);
         switch (item.getItemId()) {
             case R.id.addEditMenuSave: {
-                collectDataFromUser();
+               collectDataFromUser();
             }
         }
 
@@ -297,10 +297,14 @@ public class AddEditActivity extends AppCompatActivity {
         String medName = null;
         int amount = -1;
         int everyDay = 0;
+        int totalPills = 0;
 
         if (validate1()) {
             medName = binding.addMedEtMedName.getText().toString();
             otherInstruction = binding.addMedInstrEtOtherInstr.getText().toString();
+
+            totalPills = Integer.parseInt(binding.addMedCurrentPillsOfMedEt.getText().toString());
+
             reminderTimes = adapter.getAdapterList();
             if (!binding.addMedEtStrength.getText().toString().trim().equals(""))
                 medStrength = Integer.parseInt(binding.addMedEtStrength.getText().toString());
@@ -329,7 +333,7 @@ public class AddEditActivity extends AppCompatActivity {
             medication.setStartDate(removeAllHours(calendarFroDate));
 
             // hint
-            int i = 0;
+            int i=0;
 
             listOfTimes = new long[reminderTimes.size()];
 
@@ -346,7 +350,7 @@ public class AddEditActivity extends AppCompatActivity {
 
                 // work manager
                 listOfTimes[i] = c.getTimeInMillis();
-                i += 1;
+                i+=1;
             }
 
 
@@ -379,7 +383,7 @@ public class AddEditActivity extends AppCompatActivity {
                             24, TimeUnit.HOURS)
                             .setInputData(
                                     new Data.Builder()
-                                            .putLongArray("times", listOfTimes)
+                                            .putLongArray("times",listOfTimes)
                                             .putString("medName", medName)
                                             .putInt("dose", medication.getMedDetails().get(0).getDose())
                                             .putString("medFood", medication.getTimeToFood())
@@ -392,6 +396,22 @@ public class AddEditActivity extends AppCompatActivity {
         }
     }
 
+            // Refill snooze worker
+//            WorkRequest refillSnooze = new PeriodicWorkRequest.Builder(
+//                    RefillSnoozeWorker.class, 1, TimeUnit.MINUTES)
+//                    .setInputData(
+//                            new Data.Builder()
+//                                    .putInt("totalPills", medication.getTotalPills())
+//                                    .putInt("refillAmount", medication.getRefillNo()).
+//                                    putString("medNameSnooze", medName).
+//                                    putString("medId", medication.getId()).build()
+//                    )
+//                    .addTag(medName).build();
+//
+//            WorkManager.getInstance(this).enqueue(refillSnooze);
+
+        }
+    }
 
     boolean validate1() {
         if (!binding.addMedEtMedName.getText().toString().trim().equals(""))
@@ -456,11 +476,11 @@ public class AddEditActivity extends AppCompatActivity {
     }
 
     private long removeAllHours(Calendar calendar) {
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.HOUR,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
         return calendar.getTimeInMillis();
     }
 
@@ -491,12 +511,12 @@ public class AddEditActivity extends AppCompatActivity {
                 setNegativeButton("Cancel", (dialogInterface, i) -> {
 
                 }).setPositiveButton("Save", (dialogInterface, i) -> {
-            ReminderTime reminderTime = null;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                reminderTime = new ReminderTime(timePicker.getHour(), timePicker.getMinute(), Integer.parseInt(etAmout.getText().toString()));
-            }
-            adapter.updateList(reminderTime, index);
-        }).show();
+                    ReminderTime reminderTime = null;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        reminderTime = new ReminderTime(timePicker.getHour(), timePicker.getMinute(), Integer.parseInt(etAmout.getText().toString()));
+                    }
+                    adapter.updateList(reminderTime, index);
+                }).show();
     }
 
     void addToArraylist(int num) {
@@ -534,7 +554,7 @@ public class AddEditActivity extends AppCompatActivity {
                 }
                 calendarFroDate.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth()); //calender and return calender
 
-                Log.d("Calender 4", calendarFroDate.getTimeInMillis() + "");
+                Log.d("Calender 4" , calendarFroDate.getTimeInMillis()+"");
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String dateString = sdf.format(calendarFroDate.getTime());
@@ -624,8 +644,7 @@ public class AddEditActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(v);
         builder.setTitle("Select days");
-        builder.setNegativeButton("cancel", (dialogInterface, i) -> {
-        });
+        builder.setNegativeButton("cancel", (dialogInterface, i) -> {});
 
         builder.setPositiveButton("Set", (dialogInterface, i) -> {
             days.clear();
@@ -700,7 +719,7 @@ public class AddEditActivity extends AppCompatActivity {
     }
 
     void showBackDialog() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
         dialog.setTitle("Are you sure to exit ?").setPositiveButton("exit", (dialogInterface, i) -> finish());
         dialog.setNegativeButton("cancel", (dialogInterface, i) -> {
         });

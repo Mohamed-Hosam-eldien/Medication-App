@@ -16,6 +16,14 @@ public class AddEditPresenter {
         this.repo = Repository.getInstance(context);
     }
 
+    public int getRefillNo(String id) {
+        return repo.getRefillNo(id);
+    }
+
+    public int getTotalPills(String id){
+        return repo.getTotalPills(id);
+    }
+
    public  void insertMedication(Medication med)
     {
         repo.insertMedication(med);

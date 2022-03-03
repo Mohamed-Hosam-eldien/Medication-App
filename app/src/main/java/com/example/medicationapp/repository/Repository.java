@@ -35,6 +35,16 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public int getRefillNo(String id) {
+        return localDB.getRefillNo(id);
+    }
+
+    @Override
+    public int getTotalPills(String id) {
+        return localDB.getTotalPills(id);
+    }
+
+    @Override
     public void insertMedication(Medication medication) {
         localDB.insertMedicine(medication);
     }

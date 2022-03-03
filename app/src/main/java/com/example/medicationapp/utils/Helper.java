@@ -122,10 +122,11 @@ public class Helper {
                     .setAutoCancel(true)
                     .setColor(ContextCompat.getColor(context, R.color.darkBlue))
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    .addAction(R.drawable.custom_accept, "snooze", snoozePIntent)
-                    .addAction(R.drawable.launch, "Refill", refillP);
+                    .addAction(R.drawable.custom_accept, "snooze", snoozePIntent).setAutoCancel(true)
+                    .addAction(R.drawable.launch, "Refill", refillP).setAutoCancel(true);
             NotificationManagerCompat nmc = NotificationManagerCompat.from(context);
             nmc.notify(NOTIFICATION_ID, builder.build());
+
 
         }
     }
