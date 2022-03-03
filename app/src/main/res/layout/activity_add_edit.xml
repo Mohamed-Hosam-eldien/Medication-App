@@ -239,7 +239,9 @@
                         android:id="@+id/medIconTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/addMedTxtMedIcon" />
+                        android:text="@string/addMedTxtMedIcon"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/addMedRvMedIcon"
@@ -247,7 +249,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/medIconTxt"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal" />
+                        android:orientation="horizontal"
+                        >
+
+
+                    </androidx.recyclerview.widget.RecyclerView>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>

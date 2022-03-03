@@ -29,12 +29,16 @@ import com.example.medicationapp.medications.displayMedication.presenter.Display
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.repository.Repository;
+import com.example.medicationapp.requests.view.RequestsFragment;
+import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import io.paperdb.Paper;
 
 public class DisplayMedicationActivity extends AppCompatActivity {
 
@@ -45,6 +49,8 @@ public class DisplayMedicationActivity extends AppCompatActivity {
     DisplayPresenter presenter;
     FirebaseDatabase database;
     DatabaseReference ref;
+    String reqId;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,22 +62,29 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         tvLastTime = findViewById(R.id.showDrugTvLastTime);
         tvReasonOfTaking = findViewById(R.id.showDrugTvReasonOfTaking);
 
-        database=FirebaseDatabase.getInstance();
-        ref=database.getReference();
+        binding.showDrugTvReasonOfTaking.setVisibility(View.GONE);
+        binding.showDrugTvOtherInstruction.setVisibility(View.GONE);
+
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference(Common.Request);
+        reqId = Paper.book().read(RequestsFragment.ACEPTED_REQUEST_ID, "null");
 
         presenter = new DisplayPresenter(DisplayMedicationActivity.this);
 
-        binding.showDrugBtnRefill.setVisibility(View.GONE);
+
+
 
 
         Intent in = getIntent();
         Bundle b = in.getBundleExtra("bundle");
         med = b.getParcelable("med");
 
-        Toolbar toolbar = findViewById(R.id.displayToolbar);
-        toolbar.setTitle(med.getName());
-        toolbar.setLogo(R.drawable.pill1);
-        toolbar.setTitleMarginStart(15);
+        toolbar = findViewById(R.id.displayToolbar);
+        toolbar.setTitle("");
+
+        binding.toolbarImage.setImageResource(med.getImage());
+        binding.toolbarTextView.setText(med.getName());
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.close);
@@ -81,10 +94,8 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         if (med.getIsActive() == 1) {
             isActive = true;
             binding.showDrugBtnSuspend.setText("Suspend");
-        }
-        else
-        {
-            isActive=false;
+        } else {
+            isActive = false;
             binding.showDrugBtnSuspend.setText("Active");
         }
 
@@ -92,19 +103,21 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         binding.showDrugBtnSuspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DisplayMedicationActivity.this, ""+med.getName()+" "+med.getIsActive(), Toast.LENGTH_SHORT).show();
                 if (isActive) {
                     binding.showDrugBtnSuspend.setText("Active");
                     med.setIsActive(0);
-                    presenter.updateActive(0,med.getId());
+                    presenter.updateActive(0, med.getId());
                     isActive = false;
+                    if (!(reqId.equals("null") || reqId.equals("") || reqId == null))
+                        showFirebaseDialog(med, 1);
                 } else {
                     binding.showDrugBtnSuspend.setText("Suspend");
-                    presenter.updateActive(1,med.getId());
+                    presenter.updateActive(1, med.getId());
                     med.setIsActive(1);
                     isActive = true;
+                    if (!(reqId.equals("null") || reqId.equals("") || reqId == null))
+                        showFirebaseDialog(med, 1);
                 }
-                ref.child(med.getId()).setValue(med);
             }
         });
 
@@ -116,7 +129,6 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         });
 
     }
-
     private void setTimeToTextView(String txt, int pill) {
         binding.showDrugTvTime.setText(binding.showDrugTvTime.getText().toString() + txt + " take " + pill + " pill(s)\n");
     }
@@ -170,6 +182,9 @@ public class DisplayMedicationActivity extends AppCompatActivity {
 
         binding.showDrugStrength.setText(medication.getMidStrength() + "");
         binding.displayCurrentPillsTv.setText(medication.getTotalPills() + "");
+        toolbar.setTitle("");
+        binding.toolbarImage.setImageResource(medication.getImage());
+        binding.toolbarTextView.setText(medication.getName());
 
     }
 
@@ -220,9 +235,9 @@ public class DisplayMedicationActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 presenter.deleteMedication(med);
-                ref.child(med.getId()).removeValue();
+                showFirebaseDialog(med, 3);
                 Toast.makeText(DisplayMedicationActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
-                finish();
+
             }
         });
         dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -246,46 +261,74 @@ public class DisplayMedicationActivity extends AppCompatActivity {
             }
     }
 
-    void showRefillDialog()
-    {
-        View v= LayoutInflater.from(this).inflate(R.layout.dialog_refill,null);
-        DialogRefillBinding refillBinding=DialogRefillBinding.inflate(getLayoutInflater());
-        TextView tvMinus=v.findViewById(R.id.dialogRefillBtnMinus);
-        TextView tvPlus=v.findViewById(R.id.dialogRefillBtnPlus);
-        EditText editText=v.findViewById(R.id.dialogRefillEt);
-        editText.setText(med.getTotalPills()+"");
+    void showRefillDialog() {
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_refill, null);
+        DialogRefillBinding refillBinding = DialogRefillBinding.inflate(getLayoutInflater());
+        TextView tvMinus = v.findViewById(R.id.dialogRefillBtnMinus);
+        TextView tvPlus = v.findViewById(R.id.dialogRefillBtnPlus);
+        EditText editText = v.findViewById(R.id.dialogRefillEt);
+        editText.setText(med.getTotalPills() + "");
         tvMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Integer.parseInt(editText.getText().toString())>=2)
-                    editText.setText(Integer.parseInt(editText.getText().toString())-1+"");
+                if (Integer.parseInt(editText.getText().toString()) >= 2)
+                    editText.setText(Integer.parseInt(editText.getText().toString()) - 1 + "");
             }
         });
         tvPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.setText(Integer.parseInt(editText.getText().toString())+1+"");
+                editText.setText(Integer.parseInt(editText.getText().toString()) + 1 + "");
             }
         });
 
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(v);
         builder.setTitle("Refill you medicine ");
         builder.setPositiveButton("save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(!(Integer.parseInt(editText.getText().toString())<0&&editText.getText().toString().trim().equals(""))){
+                if (!(Integer.parseInt(editText.getText().toString()) < 0 && editText.getText().toString().trim().equals(""))) {
                     med.setTotalPills(Integer.parseInt(editText.getText().toString()));
-                    presenter.refill(Integer.parseInt(editText.getText().toString()),med.getId());
-                    ref.child(med.getId()).setValue(med);
-                    binding.displayCurrentPillsTv.setText(Integer.parseInt(editText.getText().toString()));
+                    presenter.refill(Integer.parseInt(editText.getText().toString()), med.getId());
+                    showFirebaseDialog(med, 2);
+                    binding.displayCurrentPillsTv.setText(Integer.parseInt(editText.getText().toString())+"");
                 }
             }
         });
 
         builder.show();
+    }
 
-
+    void showFirebaseDialog(Medication med1, int k) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        String text,btnText;
+        if (k == 1 || k == 2)
+        {
+            text = "Do you want to save to health taker";
+            btnText="save";
+        }
+        else{
+            btnText="delete";
+            text = "Do you want to delete from health taker";}
+        dialog.setTitle(text).setPositiveButton("save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (k == 1)
+                    ref.child(reqId).child("medicationList").child(med1.getId()).child("isActive").setValue(med1.getIsActive());
+                else if (k == 2)
+                    ref.child(reqId).child("medicationList").child(med1.getId()).child("totalPills").setValue(med1.getTotalPills());
+                else {
+                    ref.child(reqId).child("medicationList").child(med.getId()).removeValue();
+                    finish();
+                }
+            }
+        });
+        dialog.setNegativeButton("cancel", (dialogInterface, i) -> {
+            if(k==3)
+                finish();
+        });
+        dialog.show();
     }
 
 

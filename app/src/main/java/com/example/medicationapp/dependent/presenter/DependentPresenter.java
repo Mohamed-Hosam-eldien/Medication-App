@@ -1,6 +1,7 @@
 package com.example.medicationapp.dependent.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -29,16 +30,14 @@ public class DependentPresenter implements NetworkInterface {
     Connection connection;
     GetAllMedication getAllMedication;
     Context context;
-    FirebaseDatabase database;
-    DatabaseReference reference;
+
 
 
 
     public DependentPresenter(GetAllMedication getAllMedication, Context context) {
         this.connection = Connection.getInstance(this, context);
         this.getAllMedication = getAllMedication;
-        database=FirebaseDatabase.getInstance();
-        reference=database.getReference(Common.Request);
+
     }
 
     @Override
@@ -52,6 +51,7 @@ public class DependentPresenter implements NetworkInterface {
 
     @Override
     public void onReceiveMedication(List<Request> list) {
+        Log.d("TAG", "onReceiveMedication: "+ list.size());
         getAllMedication.getMedicationList(list);
     }
 
@@ -62,23 +62,6 @@ public class DependentPresenter implements NetworkInterface {
 
     @Override
     public void onSendMedicine(List<Medication> medications, String requestId) {
-       String id= Paper.book().read(RequestsFragment.ACEPTED_REQUEST_ID,"null");
-       List<Medication>medicationList=new ArrayList<>();
-        if(!(id.equals("null")||id.equals("")||id==null))
-            reference.child(id).child("medicationList").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    medicationList.clear();
-                    for(DataSnapshot s:snapshot.getChildren())
-                        medicationList.add(s.getValue(Medication.class));
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
 
     }
 

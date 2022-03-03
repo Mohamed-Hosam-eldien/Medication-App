@@ -1,7 +1,6 @@
 package com.example.medicationapp.dependent.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,9 @@ import com.example.medicationapp.home.view.ShowBottomDialog;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
+import com.example.medicationapp.utils.Common;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -29,11 +31,20 @@ public class DependentAdapter extends RecyclerView.Adapter<DependentAdapter.View
     Context context;
     List<Request> list;
     ShowBottomDialog bottomDialog;
-    Request medication;
+    Request request;
+    List<Medication>medications;
+
 
     public DependentAdapter(Context context, List<Request> list){
         this.list = list;
         this.context = context;
+
+    }
+
+    public DependentAdapter(Context context, List<Request> list, List<Medication> medications) {
+        this.context = context;
+        this.list = list;
+        this.medications = medications;
     }
 
     @Override
@@ -69,8 +80,8 @@ public class DependentAdapter extends RecyclerView.Adapter<DependentAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        medication = list.get(position);
-        holder.txtPateintName.setText(medication.getPatientName());
+        request = list.get(position);
+        holder.txtPateintName.setText(request.getPatientName());
 
         holder.img.setOnClickListener(v -> {
             if(holder.expandableLayout.isExpanded()) {
@@ -82,9 +93,14 @@ public class DependentAdapter extends RecyclerView.Adapter<DependentAdapter.View
             }
         });
 
-//        HomeAdapter adapter = new HomeAdapter(medication.getMedicationList(), context, this);
-//        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//        holder.recyclerView.setAdapter(adapter);
+        HomeAdapter adapter = new HomeAdapter(medications, context, this);
+        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        holder.recyclerView.setAdapter(adapter);
+    }
+
+    public void setMedications(List<Medication> medications) {
+        this.medications = medications;
+        notifyDataSetChanged();
     }
 
     @Override

@@ -80,12 +80,17 @@ public class Connection {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot sanp : snapshot.getChildren()) {
                             Request request = sanp.getValue(Request.class);
+                            Log.d("TAG", "onDataChange: request = "+request.getReceiverEmail() + request.getPatientName());
+
 
                             if(request.isRequest() && request.getReceiverEmail().equals(Paper.book().read(Common.emailUserPaper))) {
                                 requests.add(request);
                             }
-                            networkInterface.onReceiveMedication(requests);
+                            Log.d("TAG", "onDataChange: list = "+requests.size());
+                            Log.d("TAG", "onDataChange: email = "+ Paper.book().read(Common.emailUserPaper));
                         }
+                        networkInterface.onReceiveMedication(requests);
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {}});
