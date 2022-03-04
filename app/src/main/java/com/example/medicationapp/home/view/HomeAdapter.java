@@ -21,9 +21,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
 
     private List<Medication> medicationList;
     private final Context context;
-    ShowBottomDialog bottomDialog;
-    Medication medication;
-    private long currentDate;
+    private final ShowBottomDialog bottomDialog;
+    private final long currentDate;
 
     public HomeAdapter(List<Medication> medication , Context context, ShowBottomDialog bottomDialog, long currentDate) {
         this.medicationList = medication;
@@ -43,7 +42,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        medication = medicationList.get(position);
+        Medication medication = medicationList.get(position);
         holder.txtTime.setText(medication.getName());
 
         Log.d("MMMM", medication.getMedDetails()+"");
@@ -64,11 +63,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
 
     @Override
     public void showMedDetails(MedDetails details, Medication medication, int position) {
-        bottomDialog.showMedDialog(details, medication, position); // handle it
+        bottomDialog.showMedDialog(details, medication, position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTime, txtTimeFood;
+        TextView txtTime;
         RecyclerView recyclerView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

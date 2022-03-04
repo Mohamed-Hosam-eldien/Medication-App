@@ -7,14 +7,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.medicationapp.R;
 import com.example.medicationapp.connection.GetAllMedication;
 import com.example.medicationapp.databinding.FragmentDependentBinding;
-import com.example.medicationapp.dependent.presenter.DependentPresenter;
 import com.example.medicationapp.home.view.ShowBottomDialog;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
@@ -34,13 +33,11 @@ import io.paperdb.Paper;
 
 public class DependentFragment extends Fragment implements ShowBottomDialog, GetAllMedication {
 
-    FragmentDependentBinding binding;
-    DependentPresenter presenter;
-    DependentAdapter adapter;
-    List<Request> requestList;
-    FirebaseDatabase database;
-    DatabaseReference reference;
-    List<Medication>medicationList;
+    private FragmentDependentBinding binding;
+    private DependentAdapter adapter;
+    private List<Request> requestList;
+    private DatabaseReference reference;
+    private List<Medication>medicationList;
 
     public DependentFragment() {
         // Required empty public constructor
@@ -49,7 +46,6 @@ public class DependentFragment extends Fragment implements ShowBottomDialog, Get
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -62,11 +58,9 @@ public class DependentFragment extends Fragment implements ShowBottomDialog, Get
         binding.recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recycler.setHasFixedSize(true);
 
-        database=FirebaseDatabase.getInstance();
-        reference=database.getReference(Common.Request);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        reference= database.getReference(Common.Request);
         medicationList=new ArrayList<>();
-
-        presenter = new DependentPresenter(this, getActivity());
 
         return binding.getRoot();
     }
@@ -75,7 +69,6 @@ public class DependentFragment extends Fragment implements ShowBottomDialog, Get
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //presenter.getPatientMed();
 
         FirebaseDatabase.getInstance().getReference(Common.Request)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -99,7 +92,6 @@ public class DependentFragment extends Fragment implements ShowBottomDialog, Get
                         binding.recycler.setAdapter(adapter);
                         //networkInterface.onReceiveMedication(requests);
                         String id= Paper.book().read(RequestsFragment.ACEPTED_REQUEST_ID,"null");
-                        Toast.makeText(getActivity(), "8"+id, Toast.LENGTH_SHORT).show();
                         if(!(id.equals("null")||id.equals("")||id==null))
                             Log.i("TAG", "getMedicationList: "+id);
                         reference.child(id).child("medicationList").addValueEventListener(new ValueEventListener() {

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.databinding.FragmentHomeBinding;
-import com.example.medicationapp.utils.Helper;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.Calendar;
@@ -22,10 +21,9 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarView;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
-
 public class HomeFragment extends Fragment {
 
-    FragmentHomeBinding binding;
+    private FragmentHomeBinding binding;
 
     public HomeFragment() {
         // Required empty public constructor

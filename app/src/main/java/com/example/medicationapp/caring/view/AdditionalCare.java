@@ -35,43 +35,39 @@ import io.paperdb.Paper;
 
 public class AdditionalCare extends AppCompatActivity implements CaringViewInterface{
 
-    BottomSheetDialog bottomSheetDialog;
-    EditText edtEmail;
-    Button btnSend;
-    CaringPresenter presenter;
-    GoogleSignInClient mGoogleSignInClient;
+    private BottomSheetDialog bottomSheetDialog;
+    private EditText edtEmail;
+    private CaringPresenter presenter;
+    private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1001;
-    public final static String RECEIVER_NAME = "RECEIVER_NAME";
+    private Dialog dialog;
+    private InfoDialogBinding infoDialogBinding;
 
-    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_additional_care);
         edtEmail = findViewById(R.id.edtTxtEmail);
-        btnSend = findViewById(R.id.btnSendInvitation);
+        Button btnSend = findViewById(R.id.btnSendInvitation);
         Paper.init(this);
         bottomSheetDialog = new BottomSheetDialog(this);
         presenter = new CaringPresenter(this);
+
         createDialog();
         btnSend.setOnClickListener(view -> sendMedicationRequest());
-        Paper.init(this);
-//        sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
-
     }
 
     private void createDialog() {
         View view = getLayoutInflater().inflate(R.layout.info_dialog, null, false);
-        InfoDialogBinding infoDialogBinding = InfoDialogBinding.bind(view);
+        infoDialogBinding = InfoDialogBinding.bind(view);
         bottomSheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        infoDialogBinding.btnCancel.setOnClickListener(view1 -> {
-            bottomSheetDialog.cancel();
-        });
-        infoDialogBinding.btnSendInfoDialog.setOnClickListener(view1 -> {
 
+        infoDialogBinding.btnCancel.setOnClickListener(view1 -> bottomSheetDialog.cancel());
+
+        infoDialogBinding.btnSendInfoDialog.setOnClickListener(view1 -> {
             if (infoDialogBinding.edtPatientName.getText().toString().trim().length() < 2) {
-                infoDialogBinding.edtPatientName.setError("at Least two characters");
+                infoDialogBinding.edtPatientName.setError(getString(R.string.least_to_character));
             } else {
                 if (Paper.book().read(edtEmail.getText().toString()) == null){
                     sendRequest();
@@ -79,14 +75,12 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
                     infoDialogBinding.txtSuccess.setVisibility(View.VISIBLE);
                     infoDialogBinding.imgSuccess.setVisibility(View.VISIBLE);
                 } else {
-                    Toast.makeText(this, "you already sent a request before", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.already_sent_before), Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-        infoDialogBinding.btnSendEmail.setOnClickListener(view1 -> {
-            sendToEmail();
-        });
+
+        infoDialogBinding.btnSendEmail.setOnClickListener(view1 -> sendToEmail());
         bottomSheetDialog.setContentView(view);
     }
 
@@ -100,13 +94,13 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
                         bottomSheetDialog.show();
                     }
                 } else {
-                    Toast.makeText(this, "you can't send request to your email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.cant_send_to_email), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(AdditionalCare.this, "network Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdditionalCare.this, getString(R.string.network_failed), Toast.LENGTH_SHORT).show();
             }
         } else {
-            edtEmail.setError("Email problem");
+            edtEmail.setError(getString(R.string.email_problem));
         }
     }
 
@@ -117,8 +111,9 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
         homePresenter.getMedicationList().observe(AdditionalCare.this, medications -> {
             if (medications.size() != 0) {
                 Request request;
-                request = new Request(Helper.generateKey(), Common.currentUser.getName(), "Peter",
-                        "sent you a Medical Request", edtEmail.getText().toString(),
+                request = new Request(Helper.generateKey(), Common.currentUser.getName(),
+                        String.valueOf(infoDialogBinding.edtPatientName.getText()),
+                        getString(R.string.sent_you_medical_request), edtEmail.getText().toString(),
                         Common.currentUser.getEmail(), false);
 
                 presenter.onSendRequest(request);
@@ -126,7 +121,7 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
                 presenter.onSaveUserData(Common.currentUser);
 
             } else {
-                Toast.makeText(this, "you don't have any medication list", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.dont_have_medication_list), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -136,12 +131,12 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         i.putExtra(Intent.EXTRA_EMAIL, new String[]{edtEmail.getText().toString()});
-        i.putExtra(Intent.EXTRA_SUBJECT, "Medication APP Health Care invitation");
-        i.putExtra(Intent.EXTRA_TEXT, "please open your app to show patient request details");
+        i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject));
+        i.putExtra(Intent.EXTRA_TEXT, getString(R.string.please_open_your_app));
         try {
-            startActivity(Intent.createChooser(i, "Send mail..."));
+            startActivity(Intent.createChooser(i, getString(R.string.send_email)));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(AdditionalCare.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AdditionalCare.this, getString(R.string.no_email), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -225,5 +220,6 @@ public class AdditionalCare extends AppCompatActivity implements CaringViewInter
         Paper.book().write(Common.userNamePaper, Common.currentUser.getName());
         Paper.book().write(Common.emailUserPaper, Common.currentUser.getEmail());
     }
+
 
 }

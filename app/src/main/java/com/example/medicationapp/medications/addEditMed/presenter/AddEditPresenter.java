@@ -1,18 +1,14 @@
 package com.example.medicationapp.medications.addEditMed.presenter;
 
 import android.content.Context;
-
-import com.example.medicationapp.medications.view.MedicationViewInterface;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.repository.Repository;
 
 public class AddEditPresenter {
-    Context context;
-    MedicationViewInterface medicationViewInterface;
-    Repository repo;
+
+    private final Repository repo;
 
     public AddEditPresenter(Context context) {
-        this.context = context;
         this.repo = Repository.getInstance(context);
     }
 

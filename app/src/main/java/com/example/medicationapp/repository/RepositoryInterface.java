@@ -10,15 +10,15 @@ import java.util.List;
 
 public interface RepositoryInterface {
 
-    public LiveData<String> getMedById(String id);
+    LiveData<String> getMedById(String id);
 
-    public int getRefillNo(String id);
+    int getRefillNo(String id);
 
-    public int getTotalPills(String id);
+    int getTotalPills(String id);
 
-    public void insertMedication(Medication medication);
+    void insertMedication(Medication medication);
 
-    public void deleteMedication(Medication medication);
+    void deleteMedication(Medication medication);
 
     void updateActive(int active,String id);
 
@@ -26,13 +26,13 @@ public interface RepositoryInterface {
             ,int img,int midStrength,String timeToFood,int current,
                 long startDate,List<String>days,int allDays);
 
-    public LiveData<List<Medication>> getAllMedications();
+    LiveData<List<Medication>> getAllMedications();
 
-    public LiveData<Medication> getMedication(String name);
+    LiveData<Medication> getMedication(String name);
 
-    public LiveData<List<Medication>> getActiveMedicines();
+    LiveData<List<Medication>> getActiveMedicines();
 
-    public LiveData<List<Medication>> getInActiveMedicines();
+    LiveData<List<Medication>> getInActiveMedicines();
 
     LiveData<List<Medication>> getAllMedicationInAllDay(long currentDay);
 

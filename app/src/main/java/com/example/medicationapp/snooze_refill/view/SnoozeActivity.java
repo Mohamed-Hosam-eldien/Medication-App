@@ -36,25 +36,19 @@ public class SnoozeActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioGroup);
         snoozeRefillPresenter = new SnoozeRefillPresenter(this);
         btnSnooze = findViewById(R.id.activityBtnSnooze);
-//        Intent intent = getIntent();
-//        Medication medication = intent.getParcelableExtra("medicine");
-//        Toast.makeText(this, "" + medication.getName().toString(), Toast.LENGTH_SHORT).show();
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (i){
-                    case R.id.radiobtnMin:{
-                        time = 30;
-                        break;
-                    }
-                    case R.id.radiobtn1Hr:
-                        time = 60;
-                        break;
-                    case R.id.radiobtn2Hr:
-                        time = 120;
-                        break;
+        radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+            switch (i){
+                case R.id.radiobtnMin:{
+                    time = 30;
+                    break;
                 }
+                case R.id.radiobtn1Hr:
+                    time = 60;
+                    break;
+                case R.id.radiobtn2Hr:
+                    time = 120;
+                    break;
             }
         });
 

@@ -7,6 +7,6 @@ import com.example.medicationapp.model.Medication;
 import java.util.List;
 
 public interface MedicationViewInterface {
-    public void getAllActiveMedicines(LiveData<List<Medication>> active);
-    public void getAllInActiveMedicines(LiveData<List<Medication>> inActive);
+    void getAllActiveMedicines(LiveData<List<Medication>> active);
+    void getAllInActiveMedicines(LiveData<List<Medication>> inActive);
 }

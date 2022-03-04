@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicationapp.R;
 import com.example.medicationapp.model.Request;
-import com.example.medicationapp.requests.view.AcceptedRequestRow;
-import com.example.medicationapp.requests.view.OnRequestClick;
 import com.example.medicationapp.utils.Helper;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.snackbar.SnackbarContentLayout;
-
 import java.util.ArrayList;
 
 public class RequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -82,10 +76,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 onRequestClick.onRejectClick(requestList.get(position));
             }
         });
-        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
+        dialog.setNegativeButton("Cancel", (dialogInterface, i) -> {
         });
 
         dialog.show();

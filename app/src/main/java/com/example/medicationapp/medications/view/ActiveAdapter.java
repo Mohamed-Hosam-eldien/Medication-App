@@ -19,7 +19,6 @@ import java.util.List;
 public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.ViewHolder> {
 
     List<Medication> activeMedicines;
-//    List<Medication> suspendedMedicines;
     Context context;
     OnDisplayAdapterClickListener listener;
 
@@ -38,7 +37,6 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.ViewHolder
         ImageView medImage;
         TextView medicineName;
         TextView medDose;
-        public ConstraintLayout constraintLayout;
 
         public ViewHolder(@NonNull View generatedRow) {
             super(generatedRow);
@@ -54,12 +52,7 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.ViewHolder
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View generatedRow = layoutInflater.inflate(R.layout.custom_row, parent, false);
         ViewHolder vh= new ViewHolder(generatedRow);
-        vh.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(activeMedicines.get(vh.getAdapterPosition()));
-            }
-        });
+        vh.itemView.setOnClickListener(view -> listener.onClick(activeMedicines.get(vh.getAdapterPosition())));
         return vh;
     }
 

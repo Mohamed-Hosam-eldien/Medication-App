@@ -4,9 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="home">Home</string>
     <string name="guest">Guest</string>
-    <string name="add_dependent">Add Dependent</string>
     <string name="medications">Medications</string>
-    <string name="profiles">Profiles</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="today">today</string>
     <string name="add_medication">Add Medication</string>
@@ -30,7 +28,6 @@
     <string name="register_now">Register now</string>
     <string name="to_send_a_request_to_another_friend_please_sign_in_with_your_email">to send a request to another friend please sign in with your email</string>
     <string name="medication_App">Medication App</string>
-    <string name="info">Info</string>
 
     <string name="addMed_MedNameHint">Medication Name</string>
     <string name="addMedReminderTimesHint">Reminder Times</string>
@@ -97,4 +94,38 @@
     <string name="radiobtn1min">30 Minute</string>
     <string name="radiobtn1Hr">1 Hour</string>
     <string name="radiobtn2hr">2 Hours</string>
+    <string name="least_to_character">at Least two characters</string>
+    <string name="already_sent_before">you already sent a request before</string>
+    <string name="cant_send_to_email">you can\'t send request to your email</string>
+    <string name="network_failed">network Failed</string>
+    <string name="email_problem">Email problem</string>
+    <string name="sent_you_medical_request">sent you a Medical Request</string>
+    <string name="dont_have_medication_list">you don\'t have any medication list</string>
+    <string name="email_subject">Medication APP Health Care invitation</string>
+    <string name="please_open_your_app">please open your app to show patient request details</string>
+    <string name="send_email">Send mail…</string>
+    <string name="no_email">There are no email clients installed.</string>
+    <string name="request_has_been_sent">Request has been sent</string>
+    <string name="already_exist">you are already exist</string>
+    <string name="check_connection">please check your connection!</string>
+    <string name="do_you_want_to_delete">Do you want to delete from health taker</string>
+    <string name="edit_medication">Edit Medication</string>
+    <string name="smaller_than_number">Smaller than number of pills to remind</string>
+    <string name="greater_than_pills">greater than total pills</string>
+    <string name="number_of_remind">Number of to Remind can\'t be greater than Total pills</string>
+    <string name="number_of_reminder_cant">Number of to Remind can\'t be greater than Total pills</string>
+    <string name="select_date_to_remind">Please select date to remind you</string>
+    <string name="select_times">Please select time(s) to remind you</string>
+    <string name="name_empty">Name can\'t be empty</string>
+    <string name="sure_to_exist">Are you sure to exit ?</string>
+    <string name="exist">exit</string>
+    <string name="cancel">Cancel</string>
+    <string name="want_to_save_health_taker">Do you want to save to health taker</string>
+    <string name="save">save</string>
+    <string name="no">no</string>
+    <string name="press_to_add_date">\"Press to add date \"</string>
+    <string name="set_start_date">Set start date</string>
+    <string name="when_take_dose">When do you need to take this dose ?</string>
+    <string name="delete_med">Are you sure Delete Medicine ?</string>
+    <string name="delete">Delete</string>
 </resources>

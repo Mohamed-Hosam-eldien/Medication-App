@@ -1,29 +1,20 @@
 package com.example.medicationapp.caring.presenter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.example.medicationapp.connection.Connection;
 import com.example.medicationapp.connection.NetworkInterface;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.model.User;
-import com.example.medicationapp.repository.Repository;
-
 import java.util.List;
 
 public class CaringPresenter implements NetworkInterface {
 
-    Repository repository;
-    Connection connection;
-
-
+    private final Connection connection;
 
     public CaringPresenter(Context context) {
-        //this.repository = Repository.getInstance(context);
-
         connection = Connection.getInstance(this, context);
-
     }
 
     @Override
@@ -32,14 +23,10 @@ public class CaringPresenter implements NetworkInterface {
     }
 
     @Override
-    public void onReceiveMedication(List<Request> list) {
-
-    }
+    public void onReceiveMedication(List<Request> list) {}
 
     @Override
-    public void onSaveUserData(User user) {
-//        connection.saveUserToFirebase(user);
-    }
+    public void onSaveUserData(User user) {}
 
     @Override
     public void onSendMedicine(List<Medication> medications,String requestId) {

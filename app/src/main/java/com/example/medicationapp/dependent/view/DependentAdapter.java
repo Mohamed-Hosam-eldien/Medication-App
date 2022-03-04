@@ -1,6 +1,7 @@
 package com.example.medicationapp.dependent.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,34 +10,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicationapp.R;
+import com.example.medicationapp.home.view.HomeAdapter;
 import com.example.medicationapp.home.view.ShowBottomDialog;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
-import com.example.medicationapp.utils.Common;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import net.cachapa.expandablelayout.ExpandableLayout;
-
 import java.util.List;
 
 public class DependentAdapter extends RecyclerView.Adapter<DependentAdapter.ViewHolder> implements ShowBottomDialog {
 
-    Context context;
-    List<Request> list;
-    ShowBottomDialog bottomDialog;
-    Request request;
-    List<Medication>medications;
-
+    private final Context context;
+    private final List<Request> list;
+    private List<Medication>medications;
 
     public DependentAdapter(Context context, List<Request> list){
         this.list = list;
         this.context = context;
-
     }
 
     public DependentAdapter(Context context, List<Request> list, List<Medication> medications) {
@@ -48,11 +42,11 @@ public class DependentAdapter extends RecyclerView.Adapter<DependentAdapter.View
     @Override
     public void showMedDialog(MedDetails detail, Medication medication, int position) {
         Toast.makeText(context, "asd", Toast.LENGTH_SHORT).show();
+        Log.d("TAG", "showMedDialog: Clicked to adapter");
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView txtPateintName,txtTimeFood,txtTime;
+        TextView txtPateintName;
         RecyclerView recyclerView;
         ImageView img;
         ExpandableLayout expandableLayout;
@@ -60,11 +54,8 @@ public class DependentAdapter extends RecyclerView.Adapter<DependentAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtPateintName = itemView.findViewById(R.id.textPatientName);
-
             expandableLayout = itemView.findViewById(R.id.expandable_layout);
             img = itemView.findViewById(R.id.dropDown);
-            //txtTimeFood = itemView.findViewById(R.id.txtFoodTimeDependent);
-            //txtTime = itemView.findViewById(R.id.txtDrugNameDependent);
             recyclerView = itemView.findViewById(R.id.recyclerMedicineDependent);
         }
     }
@@ -78,7 +69,7 @@ public class DependentAdapter extends RecyclerView.Adapter<DependentAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        request = list.get(position);
+        Request request = list.get(position);
         holder.txtPateintName.setText(request.getPatientName());
 
         holder.img.setOnClickListener(v -> {
@@ -91,7 +82,7 @@ public class DependentAdapter extends RecyclerView.Adapter<DependentAdapter.View
             }
         });
 
-        HomeAdapter adapter = new HomeAdapter(medications, context, this);
+        HomeAdapter adapter = new HomeAdapter(medications, context, this, -1);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(adapter);
     }

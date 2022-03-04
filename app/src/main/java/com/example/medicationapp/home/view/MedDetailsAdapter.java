@@ -26,10 +26,10 @@ public class MedDetailsAdapter extends RecyclerView.Adapter<MedDetailsAdapter.Vi
 
     private final List<MedDetails> medDetails;
 
-    ClickToMed clickToMed;
-    Medication medication;
-    Context context;
-    long currentDate;
+    private final ClickToMed clickToMed;
+    private final Medication medication;
+    private final Context context;
+    private final long currentDate;
 
     public MedDetailsAdapter(List<MedDetails> medDetails, Medication medication, ClickToMed clickToMed, Context context, long currentDate) {
         this.medDetails = medDetails;
@@ -57,15 +57,16 @@ public class MedDetailsAdapter extends RecyclerView.Adapter<MedDetailsAdapter.Vi
                 + " " + context.getString(R.string.dose) + " (" + medication.getTimeToFood() + ")");
 
 
-        if(details.getTaken() == 1 && getRemainingDate(details.getTime()).equals(getRemainingDate(currentDate))) {
-            holder.img.setImageResource(R.drawable.ic_baseline_check_circle_24);
-            holder.img.setVisibility(View.VISIBLE);
+        if(currentDate != -1) {
+            if (details.getTaken() == 1 && getRemainingDate(details.getTime()).equals(getRemainingDate(currentDate))) {
+                holder.img.setImageResource(R.drawable.ic_baseline_check_circle_24);
+                holder.img.setVisibility(View.VISIBLE);
+            }
         }
         Log.d("TAG", "onBindViewHolder: " +getRemainingDate(details.getTime()));
         Log.d("TAG", "onBindViewHolder: "+ details.getTaken());
-        //clickToMed.showMedDetails(medication);
 
-        holder.txtDetails.setVisibility(medication.getInstruction().isEmpty()? View.GONE:View.VISIBLE);
+        holder.txtDetails.setVisibility(medication.getInstruction()==null? View.GONE:View.VISIBLE);
         holder.txtDetails.setText(medication.getInstruction());
 
         holder.layout.setOnClickListener(v -> clickToMed.showMedDetails(details, medication, position));

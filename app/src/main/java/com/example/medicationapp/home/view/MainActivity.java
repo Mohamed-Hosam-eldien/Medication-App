@@ -32,10 +32,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import io.paperdb.Paper;
 
 
@@ -138,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
             if(Helper.isNetworkAvailable(getApplicationContext())) {
                 checkUserRegistration();
             } else {
-                Toast.makeText(this, "please check your connection!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.check_connection), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -166,8 +162,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
             Log.d("TAG Main", Common.currentUser.getEmail());
             Log.d("TAG Main", Common.currentUser.getUid());
 
-            //presenter.onSaveUserData(Common.currentUser);
-            Toast.makeText(this, "you are already exist", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.already_exist), Toast.LENGTH_SHORT).show();
 
             writeToPaper();
         } else {
@@ -219,9 +214,14 @@ public class MainActivity extends AppCompatActivity implements OnDateSelect{
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUserDetails();
+    }
+
     private String getFirsName() {
         String[] arr = Paper.book().read(Common.userNamePaper).toString().split(" ", 2);
-
         return arr[0];
     }
 

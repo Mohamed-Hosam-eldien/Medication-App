@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +33,6 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
     List<Medication> activeList;
     List<Medication> suspendedList;
     List<MedDetails> medDetailsList;
-    Medication medication;
     MedScheduler medScheduler;
     RecyclerView suspendedRecyclerView;
     RecyclerView activeRecyclerView;
@@ -79,27 +77,21 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
         suspendedRecyclerView.setHasFixedSize(true);
         activeRecyclerView.setHasFixedSize(true);
 
-        suspendedAdapter = new ActiveAdapter(getContext(), suspendedList, new OnDisplayAdapterClickListener() {
-            @Override
-            public void onClick(Medication medication) {
-                Intent in = new Intent(getActivity(), DisplayMedicationActivity.class);
-                Bundle b = new Bundle();
-                b.putParcelable("med", medication);
-                in.putExtra("bundle", b);
-                startActivity(in);
+        suspendedAdapter = new ActiveAdapter(getContext(), suspendedList, medication -> {
+            Intent in = new Intent(getActivity(), DisplayMedicationActivity.class);
+            Bundle b = new Bundle();
+            b.putParcelable("med", medication);
+            in.putExtra("bundle", b);
+            startActivity(in);
 
-            }
         });
 
-        activeAdapter = new ActiveAdapter(getContext(), activeList, new OnDisplayAdapterClickListener() {
-            @Override
-            public void onClick(Medication medication) {
-                Intent in = new Intent(getActivity(), DisplayMedicationActivity.class);
-                Bundle b = new Bundle();
-                b.putParcelable("med", medication);
-                in.putExtra("bundle", b);
-                startActivity(in);
-            }
+        activeAdapter = new ActiveAdapter(getContext(), activeList, medication -> {
+            Intent in = new Intent(getActivity(), DisplayMedicationActivity.class);
+            Bundle b = new Bundle();
+            b.putParcelable("med", medication);
+            in.putExtra("bundle", b);
+            startActivity(in);
         });
         activeRecyclerView.setAdapter(activeAdapter);
         suspendedRecyclerView.setAdapter(suspendedAdapter);
@@ -108,37 +100,28 @@ public class MedicationFragment extends Fragment implements MedicationViewInterf
         medicationPresenter.getActiveMedications();
         medicationPresenter.getInActiveMedications();
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent in=new Intent(getActivity(), AddEditActivity.class);
-                in.putExtra("comeFrom",1);
-                startActivity(in);
-            }
+        btnAdd.setOnClickListener(view1 -> {
+            Intent in=new Intent(getActivity(), AddEditActivity.class);
+            in.putExtra("comeFrom",1);
+            startActivity(in);
         });
     }
 
     @Override
     public void getAllActiveMedicines(LiveData<List<Medication>> active) {
-        active.observe(getActivity(), new Observer<List<Medication>>() {
-            @Override
-            public void onChanged(List<Medication> medications) {
-                activeList = medications;
-                activeAdapter.setActiveMedicines(activeList);
-                activeAdapter.notifyDataSetChanged();
-            }
+        active.observe(getActivity(), medications -> {
+            activeList = medications;
+            activeAdapter.setActiveMedicines(activeList);
+            activeAdapter.notifyDataSetChanged();
         });
     }
 
     @Override
     public void getAllInActiveMedicines(LiveData<List<Medication>> inActive) {
-        inActive.observe(getActivity(), new Observer<List<Medication>>() {
-            @Override
-            public void onChanged(List<Medication> medications) {
-                suspendedList = medications;
-                suspendedAdapter.setActiveMedicines(suspendedList);
-                suspendedAdapter.notifyDataSetChanged();
-            }
+        inActive.observe(getActivity(), medications -> {
+            suspendedList = medications;
+            suspendedAdapter.setActiveMedicines(suspendedList);
+            suspendedAdapter.notifyDataSetChanged();
         });
     }
 }

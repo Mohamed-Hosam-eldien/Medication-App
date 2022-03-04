@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -21,7 +19,6 @@ import com.example.medicationapp.R;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.firebase.database.DataSnapshot;
@@ -30,30 +27,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import io.paperdb.Paper;
 
 public class RequestsFragment extends Fragment implements OnRequestClick {
 
     public static final String ACEPTED_REQUEST_ID = "acceptedRedId";
-    LinearLayout linearLayout;
     ArrayList<Request> requestArrayList;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    FirebaseRecyclerAdapter<Request, RecyclerView.ViewHolder> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Request> firebaseRecyclerOptions;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView recyclerView;
-    List<Request> myList;
-    Request request;
-    Request request2;
-    Request request3;
     Query query;
     RequestAdapter requestAdapter;
-    ImageView imageDisc;
     CardView cardArraySize;
     ProgressBar progressBar;
     public static final String ACCEPTED_REQUEST = "ACCEPTED_REQUEST";

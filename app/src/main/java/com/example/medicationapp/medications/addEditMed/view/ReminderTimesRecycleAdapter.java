@@ -57,20 +57,14 @@ public class ReminderTimesRecycleAdapter extends RecyclerView.Adapter<ReminderTi
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
        holder.tvTime.setText(parseTime(reminderTimes.get(position).getHour(),reminderTimes.get(position).getMinute()));
-       holder.tvPill.setText("Take "+reminderTimes.get(position).getPill()+" pill(s)");
+       holder.tvPill.setText(new StringBuilder(context.getString(R.string.take))
+               .append(reminderTimes.get(position).getPill()).append(context.getString(R.string.pills)));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-
-               onAdapterClickListener.onCLick(reminderTimes.get(holder.getAdapterPosition()), holder.getAdapterPosition());
-           }
-       });
-
+        holder.itemView.setOnClickListener(view ->
+                onAdapterClickListener.onCLick(reminderTimes.get(holder.getAdapterPosition()), holder.getAdapterPosition()));
     }
 
-    private String parseTime(int hour,int min)
-    {
+    private String parseTime(int hour,int min) {
         String format;
         if (hour == 0) {
             hour += 12;

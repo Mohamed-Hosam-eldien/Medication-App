@@ -1,6 +1,5 @@
 package com.example.medicationapp.model;
 
-import android.net.Uri;
 
 public class User {
 

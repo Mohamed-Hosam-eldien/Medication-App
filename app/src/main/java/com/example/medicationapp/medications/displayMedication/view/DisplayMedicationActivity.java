@@ -9,26 +9,21 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.medicationapp.R;
-import com.example.medicationapp.database.LocalDB;
 import com.example.medicationapp.databinding.ActivityDisplayMedicationBinding;
 import com.example.medicationapp.databinding.DialogRefillBinding;
 import com.example.medicationapp.medications.addEditMed.view.AddEditActivity;
 import com.example.medicationapp.medications.displayMedication.presenter.DisplayPresenter;
 import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.repository.Repository;
 import com.example.medicationapp.requests.view.RequestsFragment;
 import com.example.medicationapp.utils.Common;
 import com.example.medicationapp.utils.Helper;
@@ -71,10 +66,6 @@ public class DisplayMedicationActivity extends AppCompatActivity {
 
         presenter = new DisplayPresenter(DisplayMedicationActivity.this);
 
-
-
-
-
         Intent in = getIntent();
         Bundle b = in.getBundleExtra("bundle");
         med = b.getParcelable("med");
@@ -100,33 +91,25 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         }
 
 
-        binding.showDrugBtnSuspend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isActive) {
-                    binding.showDrugBtnSuspend.setText("Active");
-                    med.setIsActive(0);
-                    presenter.updateActive(0, med.getId());
-                    isActive = false;
-                    if (!(reqId.equals("null") || reqId.equals("") || reqId == null))
-                        showFirebaseDialog(med, 1);
-                } else {
-                    binding.showDrugBtnSuspend.setText("Suspend");
-                    presenter.updateActive(1, med.getId());
-                    med.setIsActive(1);
-                    isActive = true;
-                    if (!(reqId.equals("null") || reqId.equals("") || reqId == null))
-                        showFirebaseDialog(med, 1);
-                }
+        binding.showDrugBtnSuspend.setOnClickListener(view -> {
+            if (isActive) {
+                binding.showDrugBtnSuspend.setText("Active");
+                med.setIsActive(0);
+                presenter.updateActive(0, med.getId());
+                isActive = false;
+                if (!(reqId.equals("null") || reqId.equals("") || reqId == null))
+                    showFirebaseDialog(med, 1);
+            } else {
+                binding.showDrugBtnSuspend.setText("Suspend");
+                presenter.updateActive(1, med.getId());
+                med.setIsActive(1);
+                isActive = true;
+                if (!(reqId.equals("null") || reqId.equals("") || reqId == null))
+                    showFirebaseDialog(med, 1);
             }
         });
 
-        binding.showDrugBtnRefill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showRefillDialog();
-            }
-        });
+        binding.showDrugBtnRefill.setOnClickListener(view -> showRefillDialog());
 
     }
     private void setTimeToTextView(String txt, int pill) {
@@ -153,9 +136,7 @@ public class DisplayMedicationActivity extends AppCompatActivity {
     }
 
     private void setTextToPrescriptionTV(int totalPills, int noPillToRemind) {
-//        "Rx number : "+totalPills+
-        tvRefill.setText(
-                " When i have " + noPillToRemind + " pills");
+        tvRefill.setText(" When i have " + noPillToRemind + " pills");
     }
 
     private void setTextToLastTimeTv(String last) {
@@ -230,22 +211,16 @@ public class DisplayMedicationActivity extends AppCompatActivity {
 
     void showDeleteDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Are you sure to delete ?").setPositiveButton("delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        dialog.setTitle("Are you sure to delete ?").setPositiveButton("delete", (dialogInterface, i) -> {
 
-                presenter.deleteMedication(med);
+            presenter.deleteMedication(med);
+            if (!(reqId.equals("null") || reqId.equals("") || reqId == null))
                 showFirebaseDialog(med, 3);
-                Toast.makeText(DisplayMedicationActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
 
-            }
+            Toast.makeText(DisplayMedicationActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+            finish();
         });
-        dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
+        dialog.setNegativeButton("cancel", (dialogInterface, i) -> {});
 
         dialog.show();
 
@@ -275,25 +250,17 @@ public class DisplayMedicationActivity extends AppCompatActivity {
                     editText.setText(Integer.parseInt(editText.getText().toString()) - 1 + "");
             }
         });
-        tvPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editText.setText(Integer.parseInt(editText.getText().toString()) + 1 + "");
-            }
-        });
+        tvPlus.setOnClickListener(view -> editText.setText(Integer.parseInt(editText.getText().toString()) + 1 + ""));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(v);
         builder.setTitle("Refill you medicine ");
-        builder.setPositiveButton("save", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (!(Integer.parseInt(editText.getText().toString()) < 0 && editText.getText().toString().trim().equals(""))) {
-                    med.setTotalPills(Integer.parseInt(editText.getText().toString()));
-                    presenter.refill(Integer.parseInt(editText.getText().toString()), med.getId());
-                    showFirebaseDialog(med, 2);
-                    binding.displayCurrentPillsTv.setText(Integer.parseInt(editText.getText().toString())+"");
-                }
+        builder.setPositiveButton("save", (dialogInterface, i) -> {
+            if (!(Integer.parseInt(editText.getText().toString()) < 0 && editText.getText().toString().trim().equals(""))) {
+                med.setTotalPills(Integer.parseInt(editText.getText().toString()));
+                presenter.refill(Integer.parseInt(editText.getText().toString()), med.getId());
+                showFirebaseDialog(med, 2);
+                binding.displayCurrentPillsTv.setText(Integer.parseInt(editText.getText().toString())+"");
             }
         });
 
@@ -311,17 +278,14 @@ public class DisplayMedicationActivity extends AppCompatActivity {
         else{
             btnText="delete";
             text = "Do you want to delete from health taker";}
-        dialog.setTitle(text).setPositiveButton("save", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (k == 1)
-                    ref.child(reqId).child("medicationList").child(med1.getId()).child("isActive").setValue(med1.getIsActive());
-                else if (k == 2)
-                    ref.child(reqId).child("medicationList").child(med1.getId()).child("totalPills").setValue(med1.getTotalPills());
-                else {
-                    ref.child(reqId).child("medicationList").child(med.getId()).removeValue();
-                    finish();
-                }
+        dialog.setTitle(text).setPositiveButton("save", (dialogInterface, i) -> {
+            if (k == 1)
+                ref.child(reqId).child("medicationList").child(med1.getId()).child("isActive").setValue(med1.getIsActive());
+            else if (k == 2)
+                ref.child(reqId).child("medicationList").child(med1.getId()).child("totalPills").setValue(med1.getTotalPills());
+            else {
+                ref.child(reqId).child("medicationList").child(med.getId()).removeValue();
+                finish();
             }
         });
         dialog.setNegativeButton("cancel", (dialogInterface, i) -> {

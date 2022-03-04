@@ -6,14 +6,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.medicationapp.home.view.HomeMedFragment;
+import com.example.medicationapp.R;
 import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.model.Request;
 import com.example.medicationapp.model.User;
+import com.example.medicationapp.requests.view.RequestsFragment;
 import com.example.medicationapp.utils.Common;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import io.paperdb.Paper;
 
 
@@ -30,7 +27,6 @@ public class Connection {
     private static NetworkInterface networkInterface;
     private static FirebaseDatabase firebaseDatabase = null;
     private static Connection connection = null;
-    GetAllMedication getAllMedication;
     Context context;
 
     private Connection(NetworkInterface networkInterface, Context context) {
@@ -49,25 +45,29 @@ public class Connection {
     public void sendRequest(Request request) {
         firebaseDatabase.getReference(Common.Request)
                 .child(request.getId()).setValue(request)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        //Log.d("SUCCESS", "success");
-                        Toast.makeText(context, "Request has been sent", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+                .addOnSuccessListener(unused -> {
+                    Toast.makeText(context, context.getString(R.string.request_has_been_sent), Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(e -> Log.d("FAILURE", "failed : "+ e.getMessage()));
+
+        firebaseDatabase.getReference(Common.Request).child(request.getId()).child("request").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("FAILURE", "failed : "+ e.getMessage());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue(Boolean.class)==true)
+                {
+                    Paper.book().write(RequestsFragment.ACEPTED_REQUEST_ID,request.getId());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
 
-    public void sendMedicine(List<Medication>medications,String requestId)
-    {
-
+    public void sendMedicine(List<Medication>medications,String requestId) {
         for(Medication m:medications)
-        firebaseDatabase.getReference(Common.Request)
+            firebaseDatabase.getReference(Common.Request)
                 .child(requestId).child("medicationList").child(m.getId()).setValue(m);
     }
 
@@ -79,9 +79,9 @@ public class Connection {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot sanp : snapshot.getChildren()) {
+
                             Request request = sanp.getValue(Request.class);
                             Log.d("TAG", "onDataChange: request = "+request.getReceiverEmail() + request.getPatientName());
-
 
                             if(request.isRequest() && request.getReceiverEmail().equals(Paper.book().read(Common.emailUserPaper))) {
                                 requests.add(request);
@@ -123,11 +123,6 @@ public class Connection {
 
                     }
                 });
-
-
     }
-
-
-
 
 }

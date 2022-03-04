@@ -14,16 +14,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.medicationapp.R;
-import com.example.medicationapp.databinding.SnoozeLayoutBinding;
 import com.example.medicationapp.home.presenter.HomePresenter;
-import com.example.medicationapp.model.MedDetails;
 import com.example.medicationapp.model.Medication;
 
 import static android.content.Context.WINDOW_SERVICE;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.work.Data;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
@@ -32,10 +27,10 @@ import androidx.work.WorkRequest;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import io.paperdb.Paper;
 
 
 public class PopupWindow {
@@ -51,7 +46,6 @@ public class PopupWindow {
     private final String name;
     private final String food;
     HomePresenter presenter;
-    private final String id;
 
     @SuppressLint("DefaultLocale")
     public PopupWindow(Context context, String name, long time, int dose, String food, long[] array, String id) {
@@ -63,8 +57,6 @@ public class PopupWindow {
         this.array = array;
         this.food = food;
         presenter = new HomePresenter(context);
-        this.id = id;
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // set the layout parameters of the window
@@ -187,7 +179,7 @@ public class PopupWindow {
 
     private void updateTaken(int position) {
         new Thread(() -> {
-            Medication medication =  presenter.getMedicationToPopup(id);
+            Medication medication =  presenter.getMedicationToPopup(Paper.book().read("IDMED"));
             medication.getMedDetails().get(position).setTaken(1);
             presenter.updateTaken(medication.getMedDetails(), medication.getId());
             Log.d("MED", "" + position);

@@ -9,6 +9,4 @@ public class AcceptedRequestRow extends RecyclerView.ViewHolder {
     public AcceptedRequestRow(@NonNull View itemView) {
         super(itemView);
     }
-
-
 }

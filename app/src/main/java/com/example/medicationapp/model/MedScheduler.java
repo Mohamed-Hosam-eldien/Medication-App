@@ -5,7 +5,6 @@ import java.util.List;
 
 public class MedScheduler {
     String startDate;
-//    short treatDaysNo;
     List <String> days;
 
     public MedScheduler() {
@@ -13,7 +12,6 @@ public class MedScheduler {
 
     public MedScheduler(String startDate, List<String> days) {
         this.startDate = startDate;
-//        this.treatDaysNo = treatDaysNo;
         this.days = days;
     }
 
@@ -24,14 +22,6 @@ public class MedScheduler {
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
-
-//    public short getTreatDaysNo() {
-//        return treatDaysNo;
-//    }
-
-//    public void setTreatDaysNo(short treatDaysNo) {
-//        this.treatDaysNo = treatDaysNo;
-//    }
 
     public List<String> getDays() {
         return days;

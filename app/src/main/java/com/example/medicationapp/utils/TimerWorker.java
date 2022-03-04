@@ -1,10 +1,6 @@
 package com.example.medicationapp.utils;
 
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,7 +13,7 @@ import androidx.work.WorkerParameters;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-public class    TimerWorker extends Worker {
+public class TimerWorker extends Worker {
 
     Context context;
 
@@ -45,8 +41,10 @@ public class    TimerWorker extends Worker {
             for (long l : array) {
 
                 Log.d("DDD", l +"");
+                Log.d("Current", current +"");
 
-                long too = l / 1000L - current / 1000L;
+                long too = (l / 1000L) - (current / 1000L);
+                Log.d("After Sub", too +"");
 
                 OneTimeWorkRequest saveRequest = new OneTimeWorkRequest
                         .Builder(ReminderWorker.class)
@@ -61,6 +59,7 @@ public class    TimerWorker extends Worker {
                                         .putLongArray("list",array)
                                         .build()
                         ).setInitialDelay(too, TimeUnit.SECONDS).build();
+
 
                 WorkManager.getInstance(context).enqueue(saveRequest);
             }

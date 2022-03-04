@@ -1,19 +1,14 @@
 package com.example.medicationapp.snooze_refill.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.medicationapp.R;
 import com.example.medicationapp.home.view.MainActivity;
-import com.example.medicationapp.model.Medication;
 import com.example.medicationapp.snooze_refill.presenter.SnoozeRefillPresenter;
 
 public class RefillActivity extends AppCompatActivity {
@@ -22,7 +17,6 @@ public class RefillActivity extends AppCompatActivity {
     EditText edtRefill;
     TextView txtPlus;
     TextView txtMinus;
-    Medication med;
     TextView medicineName;
     SnoozeRefillPresenter snoozeRefillPresenter;
     static int counter = 1;
@@ -34,25 +28,16 @@ public class RefillActivity extends AppCompatActivity {
         setContentView(R.layout.activity_refill);
 
         String id = getIntent().getStringExtra("medicine");
-//        String medName = getIntent().getStringExtra("med");
+
         snoozeRefillPresenter=new SnoozeRefillPresenter(this);
 
-//        Toast.makeText(this, ""+medName, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, ""+id, Toast.LENGTH_SHORT).show();
         edtRefill = findViewById(R.id.edtRefillNum);
         txtMinus = findViewById(R.id.txtMinus);
         txtPlus = findViewById(R.id.txtPlus);
         medicineName = findViewById(R.id.medicineName);
-//        Toast.makeText(this, "yhj"+id, Toast.LENGTH_SHORT).show();
-        snoozeRefillPresenter.getMedNameById(id).observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-//                Toast.makeText(RefillActivity.this, ""+ s, Toast.LENGTH_SHORT).show();
-                medicineName.setText(s);
-            }
-        });
-//        Toast.makeText(this, ""+ med, Toast.LENGTH_SHORT).show();
-//        medicineName.setText(snoozeRefillPresenter.getMedNameById(medName));
+
+        snoozeRefillPresenter.getMedNameById(id).observe(this, s -> medicineName.setText(s));
+
         txtPlus.setOnClickListener(view -> {
             counter += 1;
             edtRefill.setText(String.valueOf(counter));
