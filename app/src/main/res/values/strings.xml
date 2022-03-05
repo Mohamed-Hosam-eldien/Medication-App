@@ -4,8 +4,128 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="home">Home</string>
     <string name="guest">Guest</string>
-    <string name="add_dependent">Add Dependent</string>
     <string name="medications">Medications</string>
-    <string name="more">More</string>
-    <string name="profiles">Profiles</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="today">today</string>
+    <string name="add_medication">Add Medication</string>
+    <string name="add_health_taker">Add Health Taker</string>
+    <string name="activeList">Active Medicines</string>
+    <string name="SuspendedList">Suspended Medicines</string>
+    <string name="title">Share Medicines</string>
+    <string name="sendInvitation">Send Invitation</string>
+    <string name="emalHint">USER@gmail.com</string>
+    <string name="requests">Requests</string>
+    <string name="dependents">Dependents</string>
+    <string name="email">Email</string>
+    <string name="register">Register</string>
+    <string name="already_registered">Already registered</string>
+    <string name="login_here">Login here</string>
+    <string name="register_here">Register here</string>
+    <string name="not_registered_yet">Not registered yet</string>
+    <string name="login">Login</string>
+    <string name="password">password</string>
+    <string name="authID">1056851636378-cq6m6m8d9a7vig7meptilt1rgmqvvh1b.apps.googleusercontent.com</string>
+    <string name="register_now">Register now</string>
+    <string name="to_send_a_request_to_another_friend_please_sign_in_with_your_email">to send a request to another friend please sign in with your email</string>
+    <string name="medication_App">Medication App</string>
+
+    <string name="addMed_MedNameHint">Medication Name</string>
+    <string name="addMedReminderTimesHint">Reminder Times</string>
+    <string name="addMedScheduleTxt">Schedule</string>
+    <string name="addMedStartDateTxt">Start date :</string>
+    <string name="addMedPressToAddHint">press to add date</string>
+    <string name="addMedNoteWhenChooseTime">Medications Will not be created in the past</string>
+    <string name="addMedDurationTxt">Duration</string>
+    <string name="addMedRBtnOnGoingTxt">Ongoing treatment</string>
+    <string name="addMedRBtnNoDays">Number of days</string>
+    <string name="addMedDaysTxt">Days</string>
+    <string name="addMedEveryDayTxt">Every day</string>
+    <string name="addMedSpecificDaysTxt">Specific days of the week</string>
+    <string name="addMedTxtMedIcon">Med Icon</string>
+    <string name="addMed_MedStrengthTxt">Medication strength :</string>
+    <string name="addMedAmountHint">Amount</string>
+    <string name="addMedShouldBeTakenTxt">Should this be taken</string>
+    <string name="addMedRBtnBeforeTxt">Before eating</string>
+    <string name="addMedRBtnWhileTxt">While eating</string>
+    <string name="addMedRBtnAfterTxt">After eating</string>
+    <string name="addMedRBtnDoesnotTxt">Doesn\'t matter</string>
+    <string name="addMedAnyOtherInstrHint">Any other instructions ?</string>
+    <string name="addMedPrescriptionRefillTxt">Prescription Refill</string>
+    <string name="addMedEnterAmountOfMedTxt">Enter the amount of meds you currently have to get a refill reminder</string>
+    <string name="addMedTotalAmountOfMedHint">Total amounts of Med</string>
+    <string name="addMedNoPillToRemindTxt">Number of Pills to remind to refill when reached</string>
+    <string name="displayCurrentAmountTxt">Current amount of pills</string>
+    <string name="notificationBody"> pills are about to end, Dont forget to Refill it</string>
+
+    <string-array name="addSpinnerArray">
+        <item>Choose Time</item>
+        <item>Once daily</item>
+        <item>Twice daily</item>
+        <item>3 times daily</item>
+        <item>4 times daily</item>
+        <item>5 times daily</item>
+        <item>6 times daily</item>
+        <item>Every 12 hours</item>
+        <item>Every 8 hours</item>
+        <item>Every 6 hours</item>
+
+
+    </string-array>
+
+    <string name="notification_body">send you an invitation to take care of</string>
+    <string name="acceptString">You\'ve accepted the Request, you can see all Patient Details in Home Screen</string>
+    <string name="hintInfoDialog">This will be send to the Health Taker</string>
+    <string name="btnSend">Send</string>
+    <string name="dialogTitle">Enter the Patient\'s name</string>
+    <string name="succesfullyAdded">Successfully Sent</string>
+    <string name="btnTake">Take</string>
+    <string name="btnSnooze">Snooze</string>
+    <string name="btnRefill">Refill</string>
+    <string name="hello_it_s_time_to_take_your_med">Hello it\'s time to take your Med</string>
+    <string name="snooze_1_minute">1 m</string>
+    <string name="snooze_5_minutes">5 m</string>
+    <string name="snooze_15_minutes">15 m</string>
+    <string name="snooze">snooze</string>
+    <string name="take_at">Take it at </string>
+    <string name="take">Take </string>
+    <string name="refile_after">refile after </string>
+    <string name="pills"> Pills </string>
+    <string name="dose"> dose </string>
+    <string name="radiobtn1min">30 Minute</string>
+    <string name="radiobtn1Hr">1 Hour</string>
+    <string name="radiobtn2hr">2 Hours</string>
+    <string name="least_to_character">at Least two characters</string>
+    <string name="already_sent_before">you already sent a request before</string>
+    <string name="cant_send_to_email">you can\'t send request to your email</string>
+    <string name="network_failed">network Failed</string>
+    <string name="email_problem">Email problem</string>
+    <string name="sent_you_medical_request">sent you a Medical Request</string>
+    <string name="dont_have_medication_list">you don\'t have any medication list</string>
+    <string name="email_subject">Medication APP Health Care invitation</string>
+    <string name="please_open_your_app">please open your app to show patient request details</string>
+    <string name="send_email">Send mail…</string>
+    <string name="no_email">There are no email clients installed.</string>
+    <string name="request_has_been_sent">Request has been sent</string>
+    <string name="already_exist">you are already exist</string>
+    <string name="check_connection">please check your connection!</string>
+    <string name="do_you_want_to_delete">Do you want to delete from health taker</string>
+    <string name="edit_medication">Edit Medication</string>
+    <string name="smaller_than_number">Smaller than number of pills to remind</string>
+    <string name="greater_than_pills">greater than total pills</string>
+    <string name="number_of_remind">Number of to Remind can\'t be greater than Total pills</string>
+    <string name="number_of_reminder_cant">Number of to Remind can\'t be greater than Total pills</string>
+    <string name="select_date_to_remind">Please select date to remind you</string>
+    <string name="select_times">Please select time(s) to remind you</string>
+    <string name="name_empty">Name can\'t be empty</string>
+    <string name="sure_to_exist">Are you sure to exit ?</string>
+    <string name="exist">exit</string>
+    <string name="cancel">Cancel</string>
+    <string name="want_to_save_health_taker">Do you want to save to health taker</string>
+    <string name="save">save</string>
+    <string name="no">no</string>
+    <string name="press_to_add_date">\"Press to add date \"</string>
+    <string name="set_start_date">Set start date</string>
+    <string name="when_take_dose">When do you need to take this dose ?</string>
+    <string name="delete_med">Are you sure Delete Medicine ?</string>
+    <string name="delete">Delete</string>
 </resources>

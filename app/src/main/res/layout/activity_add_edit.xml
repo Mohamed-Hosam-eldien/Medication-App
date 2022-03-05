@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/addToolbar"
+        tools:layout_editor_absoluteX="89dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/card1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:boxBackgroundColor="#fff"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
+                app:boxStrokeColor="#2196F3"
+                app:boxStrokeWidth="2dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addMedEtMedName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/addMed_MedNameHint"
+                    android:maxLength="25"
+                    android:paddingStart="@dimen/_15sdp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card1"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
+
+                <RelativeLayout
+                    android:id="@+id/rel1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_15sdp">
+
+
+                    <TextView
+                        android:id="@+id/addMedRemindTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/addMedReminderTimesHint"
+                        android:paddingStart="@dimen/_5sdp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <!--                    <Switch-->
+                    <!--                        android:id="@+id/addMedReminderSwitch"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_alignParentEnd="true"-->
+                    <!--                        tools:ignore="UseSwitchCompatOrMaterialXml" />-->
+
+                    <Spinner
+                        android:id="@+id/addMedReminderTimeSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/addMedRemindTv"
+                        android:layout_marginTop="15dp"
+                        android:entries="@array/addSpinnerArray" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/addMedReminderRv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/addMedReminderTimeSp"
+                        android:layout_marginTop="15dp"
+
+                        />
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card2"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_15sdp">
+
+                    <TextView
+                        android:id="@+id/addMedTxtSchedule"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/addMedScheduleTxt" />
+
+                    <TextView
+                        android:id="@+id/addMedStartTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedTxtSchedule"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:text="@string/addMedStartDateTxt" />
+
+                    <TextView
+                        android:id="@+id/addMedScheduleStartDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/addMedTxtSchedule"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_toEndOf="@+id/addMedStartTxt"
+                        android:hint="@string/addMedPressToAddHint"
+                        android:textColor="#3911EA"
+                        android:textColorHint="#3911EA" />
+
+                    <TextView
+                        android:id="@+id/hint1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/addMedScheduleStartDate"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:text="@string/addMedNoteWhenChooseTime"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/addMedTextRg1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/hint1"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/addMedDurationTxt" />
+
+                    <RadioGroup
+                        android:id="@+id/addMedDurationGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/addMedTextRg1"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/addMedRBtnOngoing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/addMedRBtnOnGoingTxt" />
+
+                        <RadioButton
+                            android:id="@+id/addMedRBtnNoDays"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/addMedRBtnNoDays" />
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/addMedTextRg2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedDurationGroup"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/addMedDaysTxt" />
+
+                    <RadioGroup
+                        android:id="@+id/addMedDaysGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/addMedTextRg2"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical"
+                        >
+
+                        <RadioButton
+                            android:id="@+id/addMedRBtnEveryDay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/addMedEveryDayTxt"
+
+                            />
+
+                        <RadioButton
+                            android:id="@+id/addMedRBtnSpecificDays"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/addMedSpecificDaysTxt" />
+                    </RadioGroup>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card3"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_15sdp">
+
+                    <TextView
+                        android:id="@+id/medIconTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/addMedTxtMedIcon"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/addMedRvMedIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/medIconTxt"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        >
+
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card4"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_15sdp">
+
+                    <TextView
+                        android:id="@+id/addMedTVStrength"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/addMed_MedStrengthTxt"
+
+                        />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/card15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/addMedTVStrength"
+                        app:boxBackgroundColor="#fff"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="24dp"
+                        app:boxCornerRadiusTopStart="24dp"
+                        app:boxStrokeColor="#2196F3"
+                        app:boxStrokeWidth="2dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/addMedEtStrength"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/addMedAmountHint"
+                            android:inputType="number"
+                            android:maxLength="7"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:textAlignment="@+id/addMedTVStrength" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card5"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_15sdp">
+
+                    <TextView
+                        android:id="@+id/addMedTVInstr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/addMedShouldBeTakenTxt" />
+
+                    <RadioGroup
+                        android:id="@+id/addMedInstrRadGro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedTVInstr"
+                        android:layout_marginTop="15dp">
+
+                        <RadioButton
+                            android:id="@+id/addMedInstrRaBtnBefore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/addMedRBtnBeforeTxt" />
+
+                        <RadioButton
+                            android:id="@+id/addMedInstrRaBtnWhile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/addMedRBtnWhileTxt" />
+
+                        <RadioButton
+                            android:id="@+id/addMedInstrRaBtnAfter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/addMedRBtnAfterTxt" />
+
+                        <RadioButton
+                            android:id="@+id/addMedInstrRaBtnDoesnt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/addMedRBtnDoesnotTxt" />
+                    </RadioGroup>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedInstrRadGro"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:boxBackgroundColor="#fff"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="24dp"
+                        app:boxCornerRadiusTopStart="24dp"
+                        app:boxStrokeColor="#2196F3"
+                        app:boxStrokeWidth="2dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/addMedInstrEtOtherInstr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/addMedAnyOtherInstrHint"
+                            android:maxLength="240"
+                            android:paddingStart="@dimen/_15sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card6"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_15sdp">
+
+                    <TextView
+                        android:id="@+id/addMedPres1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/addMedPrescriptionRefillTxt" />
+
+                    <TextView
+                        android:id="@+id/addMedPres2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/addMedPres1"
+                        android:text="@string/addMedEnterAmountOfMedTxt" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/card12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedPres2"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:boxBackgroundColor="#fff"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="24dp"
+                        app:boxCornerRadiusTopStart="24dp"
+                        app:boxStrokeColor="#2196F3"
+                        app:boxStrokeWidth="2dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/addMedCurrentPillsOfMedEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/addMedTotalAmountOfMedHint"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:paddingStart="@dimen/_15sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <TextView
+                        android:id="@+id/addMedLastText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/card12"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:text="@string/addMedNoPillToRemindTxt" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addMedLastText"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        app:boxBackgroundColor="#fff"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="24dp"
+                        app:boxCornerRadiusTopStart="24dp"
+                        app:boxStrokeColor="#2196F3"
+                        app:boxStrokeWidth="2dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/addMedNoPillToRemind"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/addMedAmountHint"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:paddingStart="@dimen/_15sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/addToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/purple_500"
+        app:title="Add Medication" />
+
+</RelativeLayout>

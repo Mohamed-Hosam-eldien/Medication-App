@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_5sdp"
+    >
+
+    <TextView
+        android:id="@+id/customReminderTvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6:56 PM"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:textColor="#193CFF"
+        />
+    <TextView
+        android:id="@+id/customReminderTvPill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="take 1.5 pill"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:textColor="#193CFF"
+        />
+
+</RelativeLayout>

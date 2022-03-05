@@ -16,6 +16,12 @@
     <item
         android:id="@+id/moreFragment"
         android:icon="@drawable/ic_baseline_more_horiz_24"
-        android:title="@string/more"/>
+        android:title="@string/requests" />
+
+
+    <item
+        android:id="@+id/dependentFragment"
+        android:icon="@drawable/ic_baseline_dependent_24"
+        android:title="@string/dependents" />
 
 </menu>
