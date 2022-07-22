@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
 
-    tools:context=".requests.view.RequestsFragment">
+    tools:context=".ui.requests.view.RequestsFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView

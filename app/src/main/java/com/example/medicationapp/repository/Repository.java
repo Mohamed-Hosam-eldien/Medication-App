@@ -4,21 +4,19 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.medicationapp.database.LocalDB;
-import com.example.medicationapp.model.MedDetails;
-import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.model.Request;
+import com.example.medicationapp.local.LocalDB;
+import com.example.medicationapp.models.MedDetails;
+import com.example.medicationapp.models.Medication;
+import com.example.medicationapp.models.Request;
 
 import java.util.List;
 
 public class Repository implements RepositoryInterface {
 
-    LocalDB localDB;
+    private final LocalDB localDB;
     private static Repository repository = null;
-    public Context context;
 
     private Repository (Context context){
-        this.context = context;
         this.localDB = LocalDB.getInstance(context);
     }
 

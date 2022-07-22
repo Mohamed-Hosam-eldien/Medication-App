@@ -34,19 +34,19 @@ android {
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.appcompat:appcompat:1.4.2' //1.4.1
+    implementation 'com.google.android.material:material:1.6.1' //1.5.0
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4' //2.1.3
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
 
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database'
-    implementation 'com.google.firebase:firebase-core:20.1.0'
+    implementation 'com.google.firebase:firebase-core:21.1.0' //20.1.0
     implementation 'com.firebaseui:firebase-ui-database:8.0.0'
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
-    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation 'com.google.firebase:firebase-auth:21.0.6' //21.0.1
+    implementation 'com.google.android.gms:play-services-auth:20.2.0' //20.1.0
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -54,7 +54,7 @@ dependencies {
 
 
     // for navigation
-    def nav_version = "2.4.1"
+    def nav_version = "2.5.0" //2.4.1
     // Java language implementation
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
@@ -70,12 +70,12 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // material design
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.6.1' //1.5.0
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.13.0' //4.12.0
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0' //4.12.0
 
     // retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -89,13 +89,13 @@ dependencies {
     implementation 'devs.mulham.horizontalcalendar:horizontalcalendar:1.3.4'
 
     // lotti
-    implementation "com.airbnb.android:lottie:3.4.0"
+    implementation "com.airbnb.android:lottie:3.6.1"
 
     // floating button
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 
     //gson type converter
-    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.google.code.gson:gson:2.9.0' //2.8.7
 
     //circular image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
@@ -106,13 +106,11 @@ dependencies {
     // paper
     implementation 'io.github.pilgr:paperdb:2.7.2'
 
-
     // work manager
     def work_version = "2.7.1"
     implementation "androidx.work:work-runtime:$work_version"
 
     // ssp
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
-
 
 }

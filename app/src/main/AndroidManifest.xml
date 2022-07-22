@@ -21,13 +21,13 @@
             android:exported="true" />
 
         <activity
-            android:name=".snooze_refill.view.RefillActivity"
+            android:name=".ui.snooze_refill.view.RefillActivity"
             android:exported="false" />
         <activity
-            android:name=".snooze_refill.view.SnoozeActivity"
+            android:name=".ui.snooze_refill.view.SnoozeActivity"
             android:exported="false" />
         <activity
-            android:name=".splash.Splash"
+            android:name=".ui.splash.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,15 +36,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".medications.addEditMed.view.AddEditActivity"
+            android:name=".ui.addEditMed.view.AddEditActivity"
             android:exported="true" />
         <activity
-            android:name=".medications.displayMedication.view.DisplayMedicationActivity"
+            android:name=".ui.displayMedication.view.DisplayMedicationActivity"
             android:exported="true" />
         <activity
-            android:name=".home.view.MainActivity"
+            android:name=".ui.home.view.MainActivity"
             android:exported="true" />
-        <activity android:name=".caring.view.AdditionalCare" />
+        <activity android:name=".ui.caring.view.AdditionalCare" />
     </application>
 
 </manifest>

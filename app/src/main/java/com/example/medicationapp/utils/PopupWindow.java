@@ -14,8 +14,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.medicationapp.R;
-import com.example.medicationapp.home.presenter.HomePresenter;
-import com.example.medicationapp.model.Medication;
+import com.example.medicationapp.ui.home.presenter.HomePresenter;
+import com.example.medicationapp.models.Medication;
 
 import static android.content.Context.WINDOW_SERVICE;
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/gray2"
-    tools:context=".home.view.HomeFragment">
+    tools:context=".ui.home.view.HomeFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
@@ -54,7 +54,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.example.medicationapp.home.view.HomeMedFragment"
+        android:name="com.example.medicationapp.ui.home.view.HomeMedFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/card"

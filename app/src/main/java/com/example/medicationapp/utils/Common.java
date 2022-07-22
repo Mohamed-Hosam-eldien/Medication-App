@@ -1,6 +1,6 @@
 package com.example.medicationapp.utils;
 
-import com.example.medicationapp.model.User;
+import com.example.medicationapp.models.User;
 
 public class Common {
 

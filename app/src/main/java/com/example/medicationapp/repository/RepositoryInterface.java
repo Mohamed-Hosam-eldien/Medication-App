@@ -2,9 +2,9 @@ package com.example.medicationapp.repository;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.medicationapp.model.MedDetails;
-import com.example.medicationapp.model.Medication;
-import com.example.medicationapp.model.Request;
+import com.example.medicationapp.models.MedDetails;
+import com.example.medicationapp.models.Medication;
+import com.example.medicationapp.models.Request;
 
 import java.util.List;
 

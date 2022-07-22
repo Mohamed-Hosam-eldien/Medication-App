@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="32dp"
-    tools:context=".snooze_refill.view.RefillActivity">
+    tools:context=".ui.snooze_refill.view.RefillActivity">
 
     <TextView
         android:layout_width="match_parent"

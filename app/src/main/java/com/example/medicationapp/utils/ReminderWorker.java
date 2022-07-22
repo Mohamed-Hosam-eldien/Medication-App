@@ -16,13 +16,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.medicationapp.R;
-import com.example.medicationapp.model.TimeLong;
+import com.example.medicationapp.models.TimeLong;
 
 public class ReminderWorker extends Worker {
 

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="8dp"
-    tools:context=".medications.view.MedicationFragment"
+    tools:context=".ui.medications.view.MedicationFragment"
     android:padding="5dp">
 
     <ScrollView

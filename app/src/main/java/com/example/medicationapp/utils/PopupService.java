@@ -9,15 +9,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
-import androidx.work.WorkManager;
 
 import com.example.medicationapp.R;
-import com.example.medicationapp.model.TimeLong;
 
 public class PopupService extends Service {
     public PopupService() {

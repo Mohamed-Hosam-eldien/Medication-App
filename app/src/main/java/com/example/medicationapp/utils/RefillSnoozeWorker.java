@@ -10,12 +10,10 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.medicationapp.R;
-import com.example.medicationapp.database.DAO;
-import com.example.medicationapp.database.DatabaseBuilder;
-import com.example.medicationapp.home.view.MainActivity;
-import com.example.medicationapp.medications.addEditMed.presenter.AddEditPresenter;
-import com.example.medicationapp.snooze_refill.view.RefillActivity;
-import com.example.medicationapp.snooze_refill.view.SnoozeActivity;
+import com.example.medicationapp.ui.home.view.MainActivity;
+import com.example.medicationapp.ui.addEditMed.presenter.AddEditPresenter;
+import com.example.medicationapp.ui.snooze_refill.view.RefillActivity;
+import com.example.medicationapp.ui.snooze_refill.view.SnoozeActivity;
 
 public class RefillSnoozeWorker extends Worker {
     Context context;

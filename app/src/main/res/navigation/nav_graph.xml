@@ -6,22 +6,22 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.medicationapp.home.view.HomeFragment"
+        android:name="com.example.medicationapp.ui.home.view.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/medicationFragment"
-        android:name="com.example.medicationapp.medications.view.MedicationFragment"
+        android:name="com.example.medicationapp.ui.medications.view.MedicationFragment"
         android:label="Medications"
         tools:layout="@layout/fragment_medication" />
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.example.medicationapp.requests.view.RequestsFragment"
+        android:name="com.example.medicationapp.ui.requests.view.RequestsFragment"
         android:label="More"
         tools:layout="@layout/fragment_requests" />
     <fragment
         android:id="@+id/dependentFragment"
-        android:name="com.example.medicationapp.dependent.view.DependentFragment"
+        android:name="com.example.medicationapp.ui.dependent.view.DependentFragment"
         android:label="Dependents"
         tools:layout="@layout/fragment_dependent" />
 </navigation>
